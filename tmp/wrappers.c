@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   header.h                                           :+:    :+:            */
+/*   wrappers.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 18:00:07 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/01 23:30:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "proto.h"
 
-typedef enum e_errnum
+/*
+** Checks malloc return value
+** exits program if error
+*/
+
+void	*malloc_guard(void *malloc_return)
 {
-	error,
-	success
-}	t_errnum;
-
-
-typedef struct s_node
-{
-	int				type;
-	char			*data;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
-
-#endif
+	if (malloc_return == NULL)
+		exit_program(error, "Malloc Error");
+	return (malloc_return);
+}

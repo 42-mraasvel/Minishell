@@ -1,1 +1,1 @@
-make && ./a.out @
+make  > /dev/null&& ./a.out @

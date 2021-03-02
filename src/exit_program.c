@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   header.h                                           :+:    :+:            */
+/*   exit_program.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 18:00:07 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/02/26 20:49:46 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/02 18:01:08 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include <stdlib.h>
+#include "header.h"
+#include "libft.h"
 
-typedef enum e_errnum
+void	ft_perror(t_errnum errnum, char *err_str)
 {
-	error,
-	success
-}	t_errnum;
+	// do something with errnum?
+	(void)errnum;
+	ft_putstr(err_str);
+}
 
-
-typedef struct s_node
+void	exit_program(t_errnum errnum, char *err_str)
 {
-	int				type;
-	char			*data;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
-
-#endif
+	if (errnum != success)
+	{
+		ft_perror(errnum, err_str);
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
+}

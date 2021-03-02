@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   header.h                                           :+:    :+:            */
+/*   proto.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 18:00:07 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/02 18:02:01 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#ifndef PROTO_H
+# define PROTO_H
 
-typedef enum e_errnum
-{
-	error,
-	success
-}	t_errnum;
+# include "header.h"
 
-
-typedef struct s_node
-{
-	int				type;
-	char			*data;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
+void	exit_program(t_errnum errnum, char *err_str);
+void test_pipe();
 
 #endif

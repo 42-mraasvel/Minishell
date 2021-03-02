@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   header.h                                           :+:    :+:            */
+/*   prompt.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 18:00:07 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/01 23:34:35 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include <stdlib.h>
+#include "libft.h"
+#include "proto.h"
+#include "libvect.h"
+#include "lexer.h"
 
-typedef enum e_errnum
+int	prompt(void)
 {
-	error,
-	success
-}	t_errnum;
+	int		ret;
+	char	*line;
+	t_vect	*tokens;
 
-
-typedef struct s_node
-{
-	int				type;
-	char			*data;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
-
-#endif
+	ret = 1;
+	while (ret > 0)
+	{
+		ft_putstr(MINISHELL_PROMPT);
+		ret = ft_getline(0, &line);
+		if (ret < 0)
+			exit_program(error, "Getline error");
+		tokens = lexer(line);
+		free(line);
+	}
+	vect_free(tokens, NULL);
+	return (success);
+}
