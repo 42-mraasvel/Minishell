@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/02 19:25:42 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/02 19:29:44 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,9 @@ vpath %.h $(IDIR)
 CC = gcc
 IFLAGS = -I$(IDIR)
 DFLAGS = -O0 -g -fsanitize=address
+
+# -Werror is annoying for development
+# CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -Wall -Wextra
 LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
 
@@ -67,7 +70,7 @@ $(LIBVECT):
 $(OBJDIR):
 	mkdir -p $@
 
-.PHONY: re fclean clean
+.PHONY: re fclean clean debug
 clean:
 	rm -f $(OBJ)
 	$(MAKE) clean -C $(LIBFTDIR)
@@ -80,5 +83,6 @@ fclean:
 re:
 	$(MAKE) fclean
 	$(MAKE) all
+# debug adds fsanitizer flags
 debug:
 	$(MAKE) re DEBUG=1

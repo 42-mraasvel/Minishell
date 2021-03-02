@@ -1,0 +1,136 @@
+Questions:
+
+	1. If malloc fails in our main program, should it exit. or should it only display an error and continue to run?
+
+
+https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
+2.1 Shell Introduction
+		The shell is a command language interpreter. This chapter describes the syntax of that command language as it is used by the sh utility and the system() and popen() functions defined in the System Interfaces volume of IEEE Std 1003.1-2001.
+
+		The shell operates according to the following general overview of operations. The specific details are included in the cited sections of this chapter.
+
+		1.	The shell reads its input from a file (see sh), from the -c option or from the system() and popen() functions defined in the System Interfaces volume of IEEE Std 1003.1-2001.
+			If the first line of a file of shell commands starts with the characters "#!", the results are unspecified.
+
+		2.	The shell breaks the input into tokens: words and operators; see Token Recognition.
+
+		3.	The shell parses the input into simple commands (see Simple Commands) and compound commands (see Compound Commands).
+
+		4.	The shell performs various expansions (separately) on different parts of each command,
+			resulting in a list of pathnames and fields to be treated as a command and arguments; see Word Expansions.
+
+		5.	The shell performs redirection (see Redirection) and removes redirection operators and their operands from the parameter list.
+
+		6.	The shell executes a function (see Function Definition Command), built-in (see Special Built-In Utilities), executable file, or script, giving the names of the arguments as positional
+			parameters numbered 1 to n, and the name of the command (or in the case of a function within a script, the name of the script) as the positional parameter numbered 0
+			(see Command Search and Execution).
+
+		7.	The shell optionally waits for the command to complete and collects the exit status (see Exit Status for Commands).
+
+
+
+
+Parsing:
+	Abstract syntax tree
+	Finite state machine
+
+
+Definitions:
+https://www.gnu.org/software/bash/manual/html_node/Definitions.html#Definitions
+
+	blank
+		A space or tab character.
+
+	name
+		A word consisting solely of letters, numbers, and underscores,
+		and beginning with a letter or underscore.
+		Names are used as shell variable and function names. Also referred to as an identifier.
+
+	metacharacter
+		A character that, when unquoted, separates words.
+		A metacharacter is a space(' '), tab ('\t'), newline('\n'), or one of the following characters:
+		‘|’, ‘&’, ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.
+
+	control operator
+		A token that performs a control function.
+		It is a newline or one of the following:
+		‘||’, ‘&&’, ‘&’, ‘;’, ‘;;’, ‘;&’, ‘;;&’, ‘|’, ‘|&’, ‘(’, or ‘)’.
+
+	operator
+		A control operator or a redirection operator.
+		See Redirections, for a list of redirection operators.
+		Operators contain at least one unquoted metacharacter.
+
+
+	token
+		A sequence of characters considered a single unit by the shell.
+		It is either a word or an operator.
+
+	word
+		A sequence of characters treated as a unit by the shell.
+		Words may not include unquoted metacharacters.
+	
+
+
+Lexical Analyzer:
+
+	- Remove comments ('#')
+	- Remove whitespace
+	- Seperate line into words and operators
+
+
+	- Regular expression formatting / rules to create patterns
+
+	Token:
+
+		- Words
+		- Operators
+
+
+	<arbitrary whitespace> <nothing>
+
+
+GRAMMAR:
+
+	Terminals :
+
+		<digit> ::= ['0'-'9']
+		<alpha> ::= ['a'-'z''A'-'Z']
+		<other_char> ::= NOT <operator>
+		<operator> ::=
+
+		<num> ::= <digit> { <num> }
+
+
+
+
+
+
+COPIED from https://github.com/tfukushima/psh:
+
+	<piped_commands> ::= <command> { '|' <piped_commands> }
+	<command> ::= <command_element> { <command> }
+	<command_element> ::= <word>
+						| <env_assignment>
+						| <redirection_list>
+
+	<redirect_in> ::=  { <num> } '<' { '&' } <word>
+	<redirect_out> ::= { <num> } '>' { ('>' | '&') } <word>
+	<redirection> ::= <redirect_in>
+					| <redirect_out>
+	<redirection_list> ::= <redirection> { <redirection_list> } 
+
+	<digit> ::= ['0'-'9']
+	<alpha> ::= ['a'-'z''A'-'Z']
+	<num> ::= <digit> { <num> }
+	<alphanum> ::= (<alpha> | <num> | '_') { <alphanum> }
+	<letter> ::= (<alphanum> | <special>) { <letter> }
+
+	<special> ::= '!' | '"' | '#' | '%' | ''' | '(' | ')' | '*' | '+' | ',' 
+				| '-' | '.' | '/' | ':' | ';" | '?' | '@' | '[' | ']' | '&' 
+				| '\' | '^' | '_' | '`' | '{' | '|' | '}'
+
+	<word> ::= (<env> | <letter> | <home>) { <word> }
+	<home> ::= '~' { <alphanum> }
+	<env> ::= '$' { '{' } <word> { '}' }
+	<env_assignment> ::= <alphanum> '=' <word>
