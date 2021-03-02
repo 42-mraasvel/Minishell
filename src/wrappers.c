@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error.c                                            :+:    :+:            */
+/*   wrappers.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/26 20:50:41 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/01 09:25:44 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/02 19:19:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-#include "libft.h"
+#include <stddef.h>
+#include "proto.h"
 
-void	ft_perror(t_errnums errnum, char *string)
+/*
+** Checks malloc return value
+** exits program if error
+*/
+
+void	*malloc_guard(void *malloc_return)
 {
-	(void)errnum; // do something with this?
-	ft_putstr("Error:\n");
-	if (string == NULL)
-		return ;
-	ft_putstr(string);
-	ft_putstr("\n");
+	if (malloc_return == NULL)
+		exit_program(error, "Malloc Error");
+	return (malloc_return);
 }

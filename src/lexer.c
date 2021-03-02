@@ -6,11 +6,12 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 12:39:51 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 14:22:59 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/02 19:27:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "lexer.h"
 #include "proto.h"
 
 /*
@@ -19,8 +20,6 @@
 
 t_tokentype	get_token_type(char c)
 {
-	const char	*types;
-
 	if (is_operator(c))
 		return (operator);
 	else if (c == '"')
@@ -37,8 +36,7 @@ size_t	parse_token(t_token *token)
 		tokenize_operator,
 		tokenize_word,
 		tokenize_squote,
-		tokenize_dquote,
-		tokenize_variable
+		tokenize_dquote
 	};
 
 	token->type = get_token_type(*(token->start));

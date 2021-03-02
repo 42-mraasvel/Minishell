@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/02/24 18:49:18 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/02 19:25:42 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ SRC = $(shell find $(SRCDIR) -name "*.c" -type f -exec basename {} \;)
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 HEADERS = $(shell find $(IDIR) -name "*.h" -type f)
 DEPS = $(HEADERS) Makefile
-LIBFT = $(LIBDIR)/libft.a
+
+# LIBS
+LIBFT = $(LIBFTDIR)/libft.a
+LIBVECT = $(LIBVECTDIR)/libvect.a
 
 # DIRS
 OBJDIR = obj
@@ -23,6 +26,7 @@ SRCDIR = src
 IDIR = includes
 LIBDIR = libs
 LIBFTDIR = $(LIBDIR)/libft
+LIBVECTDIR = $(LIBDIR)/libvect
 vpath %.c $(SRCDIR)
 vpath %.o $(OBJDIR)
 vpath %.h $(IDIR)
@@ -32,18 +36,21 @@ CC = gcc
 IFLAGS = -I$(IDIR)
 DFLAGS = -O0 -g -fsanitize=address
 CFLAGS = -Wall -Wextra
-LIBFLAGS = -L$(LIBDIR) -lft
+LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
 
 ifdef DEBUG
 CFLAGS += DFLAGS
 else
-CFLAGS += -O0
+# Set dflags by default for development
+# CFLAGS += -O0
+CFLAGS += $(DFLAGS)
 endif
 
 
 .PHONY: all
 all:
-	$(MAKE) -C $(LIBDIR)/libft
+	$(MAKE) -C $(LIBFTDIR)
+	$(MAKE) -C $(LIBVECTDIR)
 	$(MAKE) $(NAME)
 
 
@@ -53,7 +60,9 @@ $(OBJDIR)/%.o: %.c $(DEPS) | $(OBJDIR)
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 $(LIBFT):
-	cp $(LIBDIR)/libft/libft.a $(LIBDIR)
+	$(MAKE) -C $(LIBFTDIR)
+$(LIBVECT):
+	$(MAKE) -C $(LIBVECTDIR)
 
 $(OBJDIR):
 	mkdir -p $@
@@ -62,10 +71,14 @@ $(OBJDIR):
 clean:
 	rm -f $(OBJ)
 	$(MAKE) clean -C $(LIBFTDIR)
+	$(MAKE) clean -C $(LIBVECTDIR)
 fclean:
 	$(MAKE) clean
 	$(MAKE) fclean -C $(LIBFTDIR)
+	$(MAKE) fclean -C $(LIBVECTDIR)
 	rm -f $(NAME)
 re:
 	$(MAKE) fclean
 	$(MAKE) all
+debug:
+	$(MAKE) re DEBUG=1
