@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 12:39:51 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 19:27:28 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/06 14:29:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ t_tokentype	get_token_type(char c)
 {
 	if (is_operator(c))
 		return (operator);
-	else if (c == '"')
-		return (double_quoted);
-	else if (c == '\'')
-		return (single_quoted);
-	else
-		return (unquoted);
+	return (bad_token);
+	// else if (c == '"')
+	// 	return (double_quoted);
+	// else if (c == '\'')
+	// 	return (single_quoted);
+	// else
+	// 	return (unquoted);
 }
 
 size_t	parse_token(t_token *token)

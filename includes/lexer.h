@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 15:28:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/06 14:28:24 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 
 typedef enum e_tokentype
 {
+	bad_token,
 	operator,
-	unquoted,
-	single_quoted,
-	double_quoted
+	word
 	
 }	t_tokentype;
 
