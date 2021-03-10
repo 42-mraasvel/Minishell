@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 17:58:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/10 13:29:04 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/10 13:30:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void test_pipe()
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
-		execve(args[0], args, __environ);
+		execve(args[0], args, environ);
 	}
 
 
@@ -116,7 +116,7 @@ void test_pipe()
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
-		execve(args2[0], args2, __environ);
+		execve(args2[0], args2, environ);
 	}
 
 	close(pipes[0]);
