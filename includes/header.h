@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 19:24:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/10 13:24:42 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ typedef struct s_node
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
+
+extern char	**environ;
 
 #endif
