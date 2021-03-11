@@ -1,0 +1,21 @@
+Parse/Derivation tree
+
+
+Grammar G = {V, T, P, S}
+
+V = variable (Non-Terminal symbols)
+T = terminal symbol
+P = production rules
+S = start symbol
+
+epsilon = empty symbol (nothing)
+
+Root Vertex : Labelled by start symbol
+Vertex: Labelled by non-terminal symbols
+Leaves: labelled by terminal symbols or epsilon
+
+
+
+S	::=	0B
+A	::=	1AA | eps
+B	::=	0AA
