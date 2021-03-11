@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 19:26:52 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/10 21:25:45 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool	is_operator(char c);
 t_bool	is_metachar(char c);
 size_t	is_double(char *start);
 
-/* Some wrappers, QoL functions */
+/* Some wrappers, quality of life functions */
 
 void	*malloc_guard(void *malloc_return);
 

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/06 17:41:01 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:27:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ const char	*print_type(t_tokentype type)
 	static const char	*types[] = {
 		"ERROR",
 		"OPERATOR",
-		"WORD"
+		"UNQUOTE",
+		"SINGLEQUOTE",
+		"DOUBLEQUOTE"
 	};
 
 	return (types[type]);
@@ -43,7 +45,7 @@ void	print_tokens(t_vect *tokens)
 
 char	*skipspace(char *line)
 {
-	//! Skip only space + tabs, or all whitespace as defined in POSIX?
+	//! Skip only	 space + tabs, or all whitespace as defined in POSIX?
 	while (ft_isspace(*line))
 		line++;
 	// while (*line == ' ' || *line == '\t')
@@ -101,20 +103,41 @@ t_token	parse_quotes(char *line, t_token token)
 	if (ptr == NULL)
 		return (parse_error(line, token));
 	token.length = ptr - line + 1;
+	if (*line == '\'')
+		token.type = singlequoted;
+	else if (*line == '"')
+		token.type = doublequoted;
 	return (token);
+}
+
+int	isquote(char c)
+{
+	if (c == '\'' || c == '"')
+		return (1);
+	return (0);
 }
 
 t_token	parse_word(char *line)
 {
 	t_token	token;
+	char	*ptr;
 
 	token.start = line;
 	token.length = 0;
-	token.type = word;
+	token.type = unquoted;
 	if (*line == '\'' || *line == '"')
 		return (parse_quotes(line, token));
 	while (!ismeta(*(line + token.length)))
+	{
+		if (isquote(*(line + token.length)))
+		{
+			ptr = ft_strchr(line + token.length + 1, *(line + token.length));
+			if (ptr == NULL)
+				return (parse_error(line, token));
+			token.length = ptr - line;
+		}
 		token.length++;
+	}
 	return (token);
 }
 
@@ -153,7 +176,8 @@ void	test_lex()
 	ret = 1;
 	while (ret > 0)
 	{
-		ft_putstr(MINISHELL_PROMPT);
+		// Apparently sizeof(define_string) works
+		write(1, MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT));
 		ret = ft_getline(0, &line);
 		if (ret < 0)
 			exit_program(error, "Getline error");

@@ -12,12 +12,13 @@ VALID:
 		1. a | b | c | d
 		2. a ; b | c
 		3. a | b ; c
-		4. a > 1 > 2
-		5. a > 1 | b
-		6. a < 1
-		7. a < 1 < 2
+		4. a > 1 > 2 // Multiple Redirections: (2 would be the file redirected to here)
+		5. a > 1 | b // echo 1234 > 1 | cat, stops the cat command but the redirection is into 1; so cat takes the input pipe, but the output pipe is closed from echo?
+		6. a < 1 // Redirects stdin to be the file input (dup2(input_file_fd, STDIN_FILENO))
+		7. a < 1 < 2 // Multiple Input: (2 is file used in this case, so last position takes precedence)
 		8. a > 1 < 2
 		9. a < 2 > 1
+
 
 INVALID (gives error):
 

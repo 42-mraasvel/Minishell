@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 17:58:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/10 13:30:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:27:22 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 #ifdef __APPLE__
 
-extern char	**environ;
-
 void test_pipe()
 {
+	//! Environment variable has to be declared like this on MAC, since it's not declared in any header file
+	extern char	**environ;
 	char *const	args[] = {
 		"/usr/bin/cat",
 		"/usr/share/dict/words",
@@ -45,6 +45,7 @@ void test_pipe()
 
 	if (pid1 == 0) {
 		// child1 'cat Makefile'
+		//! This child will write to pipes[1]
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
@@ -59,19 +60,23 @@ void test_pipe()
 
 	if (pid2 == 0) {
 		// child2 'cat'
+		//! This child will read from pipes[0]
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
 		execve(args2[0], args2, environ);
 	}
 
+	//! If the pipes (read/write) aren't closed, the children will keep listening for input.
 	close(pipes[0]);
 	close(pipes[1]);
+
+	//! Wait until child processes are finished
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 }
 
-#elif
+#else
 
 void test_pipe()
 {
@@ -102,7 +107,7 @@ void test_pipe()
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
-		execve(args[0], args, environ);
+		execve(args[0], args, __environ);
 	}
 
 
@@ -116,7 +121,7 @@ void test_pipe()
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[0]);
 		close(pipes[1]);
-		execve(args2[0], args2, environ);
+		execve(args2[0], args2, __environ);
 	}
 
 	close(pipes[0]);

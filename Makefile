@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/02 19:29:44 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/11 10:14:55 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,8 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) -o $@ $(CFLAGS) $(OBJ) $(LIBFLAGS)
 $(OBJDIR)/%.o: %.c $(DEPS) | $(OBJDIR)
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
+$(OBJDIR)/main.o: main.c
+	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -D DEF="\"proto.h\""
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)

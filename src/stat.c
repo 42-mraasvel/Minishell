@@ -6,12 +6,16 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:26:21 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/10 13:30:21 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/10 21:23:13 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <sys/stat.h>
+
+/*
+** Added ifdef macOS for some warnings
+*/
 
 #ifndef __APPLE__
 
