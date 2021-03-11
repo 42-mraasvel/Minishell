@@ -1,46 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lexer.h                                            :+:    :+:            */
+/*   tree.h                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:47:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/11 16:42:19 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef TREE_H
+# define TREE_H
 
-# include <stddef.h>
+# include "lexer.h"
 
-typedef enum e_tokentype
+typedef struct s_node
 {
-	bad_token,
-	operator,
-	unquoted,
-	singlequoted,
-	doublequoted,
-	word
-}	t_tokentype;
-
-typedef size_t (*t_tokenizer)(char *);
-
-/*
-** How a token/lexeme is specified
-**
-** char *start, points to the token start within the (line) variable read from stdin
-** length specifies how long the token is.
-** This is to avoid reallocating memory for tokens
-**
-*/
-
-typedef struct s_token
-{
-	char		*start;
-	size_t		length;
-	t_tokentype	type;
-}	t_token;
+	t_token			token;
+	struct s_node	*right;
+	struct s_node	*left;
+}	t_node;
 
 #endif
