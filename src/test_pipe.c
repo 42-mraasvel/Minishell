@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 17:58:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:27:22 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 09:23:59 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #ifdef __APPLE__
 
-void test_pipe()
+void test_pipe(void)
 {
 	//! Environment variable has to be declared like this on MAC, since it's not declared in any header file
 	extern char	**environ;
@@ -78,7 +78,7 @@ void test_pipe()
 
 #else
 
-void test_pipe()
+void test_pipe(void)
 {
 	char *const	args[] = {
 		"/usr/bin/cat",

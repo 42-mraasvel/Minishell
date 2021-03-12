@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:46:33 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 09:43:37 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,6 @@
 #include "lexer.h"
 #include "libft.h"
 #include "proto.h"
-
-const char	*print_type(t_tokentype type)
-{
-	static const char	*types[] = {
-		"ERROR",
-		"OPERATOR",
-		"UNQUOTE",
-		"SINGLEQUOTE",
-		"DOUBLEQUOTE"
-	};
-
-	return (types[type]);
-}
-
-void	print_tokens(t_vect *tokens)
-{
-	size_t	i;
-	t_token	token;
-
-	i = 0;
-	while (i < tokens->nmemb)
-	{
-		token = ((t_token*)tokens->table)[i];
-		printf("%s(%.*s) : LEN(%lu)\n", print_type(token.type), (int)token.length, token.start, token.length);
-		i++;
-	}
-}
 
 char	*skipspace(char *line)
 {
@@ -148,7 +121,7 @@ t_vect	*test_lexer(char *line)
 
 	printf("Lexing: %s\n", line);
 	tokens = malloc_guard(vect_init(0, sizeof(t_token)));
-	while (1)
+	while (*line != '\0')
 	{
 		line = skipspace(line);
 		if (*line == '\0')
@@ -182,7 +155,6 @@ void	test_lex()
 		if (ret < 0)
 			exit_program(error, "Getline error");
 		tokens = test_lexer(line);
-		print_tokens(tokens);
 		vect_free(tokens, NULL);
 		free(line);
 	}

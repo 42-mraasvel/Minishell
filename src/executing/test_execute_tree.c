@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   test_execute_tree.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 13:13:57 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/12 11:57:39 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "proto.h"
+#include "header.h"
+#include "tree.h"
 
-void	test_lex(); // remove
-
-int main (void)
+void	exec_semicolon(t_nodex *node)
 {
-	// test_pipe();
-	// test_lex();
-	test_parser();
-	close(0);
-	close(1);
-	close(2);
-	return (0);
+	printf("Executing Semicolon\n");
+	(void)node;
+}
+
+void	execute_node(t_nodex *node)
+{
+	static	void	(*executors[])(t_nodex *node) = {
+		exec_command,
+		exec_pipe,
+		exec_semicolon
+	};
+
+	executors[node->rule](node);
+}
+
+void	execute_tree(t_nodex *root)
+{
+	apply_inorder_tree(root, execute_node);
 }

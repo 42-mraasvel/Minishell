@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/11 10:14:55 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/12 11:26:26 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,13 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
+SUBDIRS = executing
+SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
 LIBFTDIR = $(LIBDIR)/libft
 LIBVECTDIR = $(LIBDIR)/libvect
-vpath %.c $(SRCDIR)
+vpath %.c $(SRCDIRS)
 vpath %.o $(OBJDIR)
 vpath %.h $(IDIR)
 
@@ -52,9 +54,9 @@ endif
 
 .PHONY: all
 all:
-	$(MAKE) -C $(LIBFTDIR)
-	$(MAKE) -C $(LIBVECTDIR)
-	$(MAKE) $(NAME)
+	$(MAKE) -j4 -C $(LIBFTDIR)
+	$(MAKE) -j4 -C $(LIBVECTDIR)
+	$(MAKE) -j4 $(NAME)
 
 
 $(NAME): $(OBJ) $(LIBFT)
