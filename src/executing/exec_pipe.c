@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:27:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 13:49:58 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:11:03 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "tree.h"
 #include "proto.h"
 
-t_nodex	*next_command(t_nodex *node)
+t_node	*next_command(t_node *node)
 {
 	if (node->rule == t_pipe)
 		return (node->left);
@@ -29,10 +29,10 @@ t_nodex	*next_command(t_nodex *node)
 ** initialize pipe and out/in fds of left and right nodes respectively
 */
 
-void	exec_pipe(t_nodex *node)
+void	exec_pipe(t_node *node)
 {
 	int		fds[2];
-	t_nodex	*right_cmd;
+	t_node	*right_cmd;
 
 	printf("Executing Pipe\n");
 	if (node->left == NULL || node->right == NULL)

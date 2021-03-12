@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:08:55 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:59:56 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,21 @@
 #include "header.h"
 #include "lexer.h"
 
-t_nodex	*new_node(t_token data)
+t_node	*new_node(t_token data)
 {
-	t_nodex	*new;
+	t_node	*new;
 
-	new = (t_nodex*)malloc_guard(malloc(1 * sizeof(t_nodex)));
+	(void)data;
+	new = (t_node*)malloc_guard(malloc(1 * sizeof(t_node)));
 	new->right = NULL;
 	new->left = NULL;
 	new->args = NULL;
-	new->rule = nothing;
 	new->fds[0] = -1;
 	new->fds[1] = -1;
-	new->token = data;
 	return (new);
 }
 
-void	tree_free(t_nodex *root)
+void	tree_free(t_node *root)
 {
 	if (root == NULL)
 		return ;
@@ -40,8 +39,6 @@ void	tree_free(t_nodex *root)
 		tree_free(root->left);
 	if (root->right != NULL)
 		tree_free(root->right);
-	// if (root->args != NULL)
-	// 	ft_free_split(root->args);
 	if (root->rule == command)
 		ft_free_split(root->args);
 	if (root->fds[0] != -1)
@@ -51,7 +48,7 @@ void	tree_free(t_nodex *root)
 	free(root);
 }
 
-void	apply_inorder_tree(t_nodex *root, void (*fct)(t_nodex *))
+void	apply_inorder_tree(t_node *root, void (*fct)(t_node *))
 {
 	if (root == NULL || fct == NULL)
 		return ;
@@ -84,12 +81,23 @@ char	*get_rule(t_rule rule)
 	return (rules[rule]);
 }
 
-void	print_tree_depth(t_nodex *root, int depth)
+void	print_tree_depth(t_node *root, int depth)
 {
+	if (root == NULL) {
+		printf("Root is NULL\n");
+		return ;
+	}
 	print_node(root);
 	printf("\tDepth: %d: Rule: %s\n", depth, get_rule(root->rule));
 	if (root->left != NULL)
+	{
+		printf("\nLEFT:\n");
 		print_tree_depth(root->left, depth + 1);
+	}
 	if (root->right != NULL)
+	{
+		printf("\nRIGHT:\n");
 		print_tree_depth(root->right, depth + 1);
+	}
+	printf("Returning...\n");
 }

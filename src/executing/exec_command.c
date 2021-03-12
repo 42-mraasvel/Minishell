@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 13:14:19 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:11:35 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "libft.h"
 #include "tree.h"
 
-void	close_fds(t_nodex *node)
+void	close_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
 		close(node->fds[0]);
@@ -28,7 +28,7 @@ void	close_fds(t_nodex *node)
 		close(node->fds[1]);
 }
 
-void	set_fds(t_nodex *node)
+void	set_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
 		dup2(node->fds[0], STDIN_FILENO);
@@ -78,7 +78,7 @@ int	find_command(char **args, char *path)
 	return (ret);
 }
 
-int	set_args(t_nodex *node)
+int	set_args(t_node *node)
 {
 	char	*path;
 
@@ -101,7 +101,7 @@ int	set_args(t_nodex *node)
 ** ERRORS ARE NOT HANDLED YET
 */
 
-void	print_command(t_nodex *node)
+void	print_command(t_node *node)
 {
 	int	i;
 
@@ -119,7 +119,7 @@ void	print_command(t_nodex *node)
 
 #ifdef __APPLE__
 
-void	exec_command(t_nodex *node)
+void	exec_command(t_node *node)
 {
 	extern char	**environ;
 	int	pid;
@@ -142,7 +142,7 @@ void	exec_command(t_nodex *node)
 
 #else
 
-void	exec_command(t_nodex *node)
+void	exec_command(t_node *node)
 {
 	int	pid;
 

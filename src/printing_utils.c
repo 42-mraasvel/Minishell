@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:06:38 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:55:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_args(char **args)
 	}
 }
 
-void	print_node(t_nodex *node)
+void	print_node(t_node *node)
 {
 	static const char	*rules[] = {
 		"Command",
@@ -74,8 +74,14 @@ void	print_node(t_nodex *node)
 	};
 
 	printf("NODE\n\t");
-	print_token(node->token);
+	if (node == NULL){
+		printf("node = NULL\n");
+		return ;
+	}
+	// printf("\tRule: %d\n", node->rule);
 	printf("\tRule: %s\n", rules[node->rule]);
+	if (node->rule == command)
+		printf("\tfds[0][1]: [%d][%d]\n", node->fds[0], node->fds[1]);
 	if (node->rule == command && node->args != NULL)
 	{
 		printf("\tARGS = {\n");
@@ -84,7 +90,7 @@ void	print_node(t_nodex *node)
 	}
 }
 
-void	print_tree(t_nodex *root)
+void	print_tree(t_node *root)
 {
 	apply_inorder_tree(root, print_node);
 }

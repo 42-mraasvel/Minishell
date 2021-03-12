@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 09:43:37 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 15:06:26 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	test_lex()
 	int		ret;
 	char	*line;
 	t_vect	*tokens;
+	t_node	*root;
 
 	ret = 1;
 	while (ret > 0)
@@ -155,6 +156,13 @@ void	test_lex()
 		if (ret < 0)
 			exit_program(error, "Getline error");
 		tokens = test_lexer(line);
+		if (tokens->nmemb != 0)
+		{
+			root = create_tree(tokens);
+			print_tree_depth(root, 0);
+			execute_tree(root);
+			tree_free(root);
+		}
 		vect_free(tokens, NULL);
 		free(line);
 	}

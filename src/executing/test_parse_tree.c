@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:41:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:03:55 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:11:14 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ char	**get_args(size_t n, ...)
 
 */
 
-t_nodex	*fill_tree(t_vect *tokens)
+t_node	*fill_tree(t_vect *tokens)
 {
 	t_token	*table;
-	t_nodex	*root;
+	t_node	*root;
 
 	table = (t_token*)tokens->table;
 	root = new_node(table[7]);
@@ -104,11 +104,11 @@ t_nodex	*fill_tree(t_vect *tokens)
 	return (root);
 }
 
-t_nodex	*example_tree(void)
+t_node	*example_tree(void)
 {
 	static char	*command = "ls -la | cat -e - input.txt ; echo abcde";
 	t_vect		*tokens;
-	t_nodex		*root;
+	t_node		*root;
 
 	tokens = test_lexer(command);
 	if (tokens == NULL)
@@ -118,9 +118,9 @@ t_nodex	*example_tree(void)
 	return (root);
 }
 
-t_nodex	*test_parser(void)
+t_node	*test_parser(void)
 {
-	t_nodex	*root;
+	t_node	*root;
 
 	root = example_tree();
 	// print_tree(root);

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:03:40 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:13:20 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,17 @@ int		file_exists(char *filename);
 
 /* Some Tree Functions To Test Executor */
 
-t_nodex	*test_parser(void);
+t_node	*create_tree(t_vect *tokens);
 
-void	execute_tree(t_nodex *root);
-void	exec_pipe(t_nodex *node);
-void	exec_command(t_nodex *node);
+t_node	*test_parser(void);
 
-t_nodex	*new_node(t_token data);
-void	tree_free(t_nodex *root);
-void	apply_inorder_tree(t_nodex *root, void (*fct)(t_nodex *));
+void	execute_tree(t_node *root);
+void	exec_pipe(t_node *node);
+void	exec_command(t_node *node);
+
+t_node	*new_node(t_token data);
+void	tree_free(t_node *root);
+void	apply_inorder_tree(t_node *root, void (*fct)(t_node *));
 
 /* error part : exit_program.c */
 
@@ -62,8 +64,8 @@ void	exit_program(t_errnum errnum, char *err_str);
 
 void	print_tokens(t_vect *tokens);
 void	print_token(t_token token);
-void	print_node(t_nodex *node);
-void	print_tree(t_nodex *root);
-void	print_tree_depth(t_nodex *root, int depth);
+void	print_node(t_node *node);
+void	print_tree(t_node *root);
+void	print_tree_depth(t_node *root, int depth);
 
 #endif

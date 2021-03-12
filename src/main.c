@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 13:13:57 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:14:42 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	test_lex(); // remove
 int main (void)
 {
 	// test_pipe();
-	// test_lex();
-	test_parser();
+	test_lex();
+	// test_parser();
 	close(0);
 	close(1);
 	close(2);

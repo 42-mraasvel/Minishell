@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 11:23:06 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:10:05 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ typedef enum e_bool
 
 
 
-typedef enum e_rule
-{
-	command,
-	t_pipe,
-	semicolon,
-	nothing
-}	t_rule;
+// typedef enum e_rule
+// {
+// 	command,
+// 	t_pipe,
+// 	semicolon,
+// 	nothing
+// }	t_rule;
 
-typedef struct s_nodex
-{
-	t_token			token;
-	char			**args;
-	t_rule			rule;
-	int				fds[2];
-	struct s_nodex	*right;
-	struct s_nodex	*left;
-}	t_nodex;
+// typedef struct s_nodex
+// {
+// 	t_token			token;
+// 	char			**args;
+// 	t_rule			rule;
+// 	int				fds[2];
+// 	struct s_nodex	*right;
+// 	struct s_nodex	*left;
+// }	t_nodex;
 
 #endif
