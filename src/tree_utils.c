@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:06:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 14:08:55 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,12 @@ char	*get_rule(t_rule rule)
 	static char	*rules[] = {
 		"Command",
 		"Pipe",
-		"Semicolon"
+		"Semicolon",
+		"Nothing"
 	};
 
+	if (rule > 3)
+		return (rules[3]);
 	return (rules[rule]);
 }
 
