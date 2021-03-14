@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/14 20:37:35 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/14 20:43:54 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	adjust_for_redirection(char ***args, int fds[2], int count)
 			i++;
 			if (*(*args + i))
 			{
-				fds[1] = open(*(*args + i), (O_WRONLY | O_CREAT));
+				fds[1] = open(*(*args + i), (O_WRONLY | O_CREAT), 0644);
 				if (fds[1] == -1)
 					return (0);
 				free(*(*args + i));
 			}
 			else
-				fds[1] = open("", (O_WRONLY | O_CREAT));
+				fds[1] = open("", (O_WRONLY | O_CREAT), 0644);
 		}
 		else if (!ft_strcmp(*(*args + i), ">>"))
 		{
@@ -74,13 +74,13 @@ int	adjust_for_redirection(char ***args, int fds[2], int count)
 			i++;
 			if (*(*args + i))
 			{
-				fds[1] = open(*(*args + i), (O_APPEND | O_CREAT));
+				fds[1] = open(*(*args + i), (O_APPEND | O_CREAT), 0644);
 				if (fds[1] == -1)
 					return (0);
 				free(*(*args + i));
 			}
 			else
-				fds[1] = open("", (O_WRONLY | O_CREAT));
+				fds[1] = open("", (O_WRONLY | O_CREAT), 0644);
 		}
 		else if (ft_strcmp(*(*args + i), "<") && ft_strcmp(*(*args + i), ">") && ft_strcmp(*(*args + i), ">>"))
 		{
