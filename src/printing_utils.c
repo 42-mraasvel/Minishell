@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:55:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 23:56:55 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,57 @@ void	print_args(char **args)
 	}
 }
 
-void	print_node(t_node *node)
+void	indent_depth(int depth)
 {
-	static const char	*rules[] = {
+	int	i;
+
+	i = 0;
+	while (i < depth)
+	{
+		printf("\t");
+		i++;
+	}
+}
+
+void	print_args_depth(char **args, int depth)
+{
+	size_t	i;
+
+	if (args == NULL)
+		return ;
+	i = 0;
+	while (args[i] != NULL)
+	{
+		indent_depth(depth);
+		printf("  \"%s\"\n", args[i]);
+		i++;
+	}
+}
+
+char	*get_rule(t_rule rule)
+{
+	static char	*rules[] = {
 		"Command",
 		"Pipe",
 		"Semicolon",
 		"Nothing"
 	};
 
-	printf("NODE\n\t");
-	if (node == NULL){
-		printf("node = NULL\n");
+	if (rule > 3)
+		return (rules[3]);
+	return (rules[rule]);
+}
+
+
+
+void	print_node(t_node *node)
+{
+	if (node == NULL)
+	{
+		printf("Node is null\n");
 		return ;
 	}
-	// printf("\tRule: %d\n", node->rule);
-	printf("\tRule: %s\n", rules[node->rule]);
+	printf("\tRule: %s\n", get_rule(node->rule));
 	if (node->rule == command)
 		printf("\tfds[0][1]: [%d][%d]\n", node->fds[0], node->fds[1]);
 	if (node->rule == command && node->args != NULL)
@@ -89,6 +124,53 @@ void	print_node(t_node *node)
 		printf("\t}\n");
 	}
 }
+
+void	print_node_depth(t_node *node, int depth)
+{
+	if (node == NULL)
+	{
+		indent_depth(depth);
+		printf("Node is null\n");
+		return ;
+	}
+	printf("\n");
+	indent_depth(depth);
+	printf("\033[1;31mNODE\033[0m\n");
+	indent_depth(depth);
+	printf("Depth: %d:\n", depth);
+	indent_depth(depth);
+	printf("Rule: %s\n", get_rule(node->rule));
+	if (node->rule == command)
+	{
+		indent_depth(depth);
+		printf("fds[0][1]: [%d][%d]\n", node->fds[0], node->fds[1]);
+	}
+	if (node->rule == command && node->args != NULL)
+	{
+		indent_depth(depth);
+		printf("ARGS = {\n");
+		print_args_depth(node->args, depth);
+		indent_depth(depth);
+		printf("}\n");
+	}
+}
+
+
+void	print_tree_depth(t_node *root, int depth)
+{
+	if (root == NULL)
+	{
+		indent_depth(depth);
+		printf("Root is NULL\n");
+		return ;
+	}
+	print_node_depth(root, depth);
+	if (root->left != NULL)
+		print_tree_depth(root->left, depth + 1);
+	if (root->right != NULL)
+		print_tree_depth(root->right, depth + 1);
+}
+
 
 void	print_tree(t_node *root)
 {

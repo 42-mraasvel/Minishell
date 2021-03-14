@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   test_execve.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 20:32:53 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/14 10:12:09 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/14 10:35:47 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <fcntl.h>
 #include <stdio.h>
-#include "proto.h"
 
-void	test_lex(void); // remove
-void	test_execve(void);
+#define NOPERM "./test_exec/no_permission"
+#define EXEC "./test_exec/a.out"
 
-int	main (void)
+#ifdef __APPLE__
+
+#else
+
+void	test_execve(void)
 {
-	t_data	data;
+	char *const	argv[] = {
+		"lol",
+		NULL
+	};
+	int			ret;
 
-	data.errnum = success;
-	// test_lex();
-	test_execve();
-
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
-	return (0);
+	ret = execve(argv[0], argv, __environ);
+	perror("Execve");
+	printf("Ret: %d\n", ret);
 }
+
+#endif

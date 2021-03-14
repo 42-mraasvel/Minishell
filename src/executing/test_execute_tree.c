@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:11:10 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 20:23:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 void	exec_semicolon(t_node *node)
 {
-	printf("Executing Semicolon\n");
 	(void)node;
 }
 

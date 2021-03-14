@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 12:27:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 23:43:25 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_path(void)
 
 char	*get_path(void)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	while (__environ[i] != NULL)

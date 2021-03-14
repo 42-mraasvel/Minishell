@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:59:56 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 23:46:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,47 +57,4 @@ void	apply_inorder_tree(t_node *root, void (*fct)(t_node *))
 		apply_inorder_tree(root->left, fct);
 	if (root->right != NULL)
 		apply_inorder_tree(root->right, fct);
-}
-
-// typedef enum e_rule
-// {
-// 	command,
-// 	t_pipe,
-// 	semicolon,
-// 	nothing
-// }	t_rule;
-
-char	*get_rule(t_rule rule)
-{
-	static char	*rules[] = {
-		"Command",
-		"Pipe",
-		"Semicolon",
-		"Nothing"
-	};
-
-	if (rule > 3)
-		return (rules[3]);
-	return (rules[rule]);
-}
-
-void	print_tree_depth(t_node *root, int depth)
-{
-	if (root == NULL) {
-		printf("Root is NULL\n");
-		return ;
-	}
-	print_node(root);
-	printf("\tDepth: %d: Rule: %s\n", depth, get_rule(root->rule));
-	if (root->left != NULL)
-	{
-		printf("\nLEFT:\n");
-		print_tree_depth(root->left, depth + 1);
-	}
-	if (root->right != NULL)
-	{
-		printf("\nRIGHT:\n");
-		print_tree_depth(root->right, depth + 1);
-	}
-	printf("Returning...\n");
 }

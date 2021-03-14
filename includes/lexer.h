@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/11 16:47:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/13 22:23:07 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_tokentype
 	word
 }	t_tokentype;
 
-typedef size_t (*t_tokenizer)(char *);
+typedef size_t	(*t_tokenizer)(char *);
 
 /*
 ** How a token/lexeme is specified

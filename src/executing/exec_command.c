@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:11:35 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 20:51:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ void	close_fds(t_node *node)
 void	set_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
+	{
 		dup2(node->fds[0], STDIN_FILENO);
+		close(node->fds[0]);
+	}
 	if (node->fds[1] != -1)
+	{
 		dup2(node->fds[1], STDOUT_FILENO);
+		close(node->fds[1]);
+	}
 }
 
 char	*get_cmd_path(char *cmd, char *path)
@@ -58,9 +64,9 @@ int	find_command(char **args, char *path)
 	size_t	i;
 	int		ret;
 
-	paths = (char **)malloc_guard(ft_split(path + 5, ':'));
 	i = 0;
 	ret = -1;
+	paths = (char **)malloc_guard(ft_split(path + 5, ':'));
 	while (paths[i] != NULL)
 	{
 		str = get_cmd_path(args[0], paths[i]);
@@ -122,7 +128,7 @@ void	print_command(t_node *node)
 void	exec_command(t_node *node)
 {
 	extern char	**environ;
-	int	pid;
+	int			pid;
 
 	if (set_args(node) == -1)
 		exit_program(error, "Command not found");
@@ -148,8 +154,10 @@ void	exec_command(t_node *node)
 
 	if (set_args(node) == -1)
 		exit_program(error, "Command not found");
-	printf("Executing Command:");
-	print_command(node);
+
+	// printf("Executing Command:");
+	// print_command(node);
+
 	pid = fork();
 	if (pid < 0)
 		exit_program(error, "Fork Error");

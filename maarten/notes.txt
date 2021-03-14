@@ -1,3 +1,13 @@
+Open:
+
+	O_CREAT | O_WRONLY | O_TRUNC (O_TRUNC means to reset the content of the file to 0)
+
+Searching for executables:
+
+	If the command does not contain '/' : search the PATH variable, otherwise use it's name as path
+	PATH variable: Is split on ':' only, and those are checked
+	If there is no PATH variable (set to NULL for example): it checks the current directory
+
 Questions:
 
 	1. If malloc fails in our main program, should it exit. or should it only display an error and continue to run?

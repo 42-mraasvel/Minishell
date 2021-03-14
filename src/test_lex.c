@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 15:06:26 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 23:45:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ t_vect	*test_lexer(char *line)
 	t_vect	*tokens;
 	t_token	token;
 
-	printf("Lexing: %s\n", line);
 	tokens = malloc_guard(vect_init(0, sizeof(t_token)));
 	while (*line != '\0')
 	{
@@ -140,7 +139,7 @@ t_vect	*test_lexer(char *line)
 	return (tokens);
 }
 
-void	test_lex()
+void	test_lex(void)
 {
 	int		ret;
 	char	*line;
@@ -150,20 +149,22 @@ void	test_lex()
 	ret = 1;
 	while (ret > 0)
 	{
-		// Apparently sizeof(define_string) works
 		write(1, MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT));
 		ret = ft_getline(0, &line);
 		if (ret < 0)
 			exit_program(error, "Getline error");
-		tokens = test_lexer(line);
-		if (tokens->nmemb != 0)
+		if (ret != 0)
 		{
-			root = create_tree(tokens);
-			print_tree_depth(root, 0);
-			execute_tree(root);
-			tree_free(root);
+			tokens = test_lexer(line);
+			if (tokens->nmemb != 0)
+			{
+				root = create_tree(tokens);
+				print_tree_depth(root, 0);
+				execute_tree(root);
+				tree_free(root);
+			}
+			vect_free(tokens, NULL);
 		}
-		vect_free(tokens, NULL);
 		free(line);
 	}
 }

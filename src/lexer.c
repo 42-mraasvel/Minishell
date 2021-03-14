@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 12:39:51 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/06 14:29:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/12 23:43:33 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ size_t	parse_token(t_token *token)
 
 	token->type = get_token_type(*(token->start));
 	token->length = tokenizers[token->type](token->start);
-	return(token->length);
+	return (token->length);
 }
 
 t_bool	next_token(char **line)

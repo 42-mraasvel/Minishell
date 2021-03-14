@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:10:05 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 20:33:39 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 
 typedef enum e_errnum
 {
+	success = 0,
 	error,
-	success
+	syntax_error,
+	open_error,
+	malloc_error
 }	t_errnum;
 
 typedef enum e_bool
@@ -30,24 +33,9 @@ typedef enum e_bool
 	true
 }	t_bool;
 
-
-
-// typedef enum e_rule
-// {
-// 	command,
-// 	t_pipe,
-// 	semicolon,
-// 	nothing
-// }	t_rule;
-
-// typedef struct s_nodex
-// {
-// 	t_token			token;
-// 	char			**args;
-// 	t_rule			rule;
-// 	int				fds[2];
-// 	struct s_nodex	*right;
-// 	struct s_nodex	*left;
-// }	t_nodex;
+typedef struct s_data
+{
+	t_errnum	errnum;
+}	t_data;
 
 #endif

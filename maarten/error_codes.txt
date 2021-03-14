@@ -1,0 +1,21 @@
+https://www.thegeekdiary.com/what-are-bash-exit-codes-in-linux/
+
+LEXING/PARSING ERRORS:
+
+	-bash: syntax error near unexpected token 'operator'
+		EXIT STATUS |2|
+
+
+126:
+
+	Command invoked cannot execute
+	Permission problems or command is not an executable
+
+	"-bash: <PATHNAME>: <PERROR_MSG>\n"
+
+EXECUTOR ERRORS:
+
+	"<CMD_NAME>: command not found"
+		EXIT STATUS |127|
+
+

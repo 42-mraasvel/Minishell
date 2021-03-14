@@ -20,6 +20,19 @@ VALID:
 		9. a < 2 > 1
 
 
+Complicated Commands:
+
+	echo hi | ((echo yes && echo no); (echo oof > out1; cat -e)); cat out1
+	echo hi > file2; ( cat -e | echo; echo hello ) < file2 > file3 && echo 1 && ( ( echo 1 && echo 2 ) > test1 || echo no ); cat test1; cat file2; cat file3
+
+	yes | echo hello world
+
+	export a1=e
+	export a2=c
+	export a3=""
+	$a1"$a2"$a3'h'o hello$hello '$world'
+
+
 INVALID (gives error):
 
 	2.
@@ -35,3 +48,6 @@ INVALID (gives error):
 	3. a | b ; !
 
 	... etc, kind of like VALID, but random commands are invalid
+
+
+	;

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 13:19:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/02 13:33:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/13 00:02:35 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_bool	is_operator(char c)
 t_bool	is_metachar(char c)
 {
 	static const char	*metachars = "|&;()<>\t\n ";
-	
+
 	if (ft_strchr(metachars, c) != NULL)
 		return (true);
 	return (false);
