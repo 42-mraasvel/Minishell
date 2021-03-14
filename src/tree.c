@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/14 20:43:54 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:02:17 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	adjust_for_redirection(char ***args, int fds[2], int count)
 			i++;
 			if (*(*args + i))
 			{
-				fds[1] = open(*(*args + i), (O_APPEND | O_CREAT), 0644);
+				fds[1] = open(*(*args + i), (O_WRONLY | O_APPEND | O_CREAT), 0644);
 				if (fds[1] == -1)
 					return (0);
 				free(*(*args + i));
@@ -95,7 +95,6 @@ int	adjust_for_redirection(char ***args, int fds[2], int count)
 	*args = adj;
 	return (1);
 }
-
 
 t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 {

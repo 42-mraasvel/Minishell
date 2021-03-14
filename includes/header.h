@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 20:33:39 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:11:00 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum e_bool
 typedef struct s_data
 {
 	t_errnum	errnum;
+	char		*err_str;
 }	t_data;
 
 #endif

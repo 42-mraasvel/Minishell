@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 20:32:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:11:24 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	main (void)
 	t_data	data;
 
 	data.errnum = success;
-	// test_lex();
-	test_execve();
+	data.err_str =  NULL;
+	test_lex();
+	// test_execve();
 
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);

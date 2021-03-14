@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 23:43:25 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:12:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include <sys/stat.h>
 #include "libft.h"
 #include "proto.h"
+
+void	set_err_data(t_data *data, t_errnum errnum, char *err_str)
+{
+	data->errnum = errnum;
+	data->err_str = err_str;
+}
 
 /*
 ** Checks malloc return value

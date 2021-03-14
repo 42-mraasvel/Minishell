@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 23:45:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:24:15 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ t_bool	ismeta(char c)
 	return (true);
 }
 
+t_optype	get_optype(char c)
+{
+	const char	*optypes;
+	int			i;
+
+	optypes = "><;|";
+	i = 0;
+	while (optypes[i])
+	{
+		if (c == optypes[i])
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 t_token	parse_operator(char *line)
 {
 	t_token	token;
@@ -57,7 +73,12 @@ t_token	parse_operator(char *line)
 	token.type = operator;
 	token.length = 1;
 	if (*line == '>' && *(line + 1) == '>')
+	{
 		token.length += 1;
+		token.optype = redirect_append;
+	}
+	else
+		token.optype = get_optype(*line);
 	return (token);
 }
 
@@ -158,7 +179,10 @@ void	test_lex(void)
 			tokens = test_lexer(line);
 			if (tokens->nmemb != 0)
 			{
+				print_tokens(tokens);
 				root = create_tree(tokens);
+				if (root == NULL)
+					perror("-bash");
 				print_tree_depth(root, 0);
 				execute_tree(root);
 				tree_free(root);

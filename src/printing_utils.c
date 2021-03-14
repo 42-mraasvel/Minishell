@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 23:56:55 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:24:07 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ const char	*print_type(t_tokentype type)
 
 void	print_token(t_token token)
 {
-	printf("%s(%.*s) : LEN(%lu)\n",
-		print_type(token.type), (int)token.length, token.start, token.length);
+	printf("%s(%.*s) : LEN(%lu) : optype(%d)\n",
+		print_type(token.type), (int)token.length, token.start, token.length, token.optype);
 }
 
 

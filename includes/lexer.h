@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/13 22:23:07 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:21:52 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ typedef enum e_tokentype
 	word
 }	t_tokentype;
 
+typedef enum e_optype
+{
+	redirect_out,
+	redirect_in,
+	o_semicolon,
+	o_pipe,
+	redirect_append
+}	t_optype;
+
 typedef size_t	(*t_tokenizer)(char *);
 
 /*
@@ -40,6 +49,7 @@ typedef struct s_token
 {
 	char		*start;
 	size_t		length;
+	t_optype	optype;
 	t_tokentype	type;
 }	t_token;
 
