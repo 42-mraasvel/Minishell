@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 13:19:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/13 00:02:35 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:12:33 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ size_t	is_double(char *start)
 
 t_bool	is_operator(char c)
 {
-	static const char	*operators = "|&;()<>";
+	static const char	*operators = "|&;<>";
 
 	if (ft_strchr(operators, c) != NULL)
 		return (true);

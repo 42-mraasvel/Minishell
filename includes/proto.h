@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 14:13:20 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 21:12:14 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ size_t	is_double(char *start);
 void	*malloc_guard(void *malloc_return);
 char	*get_path(void);
 int		file_exists(char *filename);
+void	set_err_data(t_data *data, t_errnum errnum, char *err_str);
 
 /* Some Tree Functions To Test Executor */
 
