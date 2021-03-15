@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 12:50:23 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 21:38:45 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,14 @@ t_token	lex_operator(char *line);
 
 /* lexer_utils.c */
 
-t_bool	ismeta(char c);
 char	*skipspace(char *line);
+
+/* isfunctions */
+
+t_bool	ismeta(char c);
 t_bool	isquote(char c);
+t_bool	isalphanumscore(char c);
+t_bool	isalphascore(char c);
 
 /* Some wrappers, quality of life functions */
 
@@ -49,6 +54,11 @@ void	set_err_data(t_data *data, t_errnum errnum);
 void	*set_err_data_null(t_data *data, t_errnum errnum);
 int		set_err_data_int(t_data *data, t_errnum errnum, int ret);
 int		set_error_vec(t_data *data, t_errnum errnum, char *str, int ret);
+
+/* Expander */
+
+int		expander(t_data *data);
+void	expand_word(t_data *data, t_token *token);
 
 /* Some Tree Functions To Test Executor */
 

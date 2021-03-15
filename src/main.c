@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 17:15:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 20:15:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main (void)
 	data.error.errnum = success;
 	data.envp = get_envp();
 	prompt(&data);
+	vect_free(data.exec_errors, NULL);
 	end_close();
 	return (0);
 }

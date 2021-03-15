@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 14:21:13 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 21:56:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,39 @@
 #include "proto.h"
 #include "header.h"
 
+void	delete_token(void *token)
+{
+	free(((t_token*)token)->start);
+}
+
 int	process_cli(char *line, t_data *data)
 {
 	data->tokens = lexer(line, data);
 	if (data->tokens == NULL)
 		return (0);
 	print_tokens(data->tokens);
+
+	printf("\nEXPANDER\n\n");
+	expander(data);
+	if (data->error.err_str != success)
+	{
+		vect_free(data->tokens, NULL);
+		return (-1);
+	}
+	print_tokens(data->tokens);
+
 	data->root = create_tree(data->tokens);
 	if (data->root == NULL)
 		perror("-bash");
+
 	if (data->root != NULL)
 	{
 		print_tree_depth(data->root, 0);
 		executor(data->root, data);
 	}
+
 	tree_free(data->root);
-	vect_free(data->tokens, NULL);
+	vect_free(data->tokens, delete_token); // ! Should a delete_token function with this
 	return (0);
 }
 

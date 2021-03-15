@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/15 16:32:42 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/15 20:27:03 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS = executor lexer error_handling expander string_vec
+SUBDIRS = executor lexer error_handling expander string_vec utils
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -34,13 +34,13 @@ vpath %.o $(OBJDIR)
 vpath %.h $(IDIR)
 
 # compilation
-CC = gcc
+CC = clang
 IFLAGS = -I$(IDIR) -I$(LIBFTDIR) -I$(LIBVECTDIR)
-DFLAGS = -O0 -g3 -fsanitize=address
+DFLAGS = -g -fsanitize=address
 
 # -Werror is annoying for development
 # CFLAGS = -Wall -Wextra -Werror
-CFLAGS = -Wall -Wextra
+# CFLAGS = -Wall -Wextra
 LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
 
 OS_NAME = $(shell uname -s)
@@ -54,6 +54,7 @@ CFLAGS += $(DFLAGS)
 else
 # Set dflags by default for development
 # CFLAGS += -O0
+# CFLAGS =
 CFLAGS += $(DFLAGS)
 endif
 
@@ -66,11 +67,9 @@ all:
 
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -o $@ $(CFLAGS) $(OBJ) $(LIBFLAGS)
+	$(CC) -o $@ $(OBJ) $(LIBFLAGS) $(CFLAGS)
 $(OBJDIR)/%.o: %.c $(DEPS) | $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
-$(OBJDIR)/main.o: main.c
-	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -D DEF="\"proto.h\""
+	$(CC) -c $< -o $@ $(IFLAGS) $(CFLAGS)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)

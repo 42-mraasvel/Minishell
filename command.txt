@@ -1,0 +1,1 @@
+echo $LOGNAME "$LOGNAME" '$LOGNAME'

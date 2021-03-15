@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 16:33:28 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 17:05:47 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 17:22:52 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ int	vecstr_pushback_c(t_vecstr *vec, char c)
 int	vecstr_pushback_str(t_vecstr *vec, const char *s)
 {
 	size_t	len;
+	size_t	new_size;
 
 	len = ft_strlen(s);
-	while (vec->len + len >= vec->size)
-	{
-		if (vecstr_resize(vec, vec->size * 2) == -1)
+	new_size = vec->size;
+	while (vec->len + len >= new_size)
+		new_size = new_size * 2;
+	if (new_size > vec->size)
+		if (vecstr_resize(vec, new_size) == -1)
 			return (-1);
-	}
 	ft_memcpy(vec->str + vec->len - 1, s, len + 1);
 	vec->len += len;
 	return (0);
@@ -61,11 +63,14 @@ int	vecstr_pushback_str(t_vecstr *vec, const char *s)
 
 int	vecstr_pushback_substr(t_vecstr *vec, const char *s, size_t len)
 {
-	while (vec->len + len >= vec->size)
-	{
-		if (vecstr_resize(vec, vec->size * 2) == -1)
+	size_t	new_size;
+
+	new_size = vec->size;
+	while (vec->len + len >= new_size)
+		new_size = new_size * 2;
+	if (new_size > vec->size)
+		if (vecstr_resize(vec, new_size) == -1)
 			return (-1);
-	}
 	ft_memcpy(vec->str + vec->len - 1, s, len);
 	vec->len += len;
 	vec->str[vec->len - 1] = '\0';
