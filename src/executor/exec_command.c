@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 20:51:54 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 13:10:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,82 +18,35 @@
 #include "header.h"
 #include "proto.h"
 #include "libft.h"
-#include "tree.h"
+#include "structs.h"
 
-void	close_fds(t_node *node)
+static int	close_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
-		close(node->fds[0]);
+		if (close(node->fds[0]) == -1)
+			return (-1);
 	if (node->fds[1] != -1)
-		close(node->fds[1]);
+		return (close(node->fds[1]));
+	return (0);
 }
 
-void	set_fds(t_node *node)
+static int	set_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
 	{
-		dup2(node->fds[0], STDIN_FILENO);
-		close(node->fds[0]);
+		if (dup2(node->fds[0], STDIN_FILENO) == -1)
+			return (-1);
+		if (close(node->fds[0]) == -1)
+			return (-1);
 	}
 	if (node->fds[1] != -1)
 	{
-		dup2(node->fds[1], STDOUT_FILENO);
-		close(node->fds[1]);
+		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
+			return (-1);
+		if (close(node->fds[1]) == -1)
+			return (-1);
 	}
-}
-
-char	*get_cmd_path(char *cmd, char *path)
-{
-	size_t	len1;
-	size_t	len;
-	char	*path_string;
-
-	len1 = ft_strlen(path);
-	len = len1 + ft_strlen(cmd) + 2;
-	path_string = (char *)malloc_guard(ft_calloc(len, sizeof(char)));
-	ft_strlcpy(path_string, path, len);
-	path_string[len1] = '/';
-	ft_strlcat(path_string, cmd, len);
-	return (path_string);
-}
-
-int	find_command(char **args, char *path)
-{
-	char	**paths;
-	char	*str;
-	size_t	i;
-	int		ret;
-
-	i = 0;
-	ret = -1;
-	paths = (char **)malloc_guard(ft_split(path + 5, ':'));
-	while (paths[i] != NULL)
-	{
-		str = get_cmd_path(args[0], paths[i]);
-		if (file_exists(str))
-		{
-			ret = 0;
-			free(args[0]);
-			args[0] = str;
-			break ;
-		}
-		free(str);
-		i++;
-	}
-	ft_free_split(paths);
-	return (ret);
-}
-
-int	set_args(t_node *node)
-{
-	char	*path;
-
-	path = get_path();
-	if (path == NULL)
-		return (-1);
-	if (find_command(node->args, path) == -1)
-		return (-1);
-	return (success);
+	return (0);
 }
 
 /*
@@ -123,51 +76,52 @@ void	print_command(t_node *node)
 	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
 }
 
-#ifdef __APPLE__
-
-void	exec_command(t_node *node)
+static int	find_exec(char	**args, t_data *data)
 {
-	extern char	**environ;
-	int			pid;
+	char	*original;
+	int		ret;
 
-	if (set_args(node) == -1)
-		exit_program(error, "Command not found");
-	printf("Executing Command:");
-	print_command(node);
-	pid = fork();
-	if (pid < 0)
-		exit_program(error, "Fork Error");
-	if (pid == 0)
-	{
-		set_fds(node);
-		execve(node->args[0], node->args, environ);
-	}
-	close_fds(node);
-	waitpid(pid, NULL, 0);
+	ret = 0;
+	if (ft_strchr(args[0], '/') != NULL)
+		return (0);
+	original = ft_strdup(args[0]);
+	if (original == NULL)
+		return (set_err_data_int(data, malloc_error, -1));
+	if (lookup_path(data, args, original) == -1)
+		ret = -1;
+	if (args[0] != original)
+		free(original);
+	return (ret);
 }
 
-#else
-
-void	exec_command(t_node *node)
+int	exec_command(t_node *node, t_data *data)
 {
 	int	pid;
 
-	if (set_args(node) == -1)
-		exit_program(error, "Command not found");
+	printf("Executing Command:");
+	print_command(node);
 
-	// printf("Executing Command:");
-	// print_command(node);
-
+	find_exec(node->args, data);
+	if (data->error.errnum != success)
+		return (-1);
+	if (!file_exists(node->args[0]))
+		return (set_error_vec(data, cmd_not_found, node->args[0], 0));
+	// We have to check if the command is a directory or not.
 	pid = fork();
 	if (pid < 0)
-		exit_program(error, "Fork Error");
+		return (set_err_data_int(data, syscall_error, -1));
 	if (pid == 0)
 	{
-		set_fds(node);
-		execve(node->args[0], node->args, __environ);
+		if (set_fds(node) == -1)
+			return (set_err_data_int(data, syscall_error, -1));
+		//! Here we will our own functions if needed
+		if (execve(node->args[0], node->args, data->envp) == -1)
+			exit_program(syscall_error, "Execve Error in child process");
 	}
-	close_fds(node);
-	waitpid(pid, NULL, 0);
-}
+	if (close_fds(node) == -1)
+		return (set_err_data_int(data, syscall_error, -1));
 
-#endif
+	waitpid(pid, NULL, 0); // This should be used to get and set the exit status of the child process,
+	// also options for additional instructions like waiting only for child to exit
+	return (0);
+}

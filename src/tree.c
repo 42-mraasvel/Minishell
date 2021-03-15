@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/14 21:02:17 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:15:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "proto.h"
-#include "tree.h"
+#include "structs.h"
 #include "libft.h"
 #include "libvect.h"
 

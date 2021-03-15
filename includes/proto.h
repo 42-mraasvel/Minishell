@@ -6,16 +6,17 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 23:11:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 12:50:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTO_H
 # define PROTO_H
 
-# include "header.h"
+# include "structs.h"
 # include "libvect.h"
-# include "tree.h"
+# include "structs.h"
+# include "lexer.h"
 
 
 int		prompt(t_data *data);
@@ -39,8 +40,15 @@ t_bool	isquote(char c);
 void	*malloc_guard(void *malloc_return);
 char	*get_path(void);
 int		file_exists(char *filename);
-void	set_err_data(t_data *data, t_errnum errnum, char *err_str);
-void	*set_err_data_null(t_data *data, t_errnum errnum, char *err_str);
+
+/* Error Handling */
+
+void	flush_error(t_data *data);
+
+void	set_err_data(t_data *data, t_errnum errnum);
+void	*set_err_data_null(t_data *data, t_errnum errnum);
+int		set_err_data_int(t_data *data, t_errnum errnum, int ret);
+int		set_error_vec(t_data *data, t_errnum errnum, char *str, int ret);
 
 /* Some Tree Functions To Test Executor */
 
@@ -48,13 +56,16 @@ t_node	*create_tree(t_vect *tokens);
 
 t_node	*test_parser(void);
 
-void	execute_tree(t_node *root);
-void	exec_pipe(t_node *node);
-void	exec_command(t_node *node);
+int		executor(t_node *root, t_data *data);
+int		exec_pipe(t_node *node, t_data *data);
+int		exec_command(t_node *node, t_data *data);
 
-t_node	*new_node(t_token data);
+int		lookup_path(t_data *data, char **args, char *name);
+
 void	tree_free(t_node *root);
-void	apply_inorder_tree(t_node *root, void (*fct)(t_node *));
+void	apply_prefix_tree(t_node *root, void (*fct)(t_node *));
+int		apply_prefix_tree_data(
+			t_node *root, t_data *data, int (*fct)(t_node *, t_data *));
 
 /* error part : exit_program.c */
 

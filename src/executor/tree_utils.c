@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 23:46:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 13:26:18 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,8 @@
 #include <stdio.h>
 #include "libft.h"
 #include "proto.h"
-#include "header.h"
+#include "structs.h"
 #include "lexer.h"
-
-t_node	*new_node(t_token data)
-{
-	t_node	*new;
-
-	(void)data;
-	new = (t_node*)malloc_guard(malloc(1 * sizeof(t_node)));
-	new->right = NULL;
-	new->left = NULL;
-	new->args = NULL;
-	new->fds[0] = -1;
-	new->fds[1] = -1;
-	return (new);
-}
 
 void	tree_free(t_node *root)
 {
@@ -48,13 +34,39 @@ void	tree_free(t_node *root)
 	free(root);
 }
 
-void	apply_inorder_tree(t_node *root, void (*fct)(t_node *))
+/*
+** If (*fct) returns -1 it will stop the traversal and return error
+** Error code should be set in fct according to t_errnums.
+** Applies mid left right, EXCEPT for semicolons
+*/
+
+int	apply_prefix_tree_data(
+		t_node *root, t_data *data, int (*fct)(t_node *, t_data *))
+{
+	if (root == NULL || fct == NULL)
+		return (-1);
+	if (root->rule != semicolon)
+		if (fct(root, data) == -1)
+			return (-1);
+	if (root->left != NULL)
+		if (apply_prefix_tree_data(root->left, data, fct) == -1)
+			return (-1);
+	if (root->rule == semicolon)
+		if (fct(root, data) == -1)
+			return (-1);
+	if (root->right != NULL)
+		if (apply_prefix_tree_data(root->right, data, fct) == -1)
+			return (-1);
+	return (0);
+}
+
+void	apply_prefix_tree(t_node *root, void (*fct)(t_node *))
 {
 	if (root == NULL || fct == NULL)
 		return ;
 	fct(root);
 	if (root->left != NULL)
-		apply_inorder_tree(root->left, fct);
+		apply_prefix_tree(root->left, fct);
 	if (root->right != NULL)
-		apply_inorder_tree(root->right, fct);
+		apply_prefix_tree(root->right, fct);
 }

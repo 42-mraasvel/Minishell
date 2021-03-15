@@ -6,13 +6,12 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 23:11:23 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:16:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "header.h"
-#include "lexer.h"
+#include "structs.h"
 
 char	*skipspace(char *line)
 {

@@ -6,14 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 22:50:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:17:09 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "lexer.h"
 #include "libvect.h"
-#include "header.h"
+#include "structs.h"
 #include "proto.h"
 
 const char	*print_type(t_tokentype type)
@@ -172,5 +172,5 @@ void	print_tree_depth(t_node *root, int depth)
 
 void	print_tree(t_node *root)
 {
-	apply_inorder_tree(root, print_node);
+	apply_prefix_tree(root, print_node);
 }

@@ -6,33 +6,33 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 23:44:23 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 13:22:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 #include "libft.h"
 #include "proto.h"
-#include "libvect.h"
-#include "lexer.h"
+#include "header.h"
 
 int	process_cli(char *line, t_data *data)
 {
-	t_vect	*tokens;
-	t_node	*root;
-
-	tokens = lexer(line, data);
-	if (tokens == NULL)
+	data->tokens = lexer(line, data);
+	if (data->tokens == NULL)
 		return (0);
-	print_tokens(tokens);
-	root = create_tree(tokens);
-	if (root == NULL)
+	print_tokens(data->tokens);
+	data->root = create_tree(data->tokens);
+	if (data->root == NULL)
 		perror("-bash");
-	print_tree_depth(root, 0);
-	execute_tree(root);
-	tree_free(root);
-	vect_free(tokens, NULL);
+	if (data->root != NULL)
+	{
+		print_tree_depth(data->root, 0);
+		executor(data->root, data);
+	}
+	tree_free(data->root);
+	vect_free(data->tokens, NULL);
 	return (0);
 }
 
@@ -50,9 +50,12 @@ int	prompt(t_data *data)
 			exit_program(error, "Getline error");
 		if (ret != 0)
 			process_cli(line, data);
-		if (data->errnum != success)
-			perror("Error returned from process_cli");
+		flush_error(data);
+		if (data->error.errnum != success)
+			perror("Error");
+		data->error.errnum = success;
 		free(line);
 	}
+	write(1, "\n", 1);
 	return (success);
 }
