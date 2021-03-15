@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/15 12:56:39 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/15 13:29:19 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS = executor lexer error_handling
+SUBDIRS = executor lexer error_handling expander
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs

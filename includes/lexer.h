@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 22:52:40 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 14:24:46 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef enum e_optype
 	redirect_in,
 	o_semicolon,
 	o_pipe,
-	redirect_append
+	redirect_append,
+	non_operator
 }	t_optype;
 
 typedef size_t	(*t_tokenizer)(char *);

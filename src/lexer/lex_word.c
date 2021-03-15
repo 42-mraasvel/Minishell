@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/14 22:21:57 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 23:10:59 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 14:20:46 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_token	lex_word(char *line)
 	token.start = line;
 	token.length = 0;
 	token.type = word;
+	token.optype = non_operator;
 	while (line[token.length] && !ismeta(line[token.length]))
 	{
 		if (isquote(line[token.length]))
