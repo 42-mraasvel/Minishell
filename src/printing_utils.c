@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 21:24:07 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 22:50:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ const char	*print_type(t_tokentype type)
 	static const char	*types[] = {
 		"ERROR",
 		"OPERATOR",
-		"UNQUOTE",
-		"SINGLEQUOTE",
-		"DOUBLEQUOTE"
+		"WORD"
 	};
 
 	return (types[type]);

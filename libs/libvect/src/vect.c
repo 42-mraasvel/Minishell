@@ -22,7 +22,7 @@ static void	*vect_memcpy(void *dest, void *src, size_t n)
 		return (dest);
 	while (i < n)
 	{
-		((unsigned char*)dest)[i] = ((unsigned char*)src)[i];
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
 		i++;
 	}
 	return (dest);
@@ -49,16 +49,18 @@ t_vect	*vect_init(size_t initial_size, unsigned int data_type)
 	return (vect);
 }
 
-void		vect_free(t_vect *vect, void (*del)(void*))
+void	vect_free(t_vect *vect, void (*del)(void*))
 {
 	size_t	i;
 
+	if (vect == NULL)
+		return ;
 	if (del != NULL)
 	{
 		i = 0;
 		while (i < vect->nmemb)
 		{
-			del(((void**)vect->table)[i]);
+			del(((void **)vect->table)[i]);
 			i++;
 		}
 	}
@@ -80,7 +82,7 @@ static int	vect_realloc(t_vect *vect)
 	return (0);
 }
 
-int			vect_pushback(t_vect *vect, void *data)
+int	vect_pushback(t_vect *vect, void *data)
 {
 	unsigned char	*ptr;
 
@@ -89,7 +91,7 @@ int			vect_pushback(t_vect *vect, void *data)
 		if (vect_realloc(vect) == -1)
 			return (-1);
 	}
-	ptr = ((unsigned char*)vect->table) + vect->nmemb * vect->data_size;
+	ptr = ((unsigned char *)vect->table) + vect->nmemb * vect->data_size;
 	vect_memcpy(ptr, data, vect->data_size);
 	vect->nmemb += 1;
 	return (0);

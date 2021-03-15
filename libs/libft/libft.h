@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/24 19:27:20 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/02/16 23:32:06 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 22:47:51 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int					ft_strcmp(char *s1, char *s2);
 void				ft_swap_ptr(void *a, void *b);
 void				ft_strlowcase(char *str);
 void				ft_strupcase(char *str);
+char				*ft_strcpy(char *dest, const char *src);
+int					ft_strchri(const char *s, int c);
 
 /*
 ** get_next_line libft version.

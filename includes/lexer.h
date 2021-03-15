@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 21:21:52 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 22:52:40 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ typedef enum e_tokentype
 {
 	bad_token,
 	operator,
-	unquoted,
-	singlequoted,
-	doublequoted,
 	word
 }	t_tokentype;
 
@@ -39,8 +36,9 @@ typedef size_t	(*t_tokenizer)(char *);
 /*
 ** How a token/lexeme is specified
 **
-** char *start, points to the token start within the (line) variable read from stdin
-** length specifies how long the token is.
+** char *start, points to the token-
+** -start within the (line) variable read from stdin
+** Length specifies how long the token is.
 ** This is to avoid reallocating memory for tokens
 **
 */

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 21:11:00 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 23:15:33 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "lexer.h"
 
-// # define MINISHELL_PROMPT "\033[1;33m>\033[0m "
-# define MINISHELL_PROMPT "\033[1;33mminishell$\033[0m "
+# define MINISHELL_PROMPT "\033[1;33m>\033[0m "
+// # define MINISHELL_PROMPT "\033[1;33mminishell$\033[0m "
 
 typedef enum e_errnum
 {
@@ -24,7 +24,8 @@ typedef enum e_errnum
 	error,
 	syntax_error,
 	open_error,
-	malloc_error
+	malloc_error,
+	syscall_error
 }	t_errnum;
 
 typedef enum e_bool

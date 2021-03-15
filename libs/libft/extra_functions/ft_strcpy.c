@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strchr.c                                        :+:    :+:            */
+/*   ft_strcpy.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/26 11:17:45 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 22:46:50 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/02/28 00:15:54 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/02/28 00:16:58 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	char	*r;
+	size_t	i;
 
-	r = (char *)s;
-	while (*r != 0 && *r != (char)c)
-		r++;
-	if (*r != (char)c)
-		return (0);
-	return (r);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		((unsigned char*)dest)[i] = ((unsigned char*)src)[i];
+		i++;
+	}
+	return (dest);
 }
