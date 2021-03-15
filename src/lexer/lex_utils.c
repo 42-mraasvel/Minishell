@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenize.c                                         :+:    :+:            */
+/*   lex_utils.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/02 13:08:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 08:55:58 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/14 23:11:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include "proto.h"
+#include "libft.h"
+#include "header.h"
+#include "lexer.h"
 
-/*
-** These functions return the length of the token.
-*/
-
-size_t	tokenize_operator(char *start)
+char	*skipspace(char *line)
 {
-	(void)start;
-	return (0);
+	while (ft_isspace(*line))
+		line++;
+	return (line);
 }
 
-size_t	tokenize_word(char *start)
+t_bool	ismeta(char c)
 {
-	(void)start;
-	return (0);
+	if (c == '\0')
+		return (false);
+	if (ft_strchr("|<>; \t\n", c) == NULL)
+		return (false);
+	return (true);
 }
 
-size_t	tokenize_squote(char *start)
+t_bool	isquote(char c)
 {
-	(void)start;
-	return (0);
-}
-
-size_t	tokenize_dquote(char *start)
-{
-	(void)start;
-	return (0);
+	if (c == '\'' || c == '"')
+		return (true);
+	return (false);
 }

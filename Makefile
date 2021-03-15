@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/12 11:26:26 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/14 22:49:46 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS = executing
+SUBDIRS = executor lexer
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -35,7 +35,7 @@ vpath %.h $(IDIR)
 
 # compilation
 CC = gcc
-IFLAGS = -I$(IDIR)
+IFLAGS = -I$(IDIR) -I$(LIBFTDIR) -I$(LIBVECTDIR)
 DFLAGS = -O0 -g -fsanitize=address
 
 # -Werror is annoying for development

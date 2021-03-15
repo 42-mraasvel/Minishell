@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 21:12:14 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/14 23:11:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,21 @@
 # include "tree.h"
 
 
+int		prompt(t_data *data);
+
 void	test_pipe(void);
 
 /* Lexing part */
 
-t_vect	*lexer(char *line);
-
-size_t	tokenize_operator(char *start);
-size_t	tokenize_word(char *start);
-size_t	tokenize_squote(char *start);
-size_t	tokenize_dquote(char *start);
-size_t	tokenize_variable(char *start);
+t_vect	*lexer(char *line, t_data *data);
+t_token	lex_word(char *line);
+t_token	lex_operator(char *line);
 
 /* lexer_utils.c */
 
-t_bool	is_operator(char c);
-t_bool	is_metachar(char c);
-size_t	is_double(char *start);
+t_bool	ismeta(char c);
+char	*skipspace(char *line);
+t_bool	isquote(char c);
 
 /* Some wrappers, quality of life functions */
 
@@ -42,6 +40,7 @@ void	*malloc_guard(void *malloc_return);
 char	*get_path(void);
 int		file_exists(char *filename);
 void	set_err_data(t_data *data, t_errnum errnum, char *err_str);
+void	*set_err_data_null(t_data *data, t_errnum errnum, char *err_str);
 
 /* Some Tree Functions To Test Executor */
 

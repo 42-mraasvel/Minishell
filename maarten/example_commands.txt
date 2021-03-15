@@ -50,4 +50,11 @@ INVALID (gives error):
 	... etc, kind of like VALID, but random commands are invalid
 
 
-	;
+	
+
+	a ; ;
+	a > >
+	a > OPERATOR
+	a > "OPERATOR_IN_QUOTES"
+	ec"h"o
+	"l"s
