@@ -52,6 +52,7 @@ t_vect	*vect_init(size_t initial_size, unsigned int data_type)
 void	vect_free(t_vect *vect, void (*del)(void*))
 {
 	size_t	i;
+	char	*ptr;
 
 	if (vect == NULL)
 		return ;
@@ -60,7 +61,8 @@ void	vect_free(t_vect *vect, void (*del)(void*))
 		i = 0;
 		while (i < vect->nmemb)
 		{
-			del(((void **)vect->table)[i]);
+			ptr = vect->table;
+			del(ptr + (i * vect->data_size));
 			i++;
 		}
 	}

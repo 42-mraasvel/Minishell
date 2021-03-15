@@ -6,30 +6,13 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 22:04:09 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 12:49:21 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <sys/stat.h>
-#include <stdlib.h>
-#include "libft.h"
 #include "proto.h"
-
-void	*set_err_data_null(t_data *data, t_errnum errnum, char *err_str)
-{
-	data->errnum = errnum;
-	if (err_str != NULL)
-		data->err_str = ft_strdup(err_str);
-	return (NULL);
-}
-
-void	set_err_data(t_data *data, t_errnum errnum, char *err_str)
-{
-	data->errnum = errnum;
-	if (err_str != NULL)
-		data->err_str = ft_strdup(err_str);
-}
 
 /*
 ** Checks malloc return value
@@ -50,41 +33,10 @@ void	*malloc_guard(void *malloc_return)
 int	file_exists(char *filename)
 {
 	struct stat	buf;
+	int			ret;
 
-	return (stat(filename, &buf) == 0);
+	ret = stat(filename, &buf);
+	if (ret == 0)
+		return (true);
+	return (false);
 }
-
-#ifdef __APPLE__
-
-char	*get_path(void)
-{
-	extern char	**environ;
-	size_t		i;
-
-	i = 0;
-	while (environ[i] != NULL)
-	{
-		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
-			break ;
-		i++;
-	}
-	return (environ[i]);
-}
-
-#else
-
-char	*get_path(void)
-{
-	size_t	i;
-
-	i = 0;
-	while (__environ[i] != NULL)
-	{
-		if (ft_strncmp(__environ[i], "PATH=", 5) == 0)
-			break ;
-		i++;
-	}
-	return (__environ[i]);
-}
-
-#endif

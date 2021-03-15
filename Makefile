@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/14 22:49:46 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/15 12:56:39 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS = executor lexer
+SUBDIRS = executor lexer error_handling
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -36,15 +36,21 @@ vpath %.h $(IDIR)
 # compilation
 CC = gcc
 IFLAGS = -I$(IDIR) -I$(LIBFTDIR) -I$(LIBVECTDIR)
-DFLAGS = -O0 -g -fsanitize=address
+DFLAGS = -O0 -g3 -fsanitize=address
 
 # -Werror is annoying for development
 # CFLAGS = -Wall -Wextra -Werror
 CFLAGS = -Wall -Wextra
 LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
 
+OS_NAME = $(shell uname -s)
+ifeq ($(OS_NAME),Linux)
+DFLAGS += -fsanitize=leak
+else
+endif
+
 ifdef DEBUG
-CFLAGS += DFLAGS
+CFLAGS += $(DFLAGS)
 else
 # Set dflags by default for development
 # CFLAGS += -O0

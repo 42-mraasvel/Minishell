@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 23:10:43 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:56:27 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static t_vect	*check_tokens(t_vect *tokens, t_data *data)
 {
-	if (data->errnum != success || tokens->nmemb == 0)
+	if (data->error.errnum != success || tokens->nmemb == 0)
 	{
 		vect_free(tokens, NULL);
 		return (NULL);
@@ -32,7 +32,7 @@ static size_t	next_token(char *line, t_vect *tokens, t_data *data)
 	else
 		token = lex_word(line);
 	if (vect_pushback(tokens, &token) == -1)
-		set_err_data(data, malloc_error, NULL);
+		set_err_data(data, malloc_error);
 	return (token.length);
 }
 
@@ -42,14 +42,14 @@ t_vect	*lexer(char *line, t_data *data)
 
 	tokens = vect_init(10, sizeof(t_token));
 	if (tokens == NULL)
-		return (set_err_data_null(data, malloc_error, NULL));
+		return (set_err_data_null(data, malloc_error));
 	while (*line != '\0')
 	{
 		line = skipspace(line);
 		if (*line == '\0')
 			break ;
 		line += next_token(line, tokens, data);
-		if (data->errnum != success)
+		if (data->error.errnum != success)
 			break ;
 	}
 	return (check_tokens(tokens, data));

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_execute_tree.c                                :+:    :+:            */
+/*   executor.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 20:23:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 12:52:01 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,33 @@
 #include <unistd.h>
 #include "proto.h"
 #include "header.h"
-#include "tree.h"
+#include "structs.h"
 
-void	exec_semicolon(t_node *node)
+int	exec_semicolon(t_node *node, t_data *data)
 {
 	(void)node;
+	flush_error(data);
+	if (data->error.errnum != success)
+		return (-1);
+	return (0);
 }
 
-void	execute_node(t_node *node)
+static int	execute_node(t_node *node, t_data *data)
 {
-	static	void	(*executors[])(t_node *node) = {
+	static	int	(*executors[])(t_node *, t_data *) = {
 		exec_command,
 		exec_pipe,
 		exec_semicolon
 	};
 
-	executors[node->rule](node);
+	if (executors[node->rule](node, data) == -1)
+		return (-1);
+	return (0);
 }
 
-void	execute_tree(t_node *root)
+int	executor(t_node *root, t_data *data)
 {
-	apply_inorder_tree(root, execute_node);
+	if (apply_prefix_tree_data(root, data, execute_node) == -1)
+		return (-1);
+	return (0);
 }

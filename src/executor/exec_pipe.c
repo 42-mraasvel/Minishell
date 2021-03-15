@@ -6,14 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:27:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/12 20:23:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:27:18 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
-#include "header.h"
-#include "tree.h"
+#include "structs.h"
+#include "structs.h"
 #include "proto.h"
 
 static t_node	*next_command(t_node *node)
@@ -24,20 +24,22 @@ static t_node	*next_command(t_node *node)
 		return (next_command(node->right));
 }
 
-static void	set_write_end(t_node *node, int fd)
+static int	set_write_end(t_node *node, int fd)
 {
 	if (node->fds[1] == -1)
 		node->fds[1] = fd;
-	else
-		close(fd);
+	else if (close(fd) == -1)
+		return (-1);
+	return (0);
 }
 
-static void	set_read_end(t_node *node, int fd)
+static int	set_read_end(t_node *node, int fd)
 {
 	if (node->fds[0] == -1)
 		node->fds[0] = fd;
-	else
-		close(fd);
+	else if (close(fd) == -1)
+		return (-1);
+	return (0);
 }
 
 /*
@@ -47,18 +49,21 @@ static void	set_read_end(t_node *node, int fd)
 ** it's not changed and that end of the pipe is closed.
 */
 
-void	exec_pipe(t_node *node)
+int	exec_pipe(t_node *node, t_data *data)
 {
 	int		fds[2];
 	t_node	*right_cmd;
 
 	if (node->left == NULL || node->right == NULL)
-		return ;
+		return (-1); // Wouldn't be a valid tree, so error should be given at parsing stage
 	if (pipe(fds) == -1)
-		exit_program(error, "Pipe Fail");
+		return (set_err_data_int(data, syscall_error, -1));
 	right_cmd = node->right;
 	if (right_cmd->rule == t_pipe)
 		right_cmd = next_command(node->right);
-	set_read_end(right_cmd, fds[0]);
-	set_write_end(node->left, fds[1]);
+	if (set_read_end(right_cmd, fds[0]) == -1)
+		return (set_err_data_int(data, syscall_error, -1));
+	if (set_write_end(node->left, fds[1]) == -1)
+		return (set_err_data_int(data, syscall_error, -1));
+	return (0);
 }
