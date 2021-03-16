@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 21:56:04 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 13:55:03 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	process_cli(char *line, t_data *data)
 	if (data->tokens == NULL)
 		return (0);
 	print_tokens(data->tokens);
+	
+
 
 	printf("\nEXPANDER\n\n");
 	expander(data);
@@ -44,7 +46,7 @@ int	process_cli(char *line, t_data *data)
 
 	if (data->root != NULL)
 	{
-		print_tree_depth(data->root, 0);
+		// print_tree_depth(data->root, 0);
 		executor(data->root, data);
 	}
 

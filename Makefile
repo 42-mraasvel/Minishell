@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/15 20:27:03 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/16 08:46:30 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS = executor lexer error_handling expander string_vec utils
+SUBDIRS2 = env
+SUBDIRS = executor lexer error_handling expander string_vec utils builtins $(addprefix builtins/, $(SUBDIRS2))
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -57,7 +58,6 @@ else
 # CFLAGS =
 CFLAGS += $(DFLAGS)
 endif
-
 
 .PHONY: all
 all:

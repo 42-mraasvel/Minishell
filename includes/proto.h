@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 21:38:45 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 13:55:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int		file_exists(char *filename);
 
 /* Error Handling */
 
+int		syntax_check(t_data *data); //! Checks if tokens are valid
+
 void	flush_error(t_data *data);
 
 void	set_err_data(t_data *data, t_errnum errnum);
@@ -76,6 +78,12 @@ void	tree_free(t_node *root);
 void	apply_prefix_tree(t_node *root, void (*fct)(t_node *));
 int		apply_prefix_tree_data(
 			t_node *root, t_data *data, int (*fct)(t_node *, t_data *));
+
+/* Builtin Functions */
+
+int		call_builtins(t_data *data, t_node *node);
+
+int		ft_env(t_data *data);
 
 /* error part : exit_program.c */
 

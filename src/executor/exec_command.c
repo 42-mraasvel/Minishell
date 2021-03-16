@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 13:10:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 08:45:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static int	find_exec(char	**args, t_data *data)
 int	exec_command(t_node *node, t_data *data)
 {
 	int	pid;
+	int	status;
 
 	printf("Executing Command:");
 	print_command(node);
@@ -115,13 +116,17 @@ int	exec_command(t_node *node, t_data *data)
 		if (set_fds(node) == -1)
 			return (set_err_data_int(data, syscall_error, -1));
 		//! Here we will our own functions if needed
-		if (execve(node->args[0], node->args, data->envp) == -1)
-			exit_program(syscall_error, "Execve Error in child process");
+		call_builtins(data, node);
+		// if (execve(node->args[0], node->args, data->envp) == -1)
+		// 	exit_program(syscall_error, "Execve Error in child process");
 	}
 	if (close_fds(node) == -1)
 		return (set_err_data_int(data, syscall_error, -1));
 
-	waitpid(pid, NULL, 0); // This should be used to get and set the exit status of the child process,
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	// This should be used to get and set the exit status of the child process,
 	// also options for additional instructions like waiting only for child to exit
 	return (0);
 }
