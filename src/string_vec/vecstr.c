@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 16:23:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 16:47:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 20:11:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	vecstr_free(t_vecstr *vec)
 	free(vec->str);
 	free(vec);
 }
-

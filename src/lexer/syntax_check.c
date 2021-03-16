@@ -6,65 +6,84 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 18:38:28 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 20:13:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // rm
 #include "libft.h"
 #include "lexer.h"
 #include "structs.h"
 
-
-
-static void	put_syntax_error(t_token token)
+static int	ft_isotherop(t_optype type)
 {
-	// "-bash: syntax error near unexpected token `>'"
-	// "-bash: syntax error near unexpected token `;'"
-	ft_putstr_fd("-bash: syntax error near unexpected token ", STDERR_FILENO);
-	write(STDERR_FILENO, token.start, token.length);
-	write(STDERR_FILENO, "\n", 1);
+	if (type == semicolon || type == non_operator)
+		return (false);
+	return (true);
+}
+
+static int	syntax_op_error(t_token token, t_optype prev, size_t left)
+{
+	ft_putstr_fd("-bash: syntax error near unexpected token `", STDERR_FILENO);
+	if (left == 0 && ft_isotherop(token.optype) && !ft_isotherop(prev))
+		write(STDERR_FILENO, "newline", 7);
+	else
+		write(STDERR_FILENO, token.start, token.length);
+	write(STDERR_FILENO, "'\n", 2);
+	return (syntax_error);
 }
 
 static int	check_operator(t_token *token, t_optype prev, size_t i, size_t max)
 {
-	if (token->optype == semicolon && i == 0)
+	if (token->optype == semicolon && (i == 0 || prev != non_operator))
 		return (syntax_error);
 	if (token->optype == o_pipe && i == 0)
 		return (syntax_error);
+	if (ft_isotherop(prev))
+		return (syntax_error);
+	if (ft_isotherop(token->optype) && i == max - 1)
+		return (syntax_error);
 	return (success);
+}
+
+static int	syntax_error_token(t_token *token)
+{
+	ft_putstr_fd("-bash: syntax error: ", STDERR_FILENO);
+	write(STDERR_FILENO, token->start, token->length);
+	write (STDERR_FILENO, "\n", 1);
+	return (syntax_error);
 }
 
 /*
 ** Errors:
 **
-** No "word" Token after following:
-**	>
-**	>>
-**	<
-**	|
-** No "word" Token before following:
-**	;
+** (?) = operator or nothing
+**	> (?)
+**	>> (?)
+**	< (?)
+**	(?) | (?)
+**	(?) ;
+** token = error type (unclosed quotes)
 */
 
 int	syntax_check(t_data *data, t_vect *tokens)
 {
 	t_token		*table;
 	size_t		i;
-	t_optype	prev_optype;
+	t_optype	prev;
 
 	i = 0;
 	table = (t_token*)tokens->table;
-	prev_optype = non_operator;
+	prev = non_operator;
 	while (i < tokens->nmemb)
 	{
-		if (table[i].type != word)
-			if (check_operator(
-					&table[i], prev_optype, i, tokens->nmemb) != success)
-			{
-				put_syntax_error(table[i]);
-				return (syntax_error);
-			}
+		if (table[i].type == operator)
+		{
+			if (check_operator(&table[i], prev, i, tokens->nmemb) != success)
+				return (syntax_op_error(table[i], prev, tokens->nmemb - i - 1));
+		}
+		else if (table[i].type == bad_token)
+			return (syntax_error_token(&table[i]));
+		prev = table[i].optype;
 		i++;
 	}
 	return (success);
