@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 16:39:57 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 18:38:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static void	put_syntax_error(t_token token)
 
 static int	check_operator(t_token *token, t_optype prev, size_t i, size_t max)
 {
-	
+	if (token->optype == semicolon && i == 0)
+		return (syntax_error);
+	if (token->optype == o_pipe && i == 0)
+		return (syntax_error);
 	return (success);
 }
 
