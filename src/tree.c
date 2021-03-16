@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 18:27:49 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/16 18:49:13 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	create_args(t_vect *tokens, size_t start, size_t end, char ***args)
 	while (i < end)
 	{
 		token = ((t_token*)tokens->table)[i];
-		if ((token.type != operator && !(i - start)) || (token.type != operator
-				&& ((t_token*)tokens->table)[i - 1].type != operator))
+		if (token.type == word && (i == start
+				|| ((t_token*)tokens->table)[i - 1].type == word))
 			count++;
 		i++;
 	}
@@ -97,8 +97,8 @@ int	parse_redirect_out(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[0] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
-	if (node->fds[0] == -1)
+	node->fds[1] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
+	if (node->fds[1] == -1)
 		return (0);
 	free(filename->start);
 	return (1);
@@ -110,8 +110,8 @@ int	parse_redirect_append(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[0] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
-	if (node->fds[0] == -1)
+	node->fds[1] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
+	if (node->fds[1] == -1)
 		return (0);
 	free(filename->start);
 	return (1);
