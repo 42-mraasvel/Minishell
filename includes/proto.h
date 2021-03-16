@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 16:38:34 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 20:15:03 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	expand_word(t_data *data, t_token *token);
 /* Some Tree Functions To Test Executor */
 
 t_node	*create_tree(t_vect *tokens);
+t_node	*add_node(t_vect *tokens, size_t start, size_t end);
 
 t_node	*test_parser(void);
 
@@ -83,6 +84,7 @@ int		apply_prefix_tree_data(
 
 int		call_builtins(t_data *data, t_node *node);
 
+int		ft_echo(char **args);
 int		ft_env(t_data *data);
 
 /* error part : exit_program.c */
