@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:55:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 16:38:34 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		file_exists(char *filename);
 
 /* Error Handling */
 
-int		syntax_check(t_data *data); //! Checks if tokens are valid
+int		syntax_check(t_data *data, t_vect *tokens); //! Checks if tokens are valid
 
 void	flush_error(t_data *data);
 

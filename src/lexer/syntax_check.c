@@ -6,12 +6,31 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 14:25:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 16:39:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // rm
+#include "libft.h"
 #include "lexer.h"
 #include "structs.h"
+
+
+
+static void	put_syntax_error(t_token token)
+{
+	// "-bash: syntax error near unexpected token `>'"
+	// "-bash: syntax error near unexpected token `;'"
+	ft_putstr_fd("-bash: syntax error near unexpected token ", STDERR_FILENO);
+	write(STDERR_FILENO, token.start, token.length);
+	write(STDERR_FILENO, "\n", 1);
+}
+
+static int	check_operator(t_token *token, t_optype prev, size_t i, size_t max)
+{
+	
+	return (success);
+}
 
 /*
 ** Errors:
@@ -25,16 +44,25 @@
 **	;
 */
 
-int	syntax_check(t_data *data)
+int	syntax_check(t_data *data, t_vect *tokens)
 {
-	t_token	*table;
-	size_t	i;
+	t_token		*table;
+	size_t		i;
+	t_optype	prev_optype;
 
-	table = data->tokens->table;
 	i = 0;
-	while (i < data->tokens->nmemb)
+	table = (t_token*)tokens->table;
+	prev_optype = non_operator;
+	while (i < tokens->nmemb)
 	{
+		if (table[i].type != word)
+			if (check_operator(
+					&table[i], prev_optype, i, tokens->nmemb) != success)
+			{
+				put_syntax_error(table[i]);
+				return (syntax_error);
+			}
 		i++;
 	}
-	return (0);
+	return (success);
 }

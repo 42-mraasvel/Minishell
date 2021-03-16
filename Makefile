@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/16 14:20:17 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/16 16:35:03 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ else
 # Set dflags by default for development
 # CFLAGS += -O0
 CFLAGS =
-# CFLAGS += $(DFLAGS)
+CFLAGS += $(DFLAGS)
 endif
 
 .PHONY: all

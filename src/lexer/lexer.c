@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:56:27 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 16:37:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 static t_vect	*check_tokens(t_vect *tokens, t_data *data)
 {
-	if (data->error.errnum != success || tokens->nmemb == 0)
+	if (
+		data->error.errnum != success
+		|| tokens->nmemb == 0
+		|| syntax_check(data, tokens) == syntax_error)
 	{
 		vect_free(tokens, NULL);
 		return (NULL);
