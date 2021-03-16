@@ -6,10 +6,11 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:57:13 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:21:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // rm
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -46,7 +47,6 @@ int	create_args(t_vect *tokens, size_t start, size_t end, t_node *node)
 			if (node->fds[0] != -1)
 				if (close(node->fds[0]) == -1)
 					return (0);
-			free(token.start);
 			i++;
 			token = ((t_token*)tokens->table)[i];
 			node->fds[0] = open(token.start, O_RDONLY);
@@ -59,7 +59,6 @@ int	create_args(t_vect *tokens, size_t start, size_t end, t_node *node)
 			if (node->fds[1] != -1)
 				if (close(node->fds[1]) == -1)
 					return (0);
-			free(token.start);
 			i++;
 			token = ((t_token*)tokens->table)[i];
 			node->fds[1] = open(token.start, (O_WRONLY | O_CREAT), 0644);
@@ -72,7 +71,6 @@ int	create_args(t_vect *tokens, size_t start, size_t end, t_node *node)
 			if (node->fds[1] != -1)
 				if (close(node->fds[1]) == -1)
 					return (0);
-			free(token.start);
 			i++;
 			token = ((t_token*)tokens->table)[i];
 			node->fds[1] = open(token.start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
@@ -110,7 +108,7 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 	give_birth = 0;
 	while (i < end && !give_birth)
 	{
-		if (((t_token*)tokens->table)[i].type == o_semicolon)
+		if (((t_token*)tokens->table)[i].optype == o_semicolon)
 		{
 			give_birth = 1;
 			node->left = add_node(tokens, start, i);
@@ -122,7 +120,7 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 	i = start;
 	while (i < end && !give_birth)
 	{
-		if (((t_token*)tokens->table)[i].type == o_pipe)
+		if (((t_token*)tokens->table)[i].optype == o_pipe)
 		{
 			give_birth = 1;
 			node->left = add_node(tokens, start, i);
@@ -136,7 +134,6 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 		node->rule = command;
 		node->left = 0;
 		node->right = 0;
-		i = start;
 		if (create_args(tokens, start, end, node) == 0)
 			return (0);
 	}

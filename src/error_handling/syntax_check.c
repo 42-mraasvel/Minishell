@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:59:07 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:25:18 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	syntax_check(t_data *data)
 	i = 0;
 	while (i < data->tokens->nmemb)
 	{
-		
+		i++;
 	}
 	return (0);
 }

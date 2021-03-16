@@ -1,1 +1,1 @@
-echo $LOGNAME "$LOGNAME" '$LOGNAME'
+echo 1234 > 1 ; ls 
