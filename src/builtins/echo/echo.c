@@ -6,7 +6,7 @@
 /*   By: tel-bara <tel-bara@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 18:56:32 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:00:29 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/16 20:18:45 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	print_args(char **args, int	newline)
 		i = 2;
 	while (args[i])
 	{
-		ret = ft_putstr(args);
+		ret = ft_putstr(args[i]);
 		if (ret == -1)
 			return (-1);
 		if (args[i + 1])
@@ -51,7 +51,7 @@ int	ft_echo(char **args)
 		else
 			ret = print_args(args, 1);
 		if (ret == -1)
-			exit(-1);
+			exit(1);
 	}
 	exit(0);
 }

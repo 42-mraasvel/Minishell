@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/16 20:14:51 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/16 20:41:28 by tel-bara      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS2 = env echo
+SUBDIRS2 = env echo pwd
 SUBDIRS = executor lexer error_handling expander string_vec utils builtins $(addprefix builtins/, $(SUBDIRS2))
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes

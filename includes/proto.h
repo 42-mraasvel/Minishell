@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:15:03 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 20:41:47 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		call_builtins(t_data *data, t_node *node);
 
 int		ft_echo(char **args);
 int		ft_env(t_data *data);
+int		ft_pwd(char **args);
 
 /* error part : exit_program.c */
 
