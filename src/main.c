@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 20:15:23 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 13:59:41 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	end_close(void)
 	close(STDERR_FILENO);
 }
 
-#ifdef __APPLE
+#ifdef __APPLE__
 
 char	**get_envp(void)
 {
