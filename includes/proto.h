@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:55:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/16 16:12:14 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	expand_word(t_data *data, t_token *token);
 /* Some Tree Functions To Test Executor */
 
 t_node	*create_tree(t_vect *tokens);
+t_node	*add_node(t_vect *tokens, size_t start, size_t end);
 
 t_node	*test_parser(void);
 
