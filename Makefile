@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/16 20:41:28 by tel-bara      ########   odam.nl          #
+#    Updated: 2021/03/16 22:37:36 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 OBJDIR = obj
 SRCDIR = src
 SUBDIRS2 = env echo pwd
-SUBDIRS = executor lexer error_handling expander string_vec utils builtins $(addprefix builtins/, $(SUBDIRS2))
+SUBDIRS = executor lexer error_handling expander string_vec utils builtins parsing $(addprefix builtins/, $(SUBDIRS2))
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -35,7 +35,7 @@ vpath %.o $(OBJDIR)
 vpath %.h $(IDIR)
 
 # compilation
-CC = clang
+CC = gcc
 IFLAGS = -I$(IDIR) -I$(LIBFTDIR) -I$(LIBVECTDIR)
 DFLAGS = -g -fsanitize=address
 

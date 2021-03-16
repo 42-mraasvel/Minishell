@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 18:49:13 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/16 22:34:52 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 	if (node == 0)
 		return (0);
 	if (!check_semicolon(tokens, start, end, node)
-		|| !check_pipe(tokens, start, end, node))
+		&& !check_pipe(tokens, start, end, node))
 	{
 		node->rule = command;
 		node->left = 0;
