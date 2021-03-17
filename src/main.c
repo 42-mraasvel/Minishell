@@ -6,10 +6,11 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:59:41 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/17 13:01:45 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // rm
 #include <unistd.h>
 #include "libft.h"
 #include "proto.h"
@@ -24,24 +25,6 @@ void	end_close(void)
 	close(STDERR_FILENO);
 }
 
-#ifdef __APPLE__
-
-char	**get_envp(void)
-{
-	extern char	**environ;
-
-	return (environ);
-}
-
-#else
-
-char	**get_envp(void)
-{
-	return (__environ);
-}
-
-#endif
-
 int	main (void)
 {
 	t_data	data;
@@ -51,8 +34,12 @@ int	main (void)
 	if (data.exec_errors == NULL)
 		exit_program(malloc_error, NULL);
 	data.error.errnum = success;
-	data.envp = get_envp();
+	if (get_envp(&data) == -1)
+		exit_program(malloc_error, "OOM for env copy");
 	prompt(&data);
+
+	printf("Returning from main...\n");
+	ft_free_split(data.envp);
 	vect_free(data.exec_errors, NULL);
 	end_close();
 	return (0);

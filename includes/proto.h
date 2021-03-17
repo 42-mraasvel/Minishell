@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:41:47 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/17 12:54:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ t_bool	ismeta(char c);
 t_bool	isquote(char c);
 t_bool	isalphanumscore(char c);
 t_bool	isalphascore(char c);
+t_bool	isvalidvar(char *var);
 
 /* Some wrappers, quality of life functions */
 
 void	*malloc_guard(void *malloc_return);
 char	*get_path(void);
 int		file_exists(char *filename);
+
+/* Utils */
+
+int	get_envp(t_data *data);
 
 /* Error Handling */
 
@@ -87,6 +92,7 @@ int		call_builtins(t_data *data, t_node *node);
 int		ft_echo(char **args);
 int		ft_env(t_data *data);
 int		ft_pwd(char **args);
+int		ft_unset(t_data *data, char **args);
 
 /* error part : exit_program.c */
 

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 19:37:51 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 19:42:22 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/17 12:22:48 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,18 @@ t_bool	isquote(char c)
 	if (c == '\'' || c == '"')
 		return (true);
 	return (false);
+}
+
+t_bool	isvalidvar(char *var)
+{
+	if (!isalphascore(*var))
+		return (false);
+	var++;
+	while (*var)
+	{
+		if (!isalphanumscore(*var))
+			return (false);
+		var++;
+	}
+	return (true);
 }
