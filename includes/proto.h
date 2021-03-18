@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/17 12:54:04 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 09:34:30 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "libvect.h"
 # include "structs.h"
 # include "lexer.h"
-
 
 int		prompt(t_data *data);
 
@@ -39,7 +38,6 @@ t_bool	ismeta(char c);
 t_bool	isquote(char c);
 t_bool	isalphanumscore(char c);
 t_bool	isalphascore(char c);
-t_bool	isvalidvar(char *var);
 
 /* Some wrappers, quality of life functions */
 
@@ -49,7 +47,7 @@ int		file_exists(char *filename);
 
 /* Utils */
 
-int	get_envp(t_data *data);
+int		get_envp(t_data *data);
 
 /* Error Handling */
 
@@ -93,6 +91,13 @@ int		ft_echo(char **args);
 int		ft_env(t_data *data);
 int		ft_pwd(char **args);
 int		ft_unset(t_data *data, char **args);
+int		ft_export(t_data *data, char **args);
+
+/* Env Utils */
+
+t_bool	isvalidvar(char *var);
+t_bool	isvalidvar_asign(char *arg);
+t_bool	varinargs(char *var, char **args, char arg_end);
 
 /* error part : exit_program.c */
 

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/17 12:13:38 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/17 13:19:03 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 08:57:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,6 @@ static size_t	count_vars(t_data *data, char **args)
 	return (i);
 }
 
-static t_bool	varinargs(char *var, char **args)
-{
-	size_t	i;
-
-	while (*args)
-	{
-		i = 0;
-		while (var[i] != '=')
-		{
-			if (var[i] != (*args)[i])
-				break ;
-			i++;
-		}
-		if (var[i] == '=' && (*args)[i] == '\0')
-			return (true);
-		args++;
-	}
-	return (false);
-}
-
 static char	**remove_vars(t_data *data, char **args)
 {
 	size_t	size;
@@ -79,7 +59,7 @@ static char	**remove_vars(t_data *data, char **args)
 	size = 0;
 	while (data->envp[size] != NULL)
 	{
-		if (!varinargs(data->envp[size], args))
+		if (!varinargs(data->envp[size], args, '\0'))
 		{
 			new_env[i] = ft_strdup(data->envp[size]);
 			if (new_env[i] == NULL)
@@ -112,6 +92,8 @@ int	ft_unset(t_data *data, char **args)
 	char	**new_env;
 
 	data->exit_status = 0;
+	if (*args == NULL)
+		return (data->exit_status);
 	new_env = remove_vars(data, args + 1);
 	if (data->error.errnum != success)
 		return (ft_unset_error(data, NULL, 2));

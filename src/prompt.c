@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:08:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/17 22:04:39 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	process_cli(char *line, t_data *data)
 		vect_free(data->tokens, NULL);
 		return (-1);
 	}
-	print_tokens(data->tokens);
 
 	data->root = create_tree(data->tokens);
 	if (data->root == NULL)
