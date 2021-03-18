@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 09:53:43 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 15:39:22 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "proto.h"
 #include "structs.h"
+#include <limits.h>
 
 void	test_execve(void);
 
@@ -37,6 +38,7 @@ int	main (void)
 	if (get_envp(&data) == -1)
 		exit_program(malloc_error, "OOM for env copy");
 	prompt(&data);
+
 
 	printf("Returning from main...\n");
 	ft_free_split(data.envp);

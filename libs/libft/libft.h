@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/24 19:27:20 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/14 22:47:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 14:57:10 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char				*ft_llutoa(unsigned long long nbr, int min_len);
 unsigned long long	ft_atoull(char *str);
 double				ft_atof(char *str);
 unsigned long long	ft_atoull_base(const char *str, int base);
+long long int		ft_strtoll(const char *nptr);
 
 /*
 ** math functions

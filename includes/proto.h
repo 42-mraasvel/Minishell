@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 09:34:30 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 15:02:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		ft_env(t_data *data);
 int		ft_pwd(char **args);
 int		ft_unset(t_data *data, char **args);
 int		ft_export(t_data *data, char **args);
+int		ft_exit(t_data *data, char **args);
 
 /* Env Utils */
 
