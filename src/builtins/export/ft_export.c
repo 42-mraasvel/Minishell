@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/17 13:19:37 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 09:52:13 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:33:38 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_export(t_data *data, char **args)
 
 	data->exit_status = 0;
 	if (*(args + 1) == NULL)
-		return (ft_env(data));
+		return (ft_env(data, args));
 	new_env = add_vars(data, args + 1);
 	if (new_env == NULL)
 	{
