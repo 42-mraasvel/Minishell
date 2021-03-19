@@ -1,0 +1,12 @@
+
+
+a ; b | c
+
+- Error messages : "command not found" are flushed at semicolons
+- Any syscall error should be "perror'ed" with "-bash: <cmdname>" prefix
+
+
+Errors:
+
+	"<cmdname>: command not found\n"
+	"-bash: " perror(filename); (If trying to open a file/executable that doesn't exist)
