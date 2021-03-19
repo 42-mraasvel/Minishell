@@ -6,12 +6,11 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 19:33:23 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/19 08:33:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:18:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "structs.h"
 #include <stdlib.h>
 #include <stdio.h>
 
