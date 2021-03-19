@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/17 12:49:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 18:44:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_node
 {
 	t_rule			rule;
 	char			**args;
+	char			*exec_path;
 	int				fds[2];
 	struct s_node	*right;
 	struct s_node	*left;

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 15:39:22 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/18 18:42:00 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ void	end_close(void)
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
+}
+
+void	test(t_data *data)
+{
+	static char	*args[] = {
+		"cat",
+		"1",
+		NULL
+	};
+
+	if (chdir("/usr/bin") == -1)
+		perror("chdir");
+	if (execve(args[0], args, data->envp) == -1)
+		perror("execve");
 }
 
 int	main (void)
