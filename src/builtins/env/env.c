@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:37:10 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:18:47 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:18:39 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** Prototype maybe like : ft_env(char **args, char **envp);
 */
 
-int	ft_env(t_data *data)
+int	ft_env(t_data *data, char **args)
 {
 	size_t	i;
 

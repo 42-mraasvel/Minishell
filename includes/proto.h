@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 15:02:57 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:19:20 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int		apply_prefix_tree_data(
 
 int		call_builtins(t_data *data, t_node *node);
 
-int		ft_echo(char **args);
-int		ft_env(t_data *data);
-int		ft_pwd(char **args);
+int		ft_echo(t_data *data, char **args);
+int		ft_env(t_data *data, char **args);
+int		ft_pwd(t_data *data, char **args);
 int		ft_unset(t_data *data, char **args);
 int		ft_export(t_data *data, char **args);
 int		ft_exit(t_data *data, char **args);

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 19:33:23 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 22:16:33 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:18:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	pwd_perror(char *str)
 	return (1);
 }
 
-int	ft_pwd(char **args)
+int	ft_pwd(t_data *data, char **args)
 {
 	char	*path;
 	int		error;

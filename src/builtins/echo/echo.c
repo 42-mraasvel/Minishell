@@ -3,14 +3,15 @@
 /*                                                        ::::::::            */
 /*   echo.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tel-bara <tel-bara@student.codam.nl>         +#+                     */
+/*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 18:56:32 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:18:45 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/19 08:19:34 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "structs.h"
 #include "libft.h"
 
 static int	print_args(char **args, int	newline)
@@ -40,7 +41,7 @@ static int	print_args(char **args, int	newline)
 	return (0);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(t_data *data, char **args)
 {
 	int	ret;
 
