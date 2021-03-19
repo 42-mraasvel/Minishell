@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 13:19:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 15:07:47 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 12:08:47 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	exit_normal(char *arg)
 {
 	long long int	exit_status;
 
+	errno = 0;
 	exit_status = ft_strtoll(arg);
 	if (errno == ERANGE)
 		exit(exit_perror(arg, 2));

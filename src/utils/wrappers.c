@@ -6,13 +6,21 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 12:49:21 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/19 09:19:00 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <sys/stat.h>
+#include "libft.h"
 #include "proto.h"
+
+void	ft_perror(char *str)
+{
+	ft_putstr_fd("-bash: ", STDERR_FILENO);
+	perror(str);
+}
 
 /*
 ** Checks malloc return value
