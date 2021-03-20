@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 10:10:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 14:13:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 11:49:56 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ static char	**get_path_strings(t_data *data)
 	path = getenv("PATH");
 	if (path == NULL)
 		return (NULL);
-	paths = ft_split(path, ':');
-	if (paths == NULL)
-		return (set_err_data_null(data, malloc_error));
+	paths = malloc_guard(ft_split(path, ':'));
 	return (paths);
 }
 
@@ -38,9 +36,7 @@ static char	*cat_path(char *path, char *name)
 	char	*result;
 
 	len = ft_strlen(path) + ft_strlen(name) + 1;
-	result = ft_calloc((len + 1), sizeof(char));
-	if (result == NULL)
-		return (NULL);
+	result = malloc_guard(ft_calloc((len + 1), sizeof(char)));
 	ft_strlcpy(result, path, len + 1);
 	ft_strlcat(result, "/", len + 1);
 	ft_strlcat(result, name, len + 1);
@@ -51,43 +47,39 @@ static char	*cat_path(char *path, char *name)
 ** 2 = File exists but cannot be accessed (replace argc)
 ** 1 = File doesn't exist
 ** 0 = File Exists and can be accessed (replace argc)
-** -1 = Syscall Error
 */
 
 static int	stat_path(t_data *data, char *pathname)
 {
 	struct stat	buf;
 
+	errno = 0;
 	if (stat(pathname, &buf) == 0)
 		return (0);
-	if (errno != ENOENT && errno != EACCES)
-		return (set_err_data_int(data, malloc_error, -1));
 	if (errno == EACCES)
 		return (2);
 	return (1);
 }
 
-static int	check_path(t_data *data, char **args, char **path, char *name)
+static int	check_path(t_data *data, char **dst, char **path, char *name)
 {
-	size_t	i;
 	char	*pathname;
+	size_t	i;
 	int		ret;
 
 	i = 0;
 	while (path[i] != NULL)
 	{
 		pathname = cat_path(path[i], name);
-		if (pathname == NULL)
-			return (set_err_data_int(data, malloc_error, -1));
 		ret = stat_path(data, pathname);
 		if (ret == 0 || ret == 2)
 		{
-			free(args[0]);
-			args[0] = pathname;
+			free(*dst);
+			*dst = pathname;
 		}
 		else
 			free(pathname);
-		if (ret == 0 || ret == -1)
+		if (ret == 0)
 			break ;
 		i++;
 	}
@@ -105,17 +97,17 @@ static int	check_path(t_data *data, char **args, char **path, char *name)
 **	Malloc Error
 */
 
-int	lookup_path(t_data *data, char **args, char *name)
+void	search_path(t_data *data, char **dst, char *name)
 {
 	char	**path;
-	int		ret;
 
 	path = get_path_strings(data);
 	if (path == NULL)
-		return (-1);
-	ret = 0;
-	if (check_path(data, args, path, name) == -1)
-		ret = -1;
+	{
+		*dst = malloc_guard(ft_strdup(name));
+		return ;
+	}
+	if (check_path(data, dst, path, name) == -1)
+		*dst = malloc_guard(ft_strdup(name));
 	ft_free_split(path);
-	return (ret);
 }

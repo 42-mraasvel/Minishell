@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 12:06:27 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 09:07:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,34 +70,21 @@ static t_builtin	get_builtin(char *name)
 **	3. Close the one in node because they're unused
 */
 
-//! When back: slack + error checking these syscalls (dup, dup2, close)
 static int	set_fds_builtin(t_data *data, t_node *node, int fds[2])
 {
 	if (node->fds[0] != -1)
 	{
 		fds[0] = dup(STDIN_FILENO);
-		if (fds[0] == -1)
-			return (-1);
-		if (dup2(node->fds[0], STDIN_FILENO) == -1)
-		{
-			close(fds[0]);
-			fds[0] = -1;
-			return (-1);
-		}
+		dup2(node->fds[0], STDIN_FILENO);
 		close(node->fds[0]);
+		node->fds[0] = -1;
 	}
 	if (node->fds[1] != -1)
 	{
 		fds[1] = dup(STDOUT_FILENO);
-		if (fds[1] == -1)
-			return (-1);
-		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
-		{
-			close(fds[1]);
-			fds[1] = -1;
-			return (-1);
-		}
+		dup2(node->fds[1], STDOUT_FILENO);
 		close(node->fds[1]);
+		node->fds[1] = -1;
 	}
 }
 
@@ -116,8 +103,7 @@ static int	reset_fds_builtin(int fds[2])
 }
 
 /*
-** This should dup2 file descriptors
-** Not fork the process though
+** Doesn't fork the process and calls builtin functions
 */
 
 int	exec_builtin(t_node *node, t_data *data)
@@ -131,21 +117,5 @@ int	exec_builtin(t_node *node, t_data *data)
 	set_fds_builtin(data, node, fd_copy);
 	data->exit_status = fnct(data, node->args);
 	reset_fds_builtin(fd_copy);
-	if (data->error.errnum != success)
-		;//! Handle error output
 	return (data->exit_status);
-}
-
-/*
-** Array of pointers would be nice I guess
-*/
-
-int	call_builtins(t_data *data, t_node *node)
-{
-	if (execve(node->args[0], node->args, data->envp) == -1)
-	{
-		perror("-bash");
-		exit_program(syscall_error, "Execve Error in child process");
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 09:19:15 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 08:14:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_bool	isalphascore(char c);
 /* Some wrappers, quality of life functions */
 
 void	*malloc_guard(void *malloc_return);
+void	*ft_malloc(size_t size);
 char	*get_path(void);
 int		file_exists(char *filename);
 

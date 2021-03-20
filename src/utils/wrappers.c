@@ -6,11 +6,12 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 09:19:00 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 11:05:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stddef.h>
 #include <sys/stat.h>
 #include "libft.h"
@@ -30,8 +31,16 @@ void	ft_perror(char *str)
 void	*malloc_guard(void *malloc_return)
 {
 	if (malloc_return == NULL)
-		exit_program(error, "Malloc Error");
+	{
+		perror("-bash: malloc");
+		exit(EXIT_FAILURE);
+	}
 	return (malloc_return);
+}
+
+void	*ft_malloc(size_t size)
+{
+	return (malloc_guard(malloc(size)));
 }
 
 /*

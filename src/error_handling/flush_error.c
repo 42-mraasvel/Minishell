@@ -6,13 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 12:47:25 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 13:07:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 11:44:52 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "libft.h"
 #include "structs.h"
 #include "proto.h"
 
@@ -22,11 +23,25 @@ void	delete_errordata(void *error)
 		free(((t_error*)error)->err_str);
 }
 
+static void	stat_error(char *str)
+{
+	struct stat	buf;
+
+	stat(str, &buf);
+	ft_putstr_fd("-bash: ", STDERR_FILENO);
+	perror(str);
+}
+
+static void	cmd_found_error(char *str)
+{
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+}
+
 void	flush_error(t_data *data)
 {
 	size_t		i;
 	t_error		*err;
-	struct stat	buf;
 
 	i = 0;
 	while (i < data->exec_errors->nmemb)
@@ -34,8 +49,10 @@ void	flush_error(t_data *data)
 		err = ((t_error*)(data->exec_errors->table)) + i;
 		if (err->err_str != NULL)
 		{
-			stat(err->err_str, &buf);
-			perror(err->err_str);
+			if (ft_strchr(err->err_str, '/') || getenv("PATH") == NULL)
+				stat_error(err->err_str);
+			else
+				cmd_found_error(err->err_str);
 		}
 		else
 			perror("Error");

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 14:14:41 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 11:53:09 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	tree_free(t_node *root)
 		tree_free(root->left);
 	if (root->right != NULL)
 		tree_free(root->right);
-	// if (root->rule == command)
-	// 	free(root->args);
-	if (root->rule == command)
+	if (root->rule == command && root->exec_path != NULL)
+		free(root->exec_path);
+	if (root->rule == command && root->args != NULL)
 		ft_free_split(root->args);
 	if (root->rule == command && root->fds[0] != -1)
 		close(root->fds[0]);

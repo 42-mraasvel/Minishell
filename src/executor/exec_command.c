@@ -5,62 +5,20 @@
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/12 11:28:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 08:45:54 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/20 12:37:07 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
+#include <stdio.h> // rm
 #include <stdlib.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include "header.h"
-#include "proto.h"
 #include "libft.h"
+#include "executor.h"
 #include "structs.h"
+#include "proto.h"
 
-static int	close_fds(t_node *node)
-{
-	if (node->fds[0] != -1)
-		if (close(node->fds[0]) == -1)
-			return (-1);
-	if (node->fds[1] != -1)
-		return (close(node->fds[1]));
-	return (0);
-}
-
-static int	set_fds(t_node *node)
-{
-	if (node->fds[0] != -1)
-	{
-		if (dup2(node->fds[0], STDIN_FILENO) == -1)
-			return (-1);
-		if (close(node->fds[0]) == -1)
-			return (-1);
-	}
-	if (node->fds[1] != -1)
-	{
-		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
-			return (-1);
-		if (close(node->fds[1]) == -1)
-			return (-1);
-	}
-	return (0);
-}
-
-/*
-** 1. Find if command exists in any specified PATH
-** 2. Expand all arguments in the ARGS string
-** 3. Fork Process
-** 4. Replace stdin/stdout file descriptors
-** 5. execute command with arguments
-** 6. Wait until command is finished and check exit status (for error etc)
-**
-** ERRORS ARE NOT HANDLED YET
-*/
-
-void	print_command(t_node *node)
+void	print_command(t_node *node) // rm this function
 {
 	int	i;
 
@@ -76,57 +34,79 @@ void	print_command(t_node *node)
 	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
 }
 
-static int	find_exec(char	**args, t_data *data)
+static void	close_fds(t_node *node)
 {
-	char	*original;
-	int		ret;
-
-	ret = 0;
-	if (ft_strchr(args[0], '/') != NULL)
-		return (0);
-	original = ft_strdup(args[0]);
-	if (original == NULL)
-		return (set_err_data_int(data, malloc_error, -1));
-	if (lookup_path(data, args, original) == -1)
-		ret = -1;
-	if (args[0] != original)
-		free(original);
-	return (ret);
+	if (node->fds[0] != -1)
+		close(node->fds[0]);
+	if (node->fds[1] != -1)
+		close(node->fds[1]);
+	node->fds[0] = -1;
+	node->fds[1] = -1;
 }
 
-int	exec_command(t_node *node, t_data *data)
+static int	cmd_findpath(t_node *node, t_data *data)
+{
+	node->exec_path = NULL;
+	if (ft_strchr(node->args[0], '/') != NULL)
+		node->exec_path = malloc_guard(ft_strdup(node->args[0]));
+	else
+		search_path(data, &node->exec_path, node->args[0]);
+	return (0);
+}
+
+static void	set_redirection(t_node *node)
+{
+	if (node->fds[0] != -1)
+	{
+		dup2(node->fds[0], STDIN_FILENO);
+		close(node->fds[0]);
+	}
+	if (node->fds[1] != -1)
+	{
+		dup2(node->fds[1], STDOUT_FILENO);
+		close(node->fds[1]);
+	}
+}
+
+static int	finalize_cmd(t_node *node, t_data *data)
 {
 	int	pid;
 	int	status;
 
-	printf("Executing Command:");
-	print_command(node);
-
-	find_exec(node->args, data);
-	if (data->error.errnum != success)
-		return (-1);
-	if (!file_exists(node->args[0]))
-		return (set_error_vec(data, cmd_not_found, node->args[0], 0));
-	// We have to check if the command is a directory or not.
 	pid = fork();
 	if (pid < 0)
-		return (set_err_data_int(data, syscall_error, -1));
+	{
+		ft_perror("fork");
+		close_fds(node);
+		return (-1);
+	}
 	if (pid == 0)
 	{
-		if (set_fds(node) == -1)
-			return (set_err_data_int(data, syscall_error, -1));
-		//! Here we will our own functions if needed
-		call_builtins(data, node);
-		// if (execve(node->args[0], node->args, data->envp) == -1)
-		// 	exit_program(syscall_error, "Execve Error in child process");
+		set_redirection(node);
+		if (execve(node->exec_path, node->args, data->envp) == -1)
+		{
+			ft_perror("execve");
+			exit(EXIT_FAILURE);
+		}
 	}
-	if (close_fds(node) == -1)
-		return (set_err_data_int(data, syscall_error, -1));
-
+	close_fds(node);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
-	// This should be used to get and set the exit status of the child process,
-	// also options for additional instructions like waiting only for child to exit
 	return (0);
+}
+
+int	exec_command(t_node *node, t_data *data)
+{
+	printf("Executing Command: ");
+	print_command(node);
+	if (isbuiltin(node->args[0]) != -1)
+		return (exec_builtin(node, data));
+	cmd_findpath(node, data);
+	if (!ft_strchr(node->exec_path, '/') && getenv("PATH") || !file_exists(node->exec_path))
+	{
+		close_fds(node);
+		return (set_error_vec(data, cmd_not_found, node->exec_path, 0));
+	}
+	return (finalize_cmd(node, data));
 }
