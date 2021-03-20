@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:37:07 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 12:43:40 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	exec_command(t_node *node, t_data *data)
 {
 	printf("Executing Command: ");
 	print_command(node);
+	node->exec_path = NULL;
 	if (isbuiltin(node->args[0]) != -1)
 		return (exec_builtin(node, data));
 	cmd_findpath(node, data);
