@@ -6,13 +6,15 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:43:40 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 16:17:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
+#include <errno.h> // rm
 #include <stdlib.h>
 #include <sys/wait.h>
+#include "header.h"
 #include "libft.h"
 #include "executor.h"
 #include "structs.h"
@@ -85,7 +87,7 @@ static int	finalize_cmd(t_node *node, t_data *data)
 		set_redirection(node);
 		if (execve(node->exec_path, node->args, data->envp) == -1)
 		{
-			ft_perror("execve");
+			ft_perror(node->exec_path);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -96,16 +98,20 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	return (0);
 }
 
+/*
+** Not yet happening:
+**	1. Signal handling
+*/
+
 int	exec_command(t_node *node, t_data *data)
 {
-	printf("Executing Command: ");
-	print_command(node);
 	node->exec_path = NULL;
 	if (isbuiltin(node->args[0]) != -1)
 		return (exec_builtin(node, data));
 	cmd_findpath(node, data);
 	if (!ft_strchr(node->exec_path, '/') && getenv("PATH") || !file_exists(node->exec_path))
 	{
+		data->exit_status = CMD_NOT_FOUND;
 		close_fds(node);
 		return (set_error_vec(data, cmd_not_found, node->exec_path, 0));
 	}

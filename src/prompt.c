@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/17 22:04:39 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 17:22:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	process_cli(char *line, t_data *data)
 	data->tokens = lexer(line, data);
 	if (data->tokens == NULL)
 		return (0);
-	print_tokens(data->tokens);
+	// print_tokens(data->tokens);
 
-
-	printf("\nEXPANDER\n\n");
+	// printf("\nEXPANDER\n\n");
 	expander(data);
 	if (data->error.err_str != success)
 	{
@@ -46,7 +45,7 @@ int	process_cli(char *line, t_data *data)
 
 	if (data->root != NULL)
 	{
-		print_tree_depth(data->root, 0);
+		// print_tree_depth(data->root, 0);
 		executor(data->root, data);
 	}
 
@@ -64,7 +63,7 @@ int	prompt(t_data *data)
 	ret = 1;
 	while (ret > 0)
 	{
-		write(1, MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT));
+		write(1, "\r" MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT) + 1);
 		ret = ft_getline(0, &line);
 		if (ret < 0)
 			exit_program(error, "Getline error");
@@ -76,6 +75,5 @@ int	prompt(t_data *data)
 		data->error.errnum = success;
 		free(line);
 	}
-	write(1, "\n", 1);
 	return (success);
 }

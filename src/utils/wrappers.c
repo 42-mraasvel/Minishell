@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 11:05:11 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 16:11:30 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	file_exists(char *filename)
 	int			ret;
 
 	ret = stat(filename, &buf);
-	if (ret == 0)
+	if (ret == 0 && S_ISREG(buf.st_mode))
 		return (true);
 	return (false);
 }

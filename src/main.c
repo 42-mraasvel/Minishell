@@ -6,12 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 18:42:00 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 20:14:51 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
+#include <signal.h>
 #include <unistd.h>
+#include "header.h"
 #include "libft.h"
 #include "proto.h"
 #include "structs.h"
@@ -26,23 +28,22 @@ void	end_close(void)
 	close(STDERR_FILENO);
 }
 
-void	test(t_data *data)
-{
-	static char	*args[] = {
-		"cat",
-		"1",
-		NULL
-	};
+/*
+** Should set exit status for example
+*/
 
-	if (chdir("/usr/bin") == -1)
-		perror("chdir");
-	if (execve(args[0], args, data->envp) == -1)
-		perror("execve");
+void	sighandler(int sig)
+{
+	printf("SIG: %d\n", sig);
+	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
 }
 
 int	main (void)
 {
 	t_data	data;
+
+	signal(SIGINT, sighandler); // ctrl-C
+	signal(SIGQUIT, sighandler); // ctrl-\
 
 	ft_bzero(&data, sizeof(data));
 	data.exec_errors = vect_init(0, sizeof(t_error));
@@ -52,11 +53,9 @@ int	main (void)
 	if (get_envp(&data) == -1)
 		exit_program(malloc_error, "OOM for env copy");
 	prompt(&data);
-
-
-	printf("Returning from main...\n");
 	ft_free_split(data.envp);
 	vect_free(data.exec_errors, NULL);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	end_close();
-	return (0);
+	return (data.exit_status);
 }

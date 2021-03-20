@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 12:47:25 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 11:44:52 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 16:13:20 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ void	delete_errordata(void *error)
 static void	stat_error(char *str)
 {
 	struct stat	buf;
+	int			ret;
 
-	stat(str, &buf);
+	ret = stat(str, &buf);
 	ft_putstr_fd("-bash: ", STDERR_FILENO);
-	perror(str);
+	if (ret == 0 && !S_ISREG(buf.st_mode))
+	{
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+	}
+	else
+		perror(str);
 }
 
 static void	cmd_found_error(char *str)

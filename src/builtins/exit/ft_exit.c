@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 13:19:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 12:08:47 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 13:16:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,15 @@ static int	exit_normal(char *arg)
 int	ft_exit(t_data *data, char **args)
 {
 	if (args[1] == NULL)
-		exit(data->exit_status);
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		exit((unsigned char)data->exit_status);
+	}
 	else if (!exit_isnumeric_arg(args[1]))
 		exit(exit_perror(args[1], 2));
 	else if (args[2] != NULL)
 		data->exit_status = exit_perror(NULL, 1);
 	else
-		exit(exit_normal(args[1]));
+		exit_normal(args[1]);
 	return (data->exit_status);
 }

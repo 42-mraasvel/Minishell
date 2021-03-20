@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/18 13:19:44 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/20 12:54:32 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 # DIRS
 OBJDIR = obj
 SRCDIR = src
-SUBDIRS2 = env echo pwd unset export exit
+SUBDIRS2 = env echo pwd unset export exit cd
 SUBDIRS = executor lexer error_handling expander string_vec utils builtins parsing $(addprefix builtins/, $(SUBDIRS2))
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
