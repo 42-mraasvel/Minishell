@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/24 19:27:20 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 14:57:10 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 12:39:09 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char				**ft_split_token(const char *src, const char *token);
 size_t				ft_count_strings(char **strings);
 char				*ft_strstr(const char *haystack, const char *needle);
 void				ft_free_split(char **strings);
-int					ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(const char *s1, const char *s2);
 void				ft_swap_ptr(void *a, void *b);
 void				ft_strlowcase(char *str);
 void				ft_strupcase(char *str);
