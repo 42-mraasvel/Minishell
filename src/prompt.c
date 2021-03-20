@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 17:22:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/20 20:34:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,21 @@ void	delete_token(void *token)
 
 int	process_cli(char *line, t_data *data)
 {
-	//! Syntax will be checked by the lexer
 	data->tokens = lexer(line, data);
 	if (data->tokens == NULL)
 		return (0);
-	// print_tokens(data->tokens);
-
-	// printf("\nEXPANDER\n\n");
 	expander(data);
 	if (data->error.err_str != success)
 	{
 		vect_free(data->tokens, NULL);
 		return (-1);
 	}
-
 	data->root = create_tree(data->tokens);
 	if (data->root == NULL)
 		perror("-bash");
-
-	if (data->root != NULL)
-	{
-		// print_tree_depth(data->root, 0);
+	else
 		executor(data->root, data);
-	}
-
 	vect_free(data->tokens, delete_token);
-	// vect_free(data->tokens, NULL);
 	tree_free(data->root);
 	return (0);
 }
