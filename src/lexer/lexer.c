@@ -6,20 +6,24 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 23:24:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 16:37:54 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:31:56 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "header.h"
 #include "proto.h"
 
 static t_vect	*check_tokens(t_vect *tokens, t_data *data)
 {
-	if (
-		data->error.errnum != success
-		|| tokens->nmemb == 0
-		|| syntax_check(data, tokens) == syntax_error)
+	if (data->error.errnum != success || tokens->nmemb == 0)
 	{
+		vect_free(tokens, NULL);
+		return (NULL);
+	}
+	if (syntax_check(data, tokens) == syntax_error)
+	{
+		data->exit_status = MISUSE_BUILTINS;
 		vect_free(tokens, NULL);
 		return (NULL);
 	}

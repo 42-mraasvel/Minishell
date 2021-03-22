@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 13:29:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 21:31:11 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:26:08 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	expander(t_data *data)
 	t_token	*table;
 
 	i = 0;
-	table = (t_token*)data->tokens->table;
+	table = (t_token *)data->tokens->table;
 	while (i < data->tokens->nmemb)
 	{
 		if (table[i].type == word)

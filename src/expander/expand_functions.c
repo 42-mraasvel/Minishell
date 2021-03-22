@@ -6,11 +6,12 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 09:28:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 13:11:04 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:31:30 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h> // rm
 #include "libft.h"
 #include "expander.h"
 #include "proto.h"

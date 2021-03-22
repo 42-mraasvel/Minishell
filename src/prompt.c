@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:21:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:31:36 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	process_cli(char *line, t_data *data)
 	}
 	data->root = create_tree(data->tokens);
 	if (data->root == NULL)
-		data->exit_status = 2;
+		data->exit_status = GENERAL_ERROR;
 	else
 		executor(data->root, data);
 	vect_free(data->tokens, delete_token);
