@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 20:34:28 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:21:51 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	delete_token(void *token)
 {
-	if (((t_token*)token)->type == operator)
-		free(((t_token*)token)->start);
+	if (((t_token *)token)->type == operator)
+		free(((t_token *)token)->start);
 }
 
 int	process_cli(char *line, t_data *data)
@@ -36,7 +36,7 @@ int	process_cli(char *line, t_data *data)
 	}
 	data->root = create_tree(data->tokens);
 	if (data->root == NULL)
-		perror("-bash");
+		data->exit_status = 2;
 	else
 		executor(data->root, data);
 	vect_free(data->tokens, delete_token);
@@ -52,7 +52,7 @@ int	prompt(t_data *data)
 	ret = 1;
 	while (ret > 0)
 	{
-		write(1, "\r" MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT) + 1);
+		write(1, MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT));
 		ret = ft_getline(0, &line);
 		if (ret < 0)
 			exit_program(error, "Getline error");

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:13:11 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:17:36 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	syntax_check(t_data *data, t_vect *tokens)
 	t_optype	prev;
 
 	i = 0;
-	table = (t_token*)tokens->table;
+	data->exit_status = 1;
+	table = (t_token *)tokens->table;
 	prev = non_operator;
 	while (i < tokens->nmemb)
 	{
@@ -86,5 +87,6 @@ int	syntax_check(t_data *data, t_vect *tokens)
 		prev = table[i].optype;
 		i++;
 	}
+	data->exit_status = 0;
 	return (success);
 }

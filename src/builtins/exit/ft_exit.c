@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 13:19:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 13:16:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:16:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	exit_perror(char *first, int type)
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		return (255);
 	}
+	return (0);
 }
 
 static int	exit_normal(char *arg)

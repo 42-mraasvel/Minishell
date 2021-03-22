@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 20:14:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:20:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	main (void)
 {
 	t_data	data;
 
-	signal(SIGINT, sighandler); // ctrl-C
-	signal(SIGQUIT, sighandler); // ctrl-\
+	// signal(SIGINT, sighandler); // ctrl-C
+	// signal(SIGQUIT, sighandler); // ctrl-\
 
 	ft_bzero(&data, sizeof(data));
 	data.exec_errors = vect_init(0, sizeof(t_error));

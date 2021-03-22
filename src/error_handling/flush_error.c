@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 12:47:25 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 16:13:20 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:02:36 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	delete_errordata(void *error)
 {
-	if (((t_error*)error)->err_str != NULL)
-		free(((t_error*)error)->err_str);
+	if (((t_error *)error)->err_str != NULL)
+		free(((t_error *)error)->err_str);
 }
 
 static void	stat_error(char *str)
@@ -53,7 +53,7 @@ void	flush_error(t_data *data)
 	i = 0;
 	while (i < data->exec_errors->nmemb)
 	{
-		err = ((t_error*)(data->exec_errors->table)) + i;
+		err = ((t_error *)(data->exec_errors->table)) + i;
 		if (err->err_str != NULL)
 		{
 			if (ft_strchr(err->err_str, '/') || getenv("PATH") == NULL)
