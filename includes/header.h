@@ -6,14 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 15:46:56 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 19:48:42 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:10:37 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
-# define MINISHELL_PROMPT "\033[1;32mmraashell-miniradi\033[0m:$ "
+# define MINISHELL_PROMPT "\033[1;33mmraashell-miniradi\033[0m:$ "
 // # define MINISHELL_PROMPT "\033[1;33mminishell$\033[0m "
 
 # define GENERAL_ERROR 1

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:53:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:17:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	set_fds_builtin(t_data *data, t_node *node, int fds[2])
 		close(node->fds[1]);
 		node->fds[1] = -1;
 	}
+	return (success);
 }
 
 static int	reset_fds_builtin(int fds[2])
@@ -100,6 +101,7 @@ static int	reset_fds_builtin(int fds[2])
 		dup2(fds[1], STDOUT_FILENO);
 		close(fds[1]);
 	}
+	return (success);
 }
 
 /*
