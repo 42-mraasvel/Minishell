@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 16:17:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 18:54:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@ void	print_command(t_node *node) // rm this function
 		i++;
 	}
 	printf("\n");
+	if (node->exec_path != NULL)
+		printf("%s\n", node->exec_path);
 	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
 }
 
 static void	close_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
-		close(node->fds[0]);
+		if (close(node->fds[0]) == -1)
+			ft_perror("close");
 	if (node->fds[1] != -1)
-		close(node->fds[1]);
+		if (close(node->fds[1]) == -1)
+			ft_perror("close");
 	node->fds[0] = -1;
 	node->fds[1] = -1;
 }
@@ -60,13 +64,19 @@ static void	set_redirection(t_node *node)
 {
 	if (node->fds[0] != -1)
 	{
-		dup2(node->fds[0], STDIN_FILENO);
-		close(node->fds[0]);
+		if (dup2(node->fds[0], STDIN_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
+		if (close(node->fds[0]) == -1)
+			ft_perror("close");
+		node->fds[0] = -1;
 	}
 	if (node->fds[1] != -1)
 	{
-		dup2(node->fds[1], STDOUT_FILENO);
-		close(node->fds[1]);
+		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
+		if (close(node->fds[1]) == -1)
+			ft_perror("close");
+		node->fds[1] = -1;
 	}
 }
 
@@ -86,10 +96,7 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	{
 		set_redirection(node);
 		if (execve(node->exec_path, node->args, data->envp) == -1)
-		{
-			ft_perror(node->exec_path);
-			exit(EXIT_FAILURE);
-		}
+			exit_perror(GENERAL_ERROR, node->exec_path);
 	}
 	close_fds(node);
 	waitpid(pid, &status, 0);
@@ -97,11 +104,6 @@ static int	finalize_cmd(t_node *node, t_data *data)
 		data->exit_status = WEXITSTATUS(status);
 	return (0);
 }
-
-/*
-** Not yet happening:
-**	1. Signal handling
-*/
 
 int	exec_command(t_node *node, t_data *data)
 {

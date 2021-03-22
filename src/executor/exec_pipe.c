@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:27:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 09:27:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 17:49:24 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	exec_pipe(t_node *node, t_data *data)
 	t_node	*right_cmd;
 
 	if (node->left == NULL || node->right == NULL)
-		return (-1); // Wouldn't be a valid tree, so error should be given at parsing stage
+		return (-1);
 	if (pipe(fds) == -1)
 		return (set_err_data_int(data, syscall_error, -1));
 	right_cmd = node->right;

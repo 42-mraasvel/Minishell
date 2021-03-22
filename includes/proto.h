@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:53:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 16:06:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_bool	varinargs(char *var, char **args, char arg_end);
 
 void	ft_perror(char *str);
 void	exit_program(t_errnum errnum, char *err_str);
+void	exit_perror(int exit_status, char *str);
 
 /* Printing Stuff */
 

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:14:45 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/22 16:59:07 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	parse_redirect_out(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[1] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
+	node->fds[1] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
 	if (node->fds[1] == -1)
 	{
 		ft_perror(filename->start);
@@ -118,7 +118,7 @@ int	parse_redirect_append(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[1] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
+	node->fds[1] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
 	if (node->fds[1] == -1)
 	{
 		ft_perror(filename->start);

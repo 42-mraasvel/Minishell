@@ -1,1 +1,1 @@
-echo 1234 > 1 ; ls 
+cat < /usr/share/dict/words | grep o

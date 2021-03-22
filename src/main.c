@@ -6,13 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:20:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 19:01:59 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "header.h"
 #include "libft.h"
 #include "proto.h"
@@ -36,6 +37,16 @@ void	sighandler(int sig)
 {
 	printf("SIG: %d\n", sig);
 	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
+}
+
+void	replace_stdin()
+{
+	int fd = open("command.txt", O_RDONLY);
+	if (fd == -1)
+		exit_perror(GENERAL_ERROR, "open");
+	if (dup2(fd, STDIN_FILENO) == -1)
+		exit_perror(GENERAL_ERROR, "dup2");
+	close(fd);
 }
 
 int	main (void)

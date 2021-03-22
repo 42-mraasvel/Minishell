@@ -6,12 +6,13 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:17:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 17:14:38 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
 #include <stdlib.h>
+#include "header.h"
 #include "executor.h"
 #include "libft.h"
 #include "proto.h"
@@ -75,14 +76,20 @@ static int	set_fds_builtin(t_data *data, t_node *node, int fds[2])
 	if (node->fds[0] != -1)
 	{
 		fds[0] = dup(STDIN_FILENO);
-		dup2(node->fds[0], STDIN_FILENO);
+		if (fds[0] == -1)
+			exit_perror(GENERAL_ERROR, "dup");
+		if (dup2(node->fds[0], STDIN_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
 		close(node->fds[0]);
 		node->fds[0] = -1;
 	}
 	if (node->fds[1] != -1)
 	{
 		fds[1] = dup(STDOUT_FILENO);
-		dup2(node->fds[1], STDOUT_FILENO);
+		if (fds[1] == -1)
+			exit_perror(GENERAL_ERROR, "dup");
+		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
 		close(node->fds[1]);
 		node->fds[1] = -1;
 	}
@@ -93,12 +100,14 @@ static int	reset_fds_builtin(int fds[2])
 {
 	if (fds[0] != -1)
 	{
-		dup2(fds[0], STDIN_FILENO);
+		if (dup2(fds[0], STDIN_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
 		close(fds[0]);
 	}
 	if (fds[1] != -1)
 	{
-		dup2(fds[1], STDOUT_FILENO);
+		if (dup2(fds[1], STDOUT_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
 		close(fds[1]);
 	}
 	return (success);
@@ -113,6 +122,8 @@ int	exec_builtin(t_node *node, t_data *data)
 	t_builtin	fnct;
 	int			fd_copy[2];
 
+	fd_copy[0] = -1;
+	fd_copy[1] = -1;
 	fnct = get_builtin(node->args[0]);
 	if (fnct == NULL)
 		return (-1);
