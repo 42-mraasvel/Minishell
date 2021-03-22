@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/16 22:34:52 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/22 11:14:45 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int	parse_redirect_in(t_token *filename, t_node *node, size_t *index)
 	(*index)++;
 	node->fds[0] = open(filename->start, O_RDONLY);
 	if (node->fds[0] == -1)
+	{
+		ft_perror(filename->start);
+		free(filename->start);
 		return (0);
+	}
 	free(filename->start);
 	return (1);
 }
@@ -99,7 +103,11 @@ int	parse_redirect_out(t_token *filename, t_node *node, size_t *index)
 	(*index)++;
 	node->fds[1] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
 	if (node->fds[1] == -1)
+	{
+		ft_perror(filename->start);
+		free(filename->start);
 		return (0);
+	}
 	free(filename->start);
 	return (1);
 }
@@ -112,7 +120,11 @@ int	parse_redirect_append(t_token *filename, t_node *node, size_t *index)
 	(*index)++;
 	node->fds[1] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
 	if (node->fds[1] == -1)
+	{
+		ft_perror(filename->start);
+		free(filename->start);
 		return (0);
+	}
 	free(filename->start);
 	return (1);
 }
@@ -176,14 +188,15 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 	node = (t_node*)malloc_guard(malloc(1 * sizeof(t_node)));
 	if (node == 0)
 		return (0);
+	node->exec_path = 0;
+	node->fds[0] = -1;
+	node->fds[1] = -1;
 	if (!check_semicolon(tokens, start, end, node)
 		&& !check_pipe(tokens, start, end, node))
 	{
 		node->rule = command;
 		node->left = 0;
 		node->right = 0;
-		node->fds[0] = -1;
-		node->fds[1] = -1;
 		if (get_args(tokens, start, end, node) == 0)
 			return (0);
 	}
