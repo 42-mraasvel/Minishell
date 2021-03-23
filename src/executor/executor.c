@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/23 19:25:05 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 20:37:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	execute_node(t_node *node, t_data *data)
 	return (executors[node->rule](node, data));
 }
 
+/*
+** Maybe we want to wait for each semicolon sequence?
+*/
+
 int	exec_semicolon(t_node *node, t_data *data)
 {
 	int	pid_total;
@@ -45,8 +49,8 @@ int	exec_semicolon(t_node *node, t_data *data)
 
 /*
 ** Idea:
-** Return total forks.
-** Wait for each fork, take the last fork's exit status (?)
+**	Return total forks.
+**	Wait for each fork, take the last fork's exit status (?)
 **
 ** (Better) Alternative:
 **	Return a vector of PIDs in [data]
