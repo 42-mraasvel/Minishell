@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/17 13:19:37 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 08:42:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 20:34:42 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static size_t	get_new_size(t_data *data, char **args)
 	{
 		if (!isvalidvar_asign(args[i]))
 			ft_export_error(data, args[i], 1);
-		else if (ft_strchr(args[i], '=') && !varinargs(args[i], args + i + 1, '='))
+		else if (ft_strchr(args[i], '=')
+			&& !varinargs(args[i], args + i + 1, '='))
 			size++;
 		i++;
 	}
@@ -62,12 +63,6 @@ static size_t	get_new_size(t_data *data, char **args)
 	return (size);
 }
 
-static void	abort_copy_strings(t_data *data, char **new_env)
-{
-	ft_free_split(new_env);
-	set_err_data(data, malloc_error);
-}
-
 static void	copy_strings(t_data *data, char **new_env, char **args)
 {
 	size_t	i;
@@ -76,11 +71,7 @@ static void	copy_strings(t_data *data, char **new_env, char **args)
 	while (data->envp[i] != NULL)
 	{
 		if (!varinargs(data->envp[i], args, '='))
-		{
-			new_env[i] = ft_strdup(data->envp[i]);
-			if (new_env[i] == NULL)
-				return (abort_copy_strings(data, new_env));
-		}
+			new_env[i] = malloc_guard(ft_strdup(data->envp[i]));
 		i++;
 	}
 	while (*args != NULL)
@@ -88,9 +79,7 @@ static void	copy_strings(t_data *data, char **new_env, char **args)
 		if (isvalidvar_asign(*args) && ft_strchr(*args, '=') != NULL
 			&& !varinargs(*args, args + 1, '='))
 		{
-			new_env[i] = ft_strdup(*args);
-			if (new_env[i] == NULL)
-				return (abort_copy_strings(data, new_env));
+			new_env[i] = malloc_guard(ft_strdup(*args));
 			i++;
 		}
 		args++;

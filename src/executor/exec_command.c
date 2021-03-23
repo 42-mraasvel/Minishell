@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 18:54:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 19:46:31 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ static void	set_redirection(t_node *node)
 	}
 }
 
+static void	close_all_fds(t_node *node, t_node *root)
+{
+	if (root == node || root == NULL)
+		return ;
+	close_fds(root);
+	close_all_fds(node, root->left);
+	close_all_fds(node, root->right);
+}
+
 static int	finalize_cmd(t_node *node, t_data *data)
 {
 	int	pid;
@@ -95,22 +104,22 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	if (pid == 0)
 	{
 		set_redirection(node);
+		close_all_fds(node, data->root);
+		if (ft_strcmp(node->args[0], "echo") == 0)
+			exit(exec_builtin(node, data));
 		if (execve(node->exec_path, node->args, data->envp) == -1)
 			exit_perror(GENERAL_ERROR, node->exec_path);
 	}
 	close_fds(node);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	return (0);
+	return (1);
 }
 
 int	exec_command(t_node *node, t_data *data)
 {
 	node->exec_path = NULL;
-	if (isbuiltin(node->args[0]) != -1)
-		return (exec_builtin(node, data));
 	cmd_findpath(node, data);
+	if (isbuiltin(node->args[0]) != -1 && ft_strcmp(node->args[0], "echo") != 0)
+		return (exec_builtin(node, data));
 	if (!ft_strchr(node->exec_path, '/') && getenv("PATH") || !file_exists(node->exec_path))
 	{
 		data->exit_status = CMD_NOT_FOUND;

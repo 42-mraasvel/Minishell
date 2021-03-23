@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 19:01:59 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 20:36:00 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sighandler(int sig)
 	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
 }
 
-void	replace_stdin()
+void	replace_stdin() // Testing function
 {
 	int fd = open("command.txt", O_RDONLY);
 	if (fd == -1)

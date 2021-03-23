@@ -1,1 +1,1 @@
-cat < /usr/share/dict/words | grep o
+cat < /usr/share/dict/words | head

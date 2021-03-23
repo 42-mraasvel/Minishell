@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 16:06:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:28:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end);
 t_node	*test_parser(void);
 
 int		executor(t_node *root, t_data *data);
+int		execute_node(t_node *node, t_data *data);
 int		exec_pipe(t_node *node, t_data *data);
 int		exec_command(t_node *node, t_data *data);
+int		exec_semicolon(t_node *node, t_data *data);
 
 int		lookup_path(t_data *data, char **args, char *name);
 

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 17:14:38 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 19:41:10 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,7 @@ int	exec_builtin(t_node *node, t_data *data)
 	set_fds_builtin(data, node, fd_copy);
 	data->exit_status = fnct(data, node->args);
 	reset_fds_builtin(fd_copy);
-	return (data->exit_status);
+	if (ft_strcmp(node->args[0], "echo") == 0)
+		return (data->exit_status);
+	return (0);
 }
