@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   executor.h                                         :+:    :+:            */
+/*   write_error.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:42:39 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/26 09:05:40 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/26 09:07:06 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include <unistd.h>
+#include "libft.h"
 
-# include "structs.h"
-
-typedef int	(*t_builtin)(t_data *, char **);
-typedef int	(*t_redirfct)(t_node *, char *);
-
-int		isbuiltin(char *arg);
-int		exec_builtin(t_node *node, t_data *data);
-
-int		cmd_redirects(t_node *node);
-void	search_path(t_data *data, char **dst, char *name);
-
-#endif
+void	ft_error(char *prefix, char *str)
+{
+	ft_putstr_fd("-bash: ", STDERR_FILENO);
+	if (prefix != NULL)
+	{
+		ft_putstr_fd(prefix, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(str, STDERR_FILENO);
+}

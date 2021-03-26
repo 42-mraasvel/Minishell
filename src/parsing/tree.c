@@ -6,13 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:14:45 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/24 13:38:17 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "header.h"
 #include "proto.h"
 #include "structs.h"
 #include "libft.h"
@@ -25,7 +26,7 @@ int	check_semicolon(t_vect *tokens, size_t start, size_t end, t_node *node)
 	i = start;
 	while (i < end)
 	{
-		if (((t_token*)tokens->table)[i].optype == o_semicolon)
+		if (((t_token *)tokens->table)[i].optype == o_semicolon)
 		{
 			node->left = add_node(tokens, start, i);
 			node->right = add_node(tokens, i + 1, end);
@@ -84,14 +85,9 @@ int	parse_redirect_in(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[0]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[0] = open(filename->start, O_RDONLY);
-	if (node->fds[0] == -1)
-	{
-		ft_perror(filename->start);
-		free(filename->start);
-		return (0);
-	}
-	free(filename->start);
+	filename->optype = redirect_in;
+	if (vect_pushback(node->redirects, filename) == -1)
+		exit_perror(GENERAL_ERROR, "malloc");
 	return (1);
 }
 
@@ -101,14 +97,9 @@ int	parse_redirect_out(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[1] = open(filename->start, (O_WRONLY | O_APPEND | O_CREAT), 0644);
-	if (node->fds[1] == -1)
-	{
-		ft_perror(filename->start);
-		free(filename->start);
-		return (0);
-	}
-	free(filename->start);
+	filename->optype = redirect_out;
+	if (vect_pushback(node->redirects, filename) == -1)
+		exit_perror(GENERAL_ERROR, "malloc");
 	return (1);
 }
 
@@ -118,14 +109,9 @@ int	parse_redirect_append(t_token *filename, t_node *node, size_t *index)
 		if (close(node->fds[1]) == -1)
 			return (0);
 	(*index)++;
-	node->fds[1] = open(filename->start, (O_WRONLY | O_CREAT), 0644);
-	if (node->fds[1] == -1)
-	{
-		ft_perror(filename->start);
-		free(filename->start);
-		return (0);
-	}
-	free(filename->start);
+	filename->optype = redirect_append;
+	if (vect_pushback(node->redirects, filename) == -1)
+		exit_perror(GENERAL_ERROR, "malloc");
 	return (1);
 }
 
@@ -188,6 +174,7 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 	node = (t_node*)malloc_guard(malloc(1 * sizeof(t_node)));
 	if (node == 0)
 		return (0);
+	node->redirects = malloc_guard(vect_init(0, sizeof(t_token)));
 	node->exec_path = 0;
 	node->fds[0] = -1;
 	node->fds[1] = -1;

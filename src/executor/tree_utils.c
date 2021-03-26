@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 15:30:42 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 08:21:37 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include "proto.h"
 #include "structs.h"
 #include "lexer.h"
+
+void	delete_redirect_token(void *token)
+{
+	free(((t_token *)token)->start);
+}
 
 void	tree_free(t_node *root)
 {
@@ -33,6 +38,7 @@ void	tree_free(t_node *root)
 		close(root->fds[0]);
 	if (root->rule == command && root->fds[1] != -1)
 		close(root->fds[1]);
+	vect_free(root->redirects, delete_redirect_token);
 	free(root);
 }
 

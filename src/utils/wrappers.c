@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 23:27:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 16:11:30 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:40:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ void	*malloc_guard(void *malloc_return)
 void	*ft_malloc(size_t size)
 {
 	return (malloc_guard(malloc(size)));
+}
+
+t_bool	isdir(char *filename)
+{
+	struct stat	buf;
+	int			ret;
+
+	ret = stat(filename, &buf);
+	if (ret == 0 && !S_ISREG(buf.st_mode))
+		return (true);
+	return (false);
 }
 
 /*

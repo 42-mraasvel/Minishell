@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:31:36 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/24 14:00:56 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	process_cli(char *line, t_data *data)
 	data->tokens = lexer(line, data);
 	if (data->tokens == NULL)
 		return (0);
-	expander(data);
+	allocate_tokens(data);
 	if (data->error.err_str != success)
 	{
 		vect_free(data->tokens, NULL);

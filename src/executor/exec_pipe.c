@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:27:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 09:27:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:29:40 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,21 @@ static int	set_read_end(t_node *node, int fd)
 	return (0);
 }
 
+static int	start_children(t_node *node, t_data *data)
+{
+	int	tmp;
+	int	total_pid;
+
+	total_pid = execute_node(node->left, data);
+	if (total_pid == -1)
+		return (-1);
+	tmp = execute_node(node->right, data);
+	if (tmp == -1)
+		return (-1);
+	total_pid += tmp;
+	return (total_pid);
+}
+
 /*
 ** In this function:
 ** initialize pipe and out/in fds of left and right nodes respectively
@@ -55,7 +70,7 @@ int	exec_pipe(t_node *node, t_data *data)
 	t_node	*right_cmd;
 
 	if (node->left == NULL || node->right == NULL)
-		return (-1); // Wouldn't be a valid tree, so error should be given at parsing stage
+		return (-1);
 	if (pipe(fds) == -1)
 		return (set_err_data_int(data, syscall_error, -1));
 	right_cmd = node->right;
@@ -65,5 +80,5 @@ int	exec_pipe(t_node *node, t_data *data)
 		return (set_err_data_int(data, syscall_error, -1));
 	if (set_write_end(node->left, fds[1]) == -1)
 		return (set_err_data_int(data, syscall_error, -1));
-	return (0);
+	return (start_children(node, data));
 }

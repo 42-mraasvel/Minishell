@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 16:17:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:47:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,18 @@
 #include "header.h"
 #include "libft.h"
 #include "executor.h"
+#include "expander.h"
 #include "structs.h"
 #include "proto.h"
-
-void	print_command(t_node *node) // rm this function
-{
-	int	i;
-
-	i = 0;
-	while (node->args[i] != NULL)
-	{
-		if (i != 0)
-			printf(" ");
-		printf("%s", node->args[i]);
-		i++;
-	}
-	printf("\n");
-	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
-}
 
 static void	close_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
-		close(node->fds[0]);
+		if (close(node->fds[0]) == -1)
+			ft_perror("close");
 	if (node->fds[1] != -1)
-		close(node->fds[1]);
+		if (close(node->fds[1]) == -1)
+			ft_perror("close");
 	node->fds[0] = -1;
 	node->fds[1] = -1;
 }
@@ -49,7 +36,9 @@ static void	close_fds(t_node *node)
 static int	cmd_findpath(t_node *node, t_data *data)
 {
 	node->exec_path = NULL;
-	if (ft_strchr(node->args[0], '/') != NULL)
+	if (ft_strcmp(node->args[0], "echo") == 0 || node->args[0][0] == '\0')
+		node->exec_path = malloc_guard(ft_strdup(node->args[0]));
+	else if (ft_strchr(node->args[0], '/') != NULL)
 		node->exec_path = malloc_guard(ft_strdup(node->args[0]));
 	else
 		search_path(data, &node->exec_path, node->args[0]);
@@ -60,14 +49,29 @@ static void	set_redirection(t_node *node)
 {
 	if (node->fds[0] != -1)
 	{
-		dup2(node->fds[0], STDIN_FILENO);
-		close(node->fds[0]);
+		if (dup2(node->fds[0], STDIN_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
+		if (close(node->fds[0]) == -1)
+			ft_perror("close");
+		node->fds[0] = -1;
 	}
 	if (node->fds[1] != -1)
 	{
-		dup2(node->fds[1], STDOUT_FILENO);
-		close(node->fds[1]);
+		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
+			exit_perror(GENERAL_ERROR, "dup2");
+		if (close(node->fds[1]) == -1)
+			ft_perror("close");
+		node->fds[1] = -1;
 	}
+}
+
+static void	close_all_fds(t_node *node, t_node *root)
+{
+	if (root == node || root == NULL)
+		return ;
+	close_fds(root);
+	close_all_fds(node, root->left);
+	close_all_fds(node, root->right);
 }
 
 static int	finalize_cmd(t_node *node, t_data *data)
@@ -84,32 +88,31 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	}
 	if (pid == 0)
 	{
+		if (cmd_redirects(node) == -1)
+			exit(GENERAL_ERROR);
 		set_redirection(node);
+		close_all_fds(node, data->root);
+		if (ft_strcmp(node->args[0], "echo") == 0)
+			exit(exec_builtin(node, data));
 		if (execve(node->exec_path, node->args, data->envp) == -1)
-		{
-			ft_perror(node->exec_path);
-			exit(EXIT_FAILURE);
-		}
+			exit_perror(GENERAL_ERROR, node->exec_path);
 	}
 	close_fds(node);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	return (0);
+	return (1);
 }
-
-/*
-** Not yet happening:
-**	1. Signal handling
-*/
 
 int	exec_command(t_node *node, t_data *data)
 {
-	node->exec_path = NULL;
-	if (isbuiltin(node->args[0]) != -1)
+	if (expand_node(node) == -1)
+		return (0);
+	if (node->args[0] == NULL)
+		return (0);
+	if (isbuiltin(node->args[0]) != -1 && ft_strcmp(node->args[0], "echo") != 0)
 		return (exec_builtin(node, data));
 	cmd_findpath(node, data);
-	if (!ft_strchr(node->exec_path, '/') && getenv("PATH") || !file_exists(node->exec_path))
+	if (ft_strcmp(node->args[0], "echo") != 0
+		&& ((!ft_strchr(node->exec_path, '/') && getenv("PATH"))
+		|| !file_exists(node->exec_path)))
 	{
 		data->exit_status = CMD_NOT_FOUND;
 		close_fds(node);

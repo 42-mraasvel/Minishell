@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   executor.h                                         :+:    :+:            */
+/*   allocate_tokens.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:42:39 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/03/24 13:13:35 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/03/24 13:16:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include <stdlib.h>
+#include "libft.h"
+#include "proto.h"
+#include "lexer.h"
+#include "structs.h"
 
-# include "structs.h"
+int	allocate_tokens(t_data *data)
+{
+	t_token	*tokens;
+	size_t	i;
 
-typedef int	(*t_builtin)(t_data *, char **);
-typedef int	(*t_redirfct)(t_node *, char *);
-
-int		isbuiltin(char *arg);
-int		exec_builtin(t_node *node, t_data *data);
-
-int		cmd_redirects(t_node *node);
-void	search_path(t_data *data, char **dst, char *name);
-
-#endif
+	tokens = data->tokens->table;
+	i = 0;
+	while (i < data->tokens->nmemb)
+	{
+		tokens[i].start = malloc_guard(
+				ft_substr(tokens[i].start, 0, tokens[i].length));
+		i++;
+	}
+	return (0);
+}

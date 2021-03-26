@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 09:42:32 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 09:17:09 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 09:13:01 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 #include "libvect.h"
 #include "structs.h"
 #include "proto.h"
+
+void	print_command(t_node *node) // rm this function
+{
+	int	i;
+
+	i = 0;
+	printf("ARGS {\n");
+	while (node->args[i] != NULL)
+	{
+		printf("\t%s\n", node->args[i]);
+		i++;
+	}
+	printf("}\n");
+	if (node->exec_path != NULL)
+		printf("%s\n", node->exec_path);
+	printf("Redirects:\n");
+	print_tokens(node->redirects);
+	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
+}
 
 const char	*print_type(t_tokentype type)
 {
@@ -107,6 +126,8 @@ char	*get_rule(t_rule rule)
 
 void	print_node(t_node *node)
 {
+	size_t	i;
+
 	if (node == NULL)
 	{
 		printf("Node is null\n");
@@ -119,6 +140,18 @@ void	print_node(t_node *node)
 	{
 		printf("\tARGS = {\n");
 		print_args(node->args);
+		printf("\t}\n");
+	}
+	if (node->right == command && node->redirects->nmemb != 0)
+	{
+		printf("\tRedirects = {\n");
+		i = 0;
+		while (i < node->redirects->nmemb)
+		{
+			// print_token(((t_token *)node->redirects->table)[i]);
+			printf("\t  \"%s\"\n", ((t_token *)node->redirects->table)[i].start);
+			i++;
+		}
 		printf("\t}\n");
 	}
 }

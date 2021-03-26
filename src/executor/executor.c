@@ -6,26 +6,18 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/15 12:52:01 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 20:37:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdio.h> // rm
 #include <unistd.h>
+#include <sys/wait.h>
 #include "proto.h"
 #include "header.h"
 #include "structs.h"
 
-int	exec_semicolon(t_node *node, t_data *data)
-{
-	(void)node;
-	flush_error(data);
-	if (data->error.errnum != success)
-		return (-1);
-	return (0);
-}
-
-static int	execute_node(t_node *node, t_data *data)
+int	execute_node(t_node *node, t_data *data)
 {
 	static	int	(*executors[])(t_node *, t_data *) = {
 		exec_command,
@@ -33,14 +25,55 @@ static int	execute_node(t_node *node, t_data *data)
 		exec_semicolon
 	};
 
-	if (executors[node->rule](node, data) == -1)
-		return (-1);
-	return (0);
+	if (node == NULL)
+		return (0);
+	return (executors[node->rule](node, data));
 }
+
+/*
+** Maybe we want to wait for each semicolon sequence?
+*/
+
+int	exec_semicolon(t_node *node, t_data *data)
+{
+	int	pid_total;
+
+	pid_total = 0;
+	if (node->left != NULL)
+		pid_total += execute_node(node->left, data);
+	flush_error(data);
+	if (node->right != NULL)
+		pid_total += execute_node(node->right, data);
+	return (pid_total);
+}
+
+/*
+** Idea:
+**	Return total forks.
+**	Wait for each fork, take the last fork's exit status (?)
+**
+** (Better) Alternative:
+**	Return a vector of PIDs in [data]
+**	Each time a fork is called: the PID is returned to the caller.
+**	Wait for each pid using waitpid, guaranteeing the last fork's exit status.
+*/
 
 int	executor(t_node *root, t_data *data)
 {
-	if (apply_prefix_tree_data(root, data, execute_node) == -1)
+	int	pid_total;
+	int	status;
+
+	pid_total = execute_node(root, data);
+	if (pid_total == -1)
 		return (-1);
+	while (pid_total > 0)
+	{
+		int pid = wait(&status);
+		pid_total--;
+	}
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	else
+		data->exit_status = GENERAL_ERROR;
 	return (0);
 }

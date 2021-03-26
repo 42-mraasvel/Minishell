@@ -6,13 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:20:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/25 20:38:32 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "header.h"
 #include "libft.h"
 #include "proto.h"
@@ -38,6 +39,30 @@ void	sighandler(int sig)
 	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
 }
 
+void	replace_stdin() // Testing function
+{
+	int fd = open("command.txt", O_RDONLY);
+	if (fd == -1)
+		exit_perror(GENERAL_ERROR, "open");
+	if (dup2(fd, STDIN_FILENO) == -1)
+		exit_perror(GENERAL_ERROR, "dup2");
+	close(fd);
+}
+
+static int	*set_exit_status(t_data *data)
+{
+	static int	*status = NULL;
+
+	if (status == NULL && data != NULL)
+		status = &data->exit_status;
+	return (status);
+}
+
+int	*get_exit_status(void)
+{
+	return (set_exit_status(NULL));
+}
+
 int	main (void)
 {
 	t_data	data;
@@ -46,6 +71,7 @@ int	main (void)
 	// signal(SIGQUIT, sighandler); // ctrl-\
 
 	ft_bzero(&data, sizeof(data));
+	set_exit_status(&data);
 	data.exec_errors = vect_init(0, sizeof(t_error));
 	if (data.exec_errors == NULL)
 		exit_program(malloc_error, NULL);

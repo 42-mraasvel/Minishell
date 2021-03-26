@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 18:44:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/24 11:57:51 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTS_H
 
 # include "libvect.h"
+# include "lexer.h"
 
 typedef enum e_errnum
 {
@@ -39,12 +40,22 @@ typedef enum e_rule
 	semicolon,
 }	t_rule;
 
+typedef struct s_cmd
+{
+	t_vect	*output_files;
+}	t_cmd;
+
+/*
+** Redirects = t_token *
+*/
+
 typedef struct s_node
 {
 	t_rule			rule;
 	char			**args;
 	char			*exec_path;
 	int				fds[2];
+	t_vect			*redirects;
 	struct s_node	*right;
 	struct s_node	*left;
 }	t_node;

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 19:22:54 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 09:42:02 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/23 19:43:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ size_t	expand_home(t_data *data, t_vecstr *result, char *str)
 
 	var = getenv("HOME");
 	if (var == NULL)
-		return (0);
+	{
+		vecstr_pushback_c(result, '~');
+		return (1);
+	}
 	if (vecstr_pushback_str(result, var) == -1)
 		return (set_err_data_int(data, malloc_error, 0));
 	return (1);

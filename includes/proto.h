@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:53:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:40:21 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_token	lex_operator(char *line);
 /* lexer_utils.c */
 
 char	*skipspace(char *line);
+int		allocate_tokens(t_data *data);
 
 /* isfunctions */
 
@@ -45,10 +46,12 @@ void	*malloc_guard(void *malloc_return);
 void	*ft_malloc(size_t size);
 char	*get_path(void);
 int		file_exists(char *filename);
+t_bool	isdir(char *filename);
 
 /* Utils */
 
 int		get_envp(t_data *data);
+int		*get_exit_status(void);
 
 /* Error Handling */
 
@@ -61,11 +64,6 @@ void	*set_err_data_null(t_data *data, t_errnum errnum);
 int		set_err_data_int(t_data *data, t_errnum errnum, int ret);
 int		set_error_vec(t_data *data, t_errnum errnum, char *str, int ret);
 
-/* Expander */
-
-int		expander(t_data *data);
-void	expand_word(t_data *data, t_token *token);
-
 /* Some Tree Functions To Test Executor */
 
 t_node	*create_tree(t_vect *tokens);
@@ -74,8 +72,10 @@ t_node	*add_node(t_vect *tokens, size_t start, size_t end);
 t_node	*test_parser(void);
 
 int		executor(t_node *root, t_data *data);
+int		execute_node(t_node *node, t_data *data);
 int		exec_pipe(t_node *node, t_data *data);
 int		exec_command(t_node *node, t_data *data);
+int		exec_semicolon(t_node *node, t_data *data);
 
 int		lookup_path(t_data *data, char **args, char *name);
 
@@ -105,13 +105,16 @@ t_bool	varinargs(char *var, char **args, char arg_end);
 /* error part : exit_program.c */
 
 void	ft_perror(char *str);
+void	ft_error(char *prefix, char *str);
 void	exit_program(t_errnum errnum, char *err_str);
+void	exit_perror(int exit_status, char *str);
 
 /* Printing Stuff */
 
 void	print_tokens(t_vect *tokens);
 void	print_token(t_token token);
 void	print_node(t_node *node);
+void	print_command(t_node *node);
 void	print_tree(t_node *root);
 void	print_tree_depth(t_node *root, int depth);
 
