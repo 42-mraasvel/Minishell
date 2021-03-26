@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/17 13:19:37 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 11:04:36 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/25 08:44:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	copy_strings(t_data *data, char **new_env, char **args)
 	{
 		if (!varinargs(data->envp[i], args, '='))
 		{
-			new_env[i] = malloc_guard(ft_strdup(data->envp[i]));
+			new_env[size] = malloc_guard(ft_strdup(data->envp[i]));
 			size++;
 		}
 		i++;

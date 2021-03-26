@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/23 20:36:00 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/25 20:38:32 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ void	replace_stdin() // Testing function
 	close(fd);
 }
 
+static int	*set_exit_status(t_data *data)
+{
+	static int	*status = NULL;
+
+	if (status == NULL && data != NULL)
+		status = &data->exit_status;
+	return (status);
+}
+
+int	*get_exit_status(void)
+{
+	return (set_exit_status(NULL));
+}
+
 int	main (void)
 {
 	t_data	data;
@@ -57,6 +71,7 @@ int	main (void)
 	// signal(SIGQUIT, sighandler); // ctrl-\
 
 	ft_bzero(&data, sizeof(data));
+	set_exit_status(&data);
 	data.exec_errors = vect_init(0, sizeof(t_error));
 	if (data.exec_errors == NULL)
 		exit_program(malloc_error, NULL);

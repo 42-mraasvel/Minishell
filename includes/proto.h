@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 14:02:13 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:40:21 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ void	*malloc_guard(void *malloc_return);
 void	*ft_malloc(size_t size);
 char	*get_path(void);
 int		file_exists(char *filename);
+t_bool	isdir(char *filename);
 
 /* Utils */
 
 int		get_envp(t_data *data);
+int		*get_exit_status(void);
 
 /* Error Handling */
 
@@ -103,6 +105,7 @@ t_bool	varinargs(char *var, char **args, char arg_end);
 /* error part : exit_program.c */
 
 void	ft_perror(char *str);
+void	ft_error(char *prefix, char *str);
 void	exit_program(t_errnum errnum, char *err_str);
 void	exit_perror(int exit_status, char *str);
 
@@ -111,6 +114,7 @@ void	exit_perror(int exit_status, char *str);
 void	print_tokens(t_vect *tokens);
 void	print_token(t_token token);
 void	print_node(t_node *node);
+void	print_command(t_node *node);
 void	print_tree(t_node *root);
 void	print_tree_depth(t_node *root, int depth);
 

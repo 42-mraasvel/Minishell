@@ -1,1 +1,1 @@
-cat < /usr/share/dict/words | head
+export var="ls      -l" ; $var'a' ; "$var"'a'

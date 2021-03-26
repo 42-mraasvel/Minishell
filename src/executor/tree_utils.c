@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 13:40:39 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 08:21:37 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	delete_redirect_token(void *token)
 {
-	free(((t_token*)token)->start);
+	free(((t_token *)token)->start);
 }
 
 void	tree_free(t_node *root)
@@ -38,8 +38,7 @@ void	tree_free(t_node *root)
 		close(root->fds[0]);
 	if (root->rule == command && root->fds[1] != -1)
 		close(root->fds[1]);
-	if (root->rule == command)
-		vect_free(root->redirects, delete_redirect_token);
+	vect_free(root->redirects, delete_redirect_token);
 	free(root);
 }
 

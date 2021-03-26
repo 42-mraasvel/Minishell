@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/24 14:16:35 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/03/25 16:01:30 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ vpath %.o $(OBJDIR)
 vpath %.h $(IDIR)
 
 # compilation
-CC = gcc
+CC = clang
 IFLAGS = -I$(IDIR) -I$(LIBFTDIR) -I$(LIBVECTDIR)
 DFLAGS = -g -fsanitize=address
 

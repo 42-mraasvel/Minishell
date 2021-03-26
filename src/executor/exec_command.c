@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 16:28:08 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:47:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,6 @@
 #include "expander.h"
 #include "structs.h"
 #include "proto.h"
-
-void	print_command(t_node *node) // rm this function
-{
-	int	i;
-
-	i = 0;
-	printf("ARGS {\n");
-	while (node->args[i] != NULL)
-	{
-		printf("\t%s\n", node->args[i]);
-		i++;
-	}
-	printf("}\n");
-	if (node->exec_path != NULL)
-		printf("%s\n", node->exec_path);
-	printf("Redirects:\n");
-	print_tokens(node->redirects);
-	printf("\tFD[0][1] : %d | %d\n", node->fds[0], node->fds[1]);
-}
 
 static void	close_fds(t_node *node)
 {
@@ -55,7 +36,9 @@ static void	close_fds(t_node *node)
 static int	cmd_findpath(t_node *node, t_data *data)
 {
 	node->exec_path = NULL;
-	if (ft_strchr(node->args[0], '/') != NULL)
+	if (ft_strcmp(node->args[0], "echo") == 0 || node->args[0][0] == '\0')
+		node->exec_path = malloc_guard(ft_strdup(node->args[0]));
+	else if (ft_strchr(node->args[0], '/') != NULL)
 		node->exec_path = malloc_guard(ft_strdup(node->args[0]));
 	else
 		search_path(data, &node->exec_path, node->args[0]);
@@ -105,7 +88,8 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	}
 	if (pid == 0)
 	{
-		//! Expand REDIRECTIONS
+		if (cmd_redirects(node) == -1)
+			exit(GENERAL_ERROR);
 		set_redirection(node);
 		close_all_fds(node, data->root);
 		if (ft_strcmp(node->args[0], "echo") == 0)
@@ -119,15 +103,16 @@ static int	finalize_cmd(t_node *node, t_data *data)
 
 int	exec_command(t_node *node, t_data *data)
 {
-	//! Expand ARGUMENTS
-	print_command(node);
-	node->args = expand_arguments(node->args);
-	print_command(node);
-	cmd_findpath(node, data);
+	if (expand_node(node) == -1)
+		return (0);
+	if (node->args[0] == NULL)
+		return (0);
 	if (isbuiltin(node->args[0]) != -1 && ft_strcmp(node->args[0], "echo") != 0)
 		return (exec_builtin(node, data));
-	if ((!ft_strchr(node->exec_path, '/') && getenv("PATH"))
-		|| !file_exists(node->exec_path))
+	cmd_findpath(node, data);
+	if (ft_strcmp(node->args[0], "echo") != 0
+		&& ((!ft_strchr(node->exec_path, '/') && getenv("PATH"))
+		|| !file_exists(node->exec_path)))
 	{
 		data->exit_status = CMD_NOT_FOUND;
 		close_fds(node);
