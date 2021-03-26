@@ -3,16 +3,18 @@
 /*                                                        ::::::::            */
 /*   history.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tel-bara <tel-bara@student.codam.nl>         +#+                     */
+/*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 23:26:42 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/25 23:26:46 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/03/26 10:57:20 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAX_HISTORY
 # define MAX_HISTORY 1000
 #endif
+#include <stdlib.h>
+#include "proto.h"
 #include "libft.h"
 
 typedef struct s_tclist
@@ -73,7 +75,7 @@ int	save_newest(char *str, t_tchist *hist)
 	t_tclist	*link;
 
 	hist->ptr = 0;
-	link = malloc_guard(sizeof(t_tclist));
+	link = ft_malloc(sizeof(t_tclist));
 	if (link == 0)
 		return (-1);
 	link->str = str;
