@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:47:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/03/26 11:03:18 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	finalize_cmd(t_node *node, t_data *data)
 		if (cmd_redirects(node) == -1)
 			exit(GENERAL_ERROR);
 		set_redirection(node);
-		close_all_fds(node, data->root);
+		close_all_fds(node, data->root); //! Maybe now that FD opening is exclusive to this file, we don't have to do this anymore?
 		if (ft_strcmp(node->args[0], "echo") == 0)
 			exit(exec_builtin(node, data));
 		if (execve(node->exec_path, node->args, data->envp) == -1)
