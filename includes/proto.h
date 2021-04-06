@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:40:21 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:32:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "lexer.h"
 
 int		prompt(t_data *data);
+t_data	*getdata(void);
 
 void	test_pipe(void);
 
@@ -52,6 +53,7 @@ t_bool	isdir(char *filename);
 
 int		get_envp(t_data *data);
 int		*get_exit_status(void);
+void	ft_putprompt(char *prefix);
 
 /* Error Handling */
 
@@ -117,5 +119,11 @@ void	print_node(t_node *node);
 void	print_command(t_node *node);
 void	print_tree(t_node *root);
 void	print_tree_depth(t_node *root, int depth);
+
+/* Termcaps */
+
+int		prompt_termcap(t_data *data);
+int		init_termcap(t_data *data);
+void	reset_term(void);
 
 #endif

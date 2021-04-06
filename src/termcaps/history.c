@@ -6,31 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 23:26:42 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:57:20 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:36:27 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAX_HISTORY
-# define MAX_HISTORY 1000
-#endif
 #include <stdlib.h>
 #include "proto.h"
 #include "libft.h"
-
-typedef struct s_tclist
-{
-	char				*str;
-	struct s_tclist		*next;
-	struct s_tclist		*prev;	
-}	t_tclist;
-
-typedef struct s_tchist
-{
-	int			size;
-	t_tclist	*old;
-	t_tclist	*new;
-	t_tclist	*ptr;
-}	t_tchist;
+#include "ft_termcap.h"
 
 //cycle up or down through history and return and display relevant string. If history pointer = null, return 0 and display active string buffer.
 char	*cycle_through(t_tchist *hist, int up, int down)
@@ -55,7 +38,6 @@ char	*cycle_through(t_tchist *hist, int up, int down)
 		return (hist->ptr->str);
 	else
 		return (0);
-
 }
 
 void	delete_oldest(t_tchist *hist)

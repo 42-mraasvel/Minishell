@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 19:37:51 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 08:30:10 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:29:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@
 t_bool	isalphascore(char c)
 {
 	if (ft_isalpha(c) || c == '_')
-		return (true);
-	return (false);
+		return (ft_true);
+	return (ft_false);
 }
 
 t_bool	isalphanumscore(char c)
 {
 	if (isalphascore(c) || ft_isdigit(c))
-		return (true);
-	return (false);
+		return (ft_true);
+	return (ft_false);
 }
 
 t_bool	ismeta(char c)
 {
 	if (c == '\0')
-		return (false);
+		return (ft_false);
 	if (ft_strchr("|<>; \t\n", c) == NULL)
-		return (false);
-	return (true);
+		return (ft_false);
+	return (ft_true);
 }
 
 t_bool	isquote(char c)
 {
 	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
+		return (ft_true);
+	return (ft_false);
 }

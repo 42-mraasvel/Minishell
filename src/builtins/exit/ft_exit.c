@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 13:19:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:16:54 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:28:26 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static t_bool	exit_isnumeric_arg(char *arg)
 	while (ft_isdigit(*arg) || ft_isspace(*arg))
 		arg++;
 	if (*arg != '\0')
-		return (false);
-	return (true);
+		return (ft_false);
+	return (ft_true);
 }
 
 static int	exit_perror(char *first, int type)

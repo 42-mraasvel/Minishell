@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/26 10:58:25 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/04/06 17:03:04 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ DFLAGS = -g -fsanitize=address
 # -Werror is annoying for development
 # CFLAGS = -Wall -Wextra -Werror
 # CFLAGS = -Wall -Wextra
-LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
+LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect -ltermcap
 
 OS_NAME = $(shell uname -s)
 ifeq ($(OS_NAME),Linux)

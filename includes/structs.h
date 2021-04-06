@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 11:57:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:27:35 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libvect.h"
 # include "lexer.h"
+# include "ft_termcap.h"
 
 typedef enum e_errnum
 {
@@ -29,8 +30,8 @@ typedef enum e_errnum
 
 typedef enum e_bool
 {
-	false,
-	true
+	ft_false,
+	ft_true
 }	t_bool;
 
 typedef enum e_rule
@@ -72,6 +73,7 @@ typedef struct s_data
 	t_vect		*exec_errors;
 	t_vect		*tokens;
 	t_node		*root;
+	t_termcap	term;
 	char		**envp;
 	char		***envpp;
 	int			exit_status;

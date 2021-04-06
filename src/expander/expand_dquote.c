@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 20:30:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 08:20:06 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:27:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 static t_bool	dq_isonlyvariable(char *arg, size_t len, size_t var_len)
 {
 	if (len > 1 || arg[var_len] != '"')
-		return (false);
-	return (true);
+		return (ft_false);
+	return (ft_true);
 }
 
 /*

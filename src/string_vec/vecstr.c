@@ -6,13 +6,21 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 16:23:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/16 20:11:23 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:40:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vec_string.h"
 #include "libft.h"
+
+void	vecstr_pop(t_vecstr *ptr)
+{
+	if (ptr->len == 1)
+		return ;
+	ptr->str[ptr->len - 1] = '\0';
+	ptr->len -= 1;
+}
 
 t_vecstr	*vecstr_init(size_t initial_size)
 {
