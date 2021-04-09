@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/23 20:37:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:44:26 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,18 @@ int	executor(t_node *root, t_data *data)
 	int	pid_total;
 	int	status;
 
+	restore_term(data);
 	pid_total = execute_node(root, data);
 	if (pid_total == -1)
 		return (-1);
+	data->status = waiting;
 	while (pid_total > 0)
 	{
 		int pid = wait(&status);
 		pid_total--;
 	}
+	data->status = done;
+	ft_setterm(data, 1);
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else

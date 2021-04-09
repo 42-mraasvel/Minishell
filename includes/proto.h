@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 16:15:11 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:37:13 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ void	print_tree_depth(t_node *root, int depth);
 
 int		prompt_termcap(t_data *data);
 int		init_termcap(t_data *data);
+int		ft_setterm(t_data *data, int reset);
+void	restore_term(t_data *data);
 void	delete_edited(t_tchist *hist);
 t_tchist	*init_history(void);
 void	reset_term(void);

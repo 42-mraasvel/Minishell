@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:27:35 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:55:47 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ typedef struct s_error
 	char		*err_str;
 }	t_error;
 
+typedef enum e_status
+{
+	done,
+	waiting
+}	t_status;
+
 typedef struct s_data
 {
 	t_error		error;
@@ -74,6 +80,7 @@ typedef struct s_data
 	t_vect		*tokens;
 	t_node		*root;
 	t_termcap	term;
+	t_status	status;
 	char		**envp;
 	char		***envpp;
 	int			exit_status;

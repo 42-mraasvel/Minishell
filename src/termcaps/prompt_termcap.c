@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:44:52 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 16:16:38 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:19:46 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ void	flush_line(t_data *data)
 		else
 			result = data->term.hist->ptr->edited->str;
 	}
+	write(1, "\n", 1);
 	if (*result != '\0')
 	{
-		write(1, "\n", 1);
 		process_cli(result, data);
 		save_newest(result, data->term.hist);
 		vecstr_clear(data->term.buffer);
@@ -144,6 +144,8 @@ static void	check_buf(t_data *data, char buf[6])
 		pop_char(data);
 	else if (buf[0] == CTRL_U)
 		clear_line(data);
+	// else
+	// 	printf("%d\n", buf[0]);
 	// else if (buf[0] == '\t')
 	// 	fprintf(stderr, "LEN: %s\n", data->term.buffer->str);
 	// else

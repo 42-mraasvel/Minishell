@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 16:33:29 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:51:59 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,20 @@ void	end_close(void)
 
 void	sighandler(int sig)
 {
-	// printf("SIG: %d\n", sig);
-	ft_putstr_fd("", 1);
+	t_data *data;
+
+	data = getdata();
+	if (sig == 2 && data->status == done)
+		ft_putprompt("\n");
+	if (sig == 2)
+		data->exit_status = 130;
+	else if (sig == 3 && data->status == waiting)
+	{
+		data->exit_status = 131;
+		ft_putstr_fd("Quit: 3", STDERR_FILENO);
+	}
+	if (data->status == waiting)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
 }
 
