@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:30:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 14:38:37 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,19 @@ t_data	*getdata(void)
 	return (&data);
 }
 
+void	handle_winch(int sig)
+{
+	cursor_update(getdata());
+}
+
 int	main (void)
 {
 	t_data	*data;
 
 	// signal(SIGINT, sighandler); // ctrl-C
 	// signal(SIGQUIT, sighandler); // ctrl-\
+
+	signal(SIGWINCH, handle_winch);
 
 	data = getdata();
 	ft_bzero(data, sizeof(data));

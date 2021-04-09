@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 12:24:36 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 15:08:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,28 @@ void	print_tree_depth(t_node *root, int depth);
 
 int		prompt_termcap(t_data *data);
 int		init_termcap(t_data *data);
+void	delete_edited(t_tchist *hist);
 t_tchist	*init_history(void);
 void	reset_term(void);
 int		save_newest(char *str, t_tchist *hist);
 char	*cycle_through(t_tchist *hist, int up, int down);
+
+void	termcmd(char *id, int hpos, int ypos, int nlines);
+void	delete_char(t_data *data);
+
+/* Cursor */
+
+void	cursor_update(t_data *data);
+void	cursor_move(t_cursor *cursor, t_point delta);
+void	update_winsz(void);
+void	clear_line(t_data *data);
+
+void	print_cursor(t_cursor cursor);
+
+/* Point */
+
+t_point	point(int x, int y);
+t_point	point_sub(t_point a, t_point b);
+t_point	point_add(t_point a, t_point b);
 
 #endif

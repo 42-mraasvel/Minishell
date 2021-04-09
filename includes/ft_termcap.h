@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 12:52:19 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 15:03:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 typedef struct s_tclist
 {
 	char				*str;
-	char				*edited;
+	t_vecstr			*edited;
 	struct s_tclist		*next;
 	struct s_tclist		*prev;	
 }	t_tclist;
@@ -39,11 +39,25 @@ typedef struct s_tchist
 	t_tclist	*ptr;
 }	t_tchist;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_cursor
+{
+	t_point	pos;
+	t_point	winsz;
+	int		line_length;
+}	t_cursor;
+
 typedef struct s_termcap
 {
 	struct termios	original;
 	struct termios	settings;
 	int				changed;
+	t_cursor		cursor;
 	t_vecstr		*buffer;
 	t_tchist		*hist;
 }	t_termcap;
@@ -51,11 +65,14 @@ typedef struct s_termcap
 /* Key Codes */
 
 # define CTRL_D 4
+# define CTRL_U 21
 # define NEWLINE 10
 # define ESC 27
 # define BACKSPACE 127
 
 # define UPARROW "\033[A"
 # define DOWNARROW "\033[B"
+
+# define DSR "\033[6n"
 
 #endif

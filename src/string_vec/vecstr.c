@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 16:23:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 12:20:33 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 15:20:14 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,21 @@ void	vecstr_pop(t_vecstr *ptr)
 {
 	if (ptr->len == 1)
 		return ;
-	ptr->str[ptr->len - 1] = '\0';
+	ptr->str[ptr->len - 2] = '\0';
 	ptr->len -= 1;
+}
+
+t_vecstr	*vecstr_init_str(char *str)
+{
+	t_vecstr	*new;
+	size_t		init_size;
+
+	init_size = ft_strlen(str) + 1;
+	new = (t_vecstr *)ft_malloc(sizeof(t_vecstr));
+	new->size = init_size;
+	new->len = init_size;
+	new->str = malloc_guard(ft_strdup(str));
+	return (new);
 }
 
 t_vecstr	*vecstr_init(size_t initial_size)
@@ -29,10 +42,10 @@ t_vecstr	*vecstr_init(size_t initial_size)
 
 	if (initial_size == 0)
 		initial_size = 10;
-	new = (t_vecstr *)malloc(1 * sizeof(t_vecstr));
+	new = (t_vecstr *)ft_malloc(1 * sizeof(t_vecstr));
 	if (new == NULL)
 		return (NULL);
-	new->str = (char *)malloc(initial_size * sizeof(char));
+	new->str = (char *)ft_malloc(initial_size * sizeof(char));
 	if (new->str == NULL)
 	{
 		free(new);

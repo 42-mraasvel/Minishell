@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 23:26:42 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/04/09 12:13:44 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 15:13:04 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,25 @@ void	delete_oldest(t_tchist *hist)
 	hist->old = hist->old->next;
 	hist->old->prev = 0;
 	free(tmp->str);
-	free(tmp->edited);
+	if (tmp->edited != NULL)
+		vecstr_free(tmp->edited);
 	free(tmp);
+}
+
+void	delete_edited(t_tchist *hist)
+{
+	t_tclist	*tmp;
+
+	tmp = hist->old;
+	while (tmp != NULL)
+	{
+		if (tmp->edited != NULL)
+		{
+			vecstr_free(tmp->edited);
+			tmp->edited = NULL;
+		}
+		tmp = tmp->next;
+	}
 }
 
 //goal: save command line input into history whenever the user presses enter
@@ -69,7 +86,7 @@ int	save_newest(char *str, t_tchist *hist)
 	hist->ptr = 0;
 	link = ft_malloc(sizeof(t_tclist));
 	link->str = malloc_guard(ft_strdup(str));
-	link->edited = malloc_guard(ft_strdup(str));
+	link->edited = NULL;
 	link->next = 0;
 	if (hist->new == 0)
 	{
