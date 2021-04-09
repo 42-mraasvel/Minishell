@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 15:08:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 16:15:11 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "lexer.h"
 
 int		prompt(t_data *data);
+int		process_cli(char *line, t_data *data);
 t_data	*getdata(void);
 
 void	test_pipe(void);

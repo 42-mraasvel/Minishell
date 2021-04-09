@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:44:52 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 15:34:10 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 16:16:38 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,16 @@ void	flush_line(t_data *data)
 		else
 			result = data->term.hist->ptr->edited->str;
 	}
-	//! Check save_newest for which entries not to save
-	//! Flush string to process cli
 	if (*result != '\0')
 	{
 		write(1, "\n", 1);
-		ft_putstr(result);
+		process_cli(result, data);
+		save_newest(result, data->term.hist);
+		vecstr_clear(data->term.buffer);
+		delete_edited(data->term.hist);
+		data->term.cursor.line_length = 0;
 	}
-	save_newest(result, data->term.hist);
-	vecstr_clear(data->term.buffer);
-	delete_edited(data->term.hist);
-	data->term.cursor.line_length = 0;
-	ft_putprompt("\n");
+	ft_putprompt(NULL);
 	cursor_update(data);
 }
 

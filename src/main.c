@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 14:38:37 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 16:33:29 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	end_close(void)
 
 void	sighandler(int sig)
 {
-	printf("SIG: %d\n", sig);
+	// printf("SIG: %d\n", sig);
+	ft_putstr_fd("", 1);
 	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
 }
 
@@ -79,9 +80,8 @@ int	main (void)
 {
 	t_data	*data;
 
-	// signal(SIGINT, sighandler); // ctrl-C
-	// signal(SIGQUIT, sighandler); // ctrl-\
-
+	signal(SIGINT, sighandler); // ctrl-C
+	signal(SIGQUIT, sighandler); // ctrl-\.
 	signal(SIGWINCH, handle_winch);
 
 	data = getdata();
