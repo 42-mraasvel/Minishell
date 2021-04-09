@@ -6,13 +6,14 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 16:23:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:40:57 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 12:20:33 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vec_string.h"
 #include "libft.h"
+#include "proto.h"
 
 void	vecstr_pop(t_vecstr *ptr)
 {
@@ -49,4 +50,13 @@ void	vecstr_free(t_vecstr *vec)
 		return ;
 	free(vec->str);
 	free(vec);
+}
+
+void	vecstr_clear(t_vecstr *vec)
+{
+	free(vec->str);
+	vec->str = ft_malloc(10);
+	vec->size = 10;
+	vec->str[0] = '\0';
+	vec->len = 1;
 }

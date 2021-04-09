@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:51:24 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 12:52:19 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_termcap
 	struct termios	settings;
 	int				changed;
 	t_vecstr		*buffer;
+	t_tchist		*hist;
 }	t_termcap;
 
 /* Key Codes */

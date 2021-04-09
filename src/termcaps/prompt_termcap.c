@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:44:52 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:49:01 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 12:53:43 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 
 int	handle_uparrow(t_data *data)
 {
+	cycle_through(data->term.hist, 1, 0);
 }
 
 int	handle_downarrow(t_data *data)
 {
+	cycle_through(data->term.hist, 0, 1);
 }
 
 static void	check_buf(t_data *data, char buf[6])
@@ -36,7 +38,28 @@ static void	check_buf(t_data *data, char buf[6])
 	}
 	else if (buf[0] == NEWLINE)
 	{
-		//! flush output
+		if (data->term.hist->ptr == NULL)
+		{
+			save_newest(data->term.buffer->str, data->term.hist);
+			ft_putchar_fd('\n', 1);
+			ft_putstr(data->term.hist->new->str);
+		}
+		else
+		{
+			if (data->term.hist->ptr->edited == NULL)
+			{
+				ft_putchar_fd('\n', 1);
+				ft_putstr(data->term.hist->ptr->str);
+				save_newest(data->term.hist->ptr->str, data->term.hist);
+			}
+			else
+			{
+				ft_putchar_fd('\n', 1);
+				ft_putstr(data->term.hist->ptr->edited);
+				save_newest(data->term.hist->ptr->edited, data->term.hist);
+			}
+		}
+		vecstr_clear(data->term.buffer);
 		ft_putprompt("\n");
 	}
 	else if (buf[0] == ESC)
@@ -63,6 +86,7 @@ int	prompt_termcap(t_data *data)
 	data->term.buffer = vecstr_init(50);
 	while (1)
 	{
+		ft_bzero(buf, 6);
 		ret = read(STDIN_FILENO, buf, 6);
 		if (ret == -1)
 			exit_perror(GENERAL_ERROR, "read");

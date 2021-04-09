@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:50:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:29:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 11:47:16 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	init_termcap(t_data *data)
 	if (tgetent(NULL, termtype) <= 0)
 		exit_perror(GENERAL_ERROR, "tgetent");
 	ft_setterm(data);
+	data->term.hist = init_history();
 	return (success);
 }

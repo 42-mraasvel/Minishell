@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:41:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 12:20:49 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int			vecstr_pushback_c(t_vecstr *vec, char c);
 int			vecstr_pushback_str(t_vecstr *vec, const char *s);
 int			vecstr_pushback_substr(t_vecstr *vec, const char *s, size_t len);
 void		vecstr_pop(t_vecstr *ptr);
+void		vecstr_clear(t_vecstr *vec);
 
 #endif
