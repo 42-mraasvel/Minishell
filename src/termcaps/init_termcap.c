@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:50:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:36:38 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:58:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	ft_setterm(t_data *data, int reset)
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->term.settings) == -1)
 		exit_perror(GENERAL_ERROR, "tcsetattr");
 	data->term.changed = ft_true;
-	if (check_changes(data) == error)
-		exit_perror(GENERAL_ERROR, "tcsetattr");
 	return (success);
 }
 

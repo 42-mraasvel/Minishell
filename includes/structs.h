@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:55:47 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:59:22 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_data
 	t_node		*root;
 	t_termcap	term;
 	t_status	status;
+	int			interrupted;
 	char		**envp;
 	char		***envpp;
 	int			exit_status;

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:44:26 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 18:05:43 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	executor(t_node *root, t_data *data)
 	}
 	data->status = done;
 	ft_setterm(data, 1);
-	if (WIFEXITED(status))
+	if (data->interrupted == ft_true)
+		data->interrupted = ft_false;
+	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
-	else
-		data->exit_status = GENERAL_ERROR;
 	return (0);
 }

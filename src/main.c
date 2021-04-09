@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:51:59 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/09 18:02:48 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ void	sighandler(int sig)
 	}
 	if (data->status == waiting)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	// ft_putstr_fd("\n" "\r" MINISHELL_PROMPT, STDOUT_FILENO);
+	else if (sig == 2)
+	{
+		cursor_update(data);
+		data->term.cursor.line_length = 0;
+	}
+	data->interrupted = ft_true;
 }
 
 void	replace_stdin() // Testing function
