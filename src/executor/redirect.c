@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/26 10:14:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 21:01:08 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 21:10:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	redir_out(t_node *node, char *pathname)
 	if (isdir(pathname))
 		return (dir_error(pathname));
 	if (node->fds[1] != -1)
-		close(node->fds[0]);
+		close(node->fds[1]);
 	node->fds[1] = open(pathname, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (node->fds[1] == -1)
 	{
