@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 19:09:05 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:17:48 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "structs.h"
 #include "proto.h"
 
-static void	close_fds(t_node *node)
+void	close_fds(t_node *node)
 {
 	if (node->fds[0] != -1)
 		if (close(node->fds[0]) == -1)

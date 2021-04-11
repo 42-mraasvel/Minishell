@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 17:54:26 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:17:54 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef int	(*t_redirfct)(t_node *, char *);
 
 int		isbuiltin(char *arg);
 int		exec_builtin(t_node *node, t_data *data);
+void	close_all_fds(t_node *node, t_node *root);
+void	close_fds(t_node *node);
 
 int		cmd_redirects(t_node *node);
 void	search_path(t_data *data, char **dst, char *name);

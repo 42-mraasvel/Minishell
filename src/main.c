@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/10 23:15:26 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:18:40 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ int	main (void)
 {
 	t_data	*data;
 
-	// signal(SIGINT, sighandler); // ctrl-C
-	// signal(SIGQUIT, sighandler); // ctrl-\.
 	signal(SIGINT, sigignore);
 	signal(SIGQUIT, sigignore);
 	signal(SIGWINCH, handle_winch);
