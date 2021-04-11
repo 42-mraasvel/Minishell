@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 19:02:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 09:50:10 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:58:51 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,30 @@ static void	replace_args(t_vect *strings, t_node *node)
 	vect_free(strings, NULL);
 }
 
+t_expander	get_expander(char c)
+{
+	static t_expander	expanders[255] = {
+		['~'] = expand_tilde,
+		['$'] = expand_variable,
+		['\''] = expand_squote,
+		['"'] = expand_dquote
+	};
+
+	if (expanders[c] == NULL)
+		return (expand_char);
+	return (expanders[c]);
+}
+
 void	expand_arg(t_vect *strings, char *arg)
 {
 	t_vecstr	*string;
+	t_expander	fnc;
 
 	string = malloc_guard(vecstr_init(0));
 	while (*arg != '\0')
 	{
-		switch(*arg) { // turn into function pointer array
-			case('~'):
-				arg += expand_tilde(strings, string, arg);
-				break;
-			case('$'):
-				arg += expand_variable(strings, string, arg);
-				break;
-			case('\''):
-				arg += expand_squote(strings, string, arg);
-				break;
-			case('"'):
-				arg += expand_dquote(strings, string, arg);
-				break;
-			default:
-				arg += expand_char(strings, string, arg);
-				break;
-		}
+		fnc = get_expander(*arg);
+		arg += fnc(strings, string, arg);
 	}
 	if (string->len == 1)
 		free(string->str);
@@ -69,24 +69,18 @@ void	expand_arg(t_vect *strings, char *arg)
 	free(string);
 }
 
-t_vect	*expand_parameters(char **args)
-{
-	t_vect	*strings;
-
-	strings = malloc_guard(vect_init(0, sizeof(char *)));
-	while (*args != NULL)
-	{
-		expand_arg(strings, *args);
-		args++;
-	}
-	return (strings);
-}
-
 int	expand_args(t_node *node)
 {
 	t_vect	*strings;
+	size_t	i;
 
-	strings = expand_parameters(node->args); //! merge expand_params and expand_args
+	strings = malloc_guard(vect_init(0, sizeof(char *)));
+	i = 0;
+	while (node->args[i] != NULL)
+	{
+		expand_arg(strings, node->args[i]);
+		i++;
+	}
 	replace_args(strings, node);
 	return (0);
 }

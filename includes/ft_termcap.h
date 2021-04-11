@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 15:03:16 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 08:16:38 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_termcap
 
 /* Key Codes */
 
+# define CTRL_C 3
 # define CTRL_D 4
 # define CTRL_U 21
 # define NEWLINE 10

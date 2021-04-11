@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 23:26:42 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/04/09 15:13:04 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 08:21:42 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	delete_edited(t_tchist *hist)
 		}
 		tmp = tmp->next;
 	}
+	hist->ptr = NULL;
 }
 
 //goal: save command line input into history whenever the user presses enter

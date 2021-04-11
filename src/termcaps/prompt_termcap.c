@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:44:52 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:19:46 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:10:08 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "structs.h"
 #include "proto.h"
+#include "signal.h"
 
 void	put_line(char *str, t_cursor *cursor)
 {
@@ -101,6 +102,22 @@ static void	pop_char(t_data *data)
 	data->term.cursor.line_length -= 1;
 }
 
+static void	pop_line(t_data *data)
+{
+	t_vecstr	*buf;
+
+	if (data->term.hist->ptr == NULL)
+		buf = data->term.buffer;
+	else
+	{
+		if (data->term.hist->ptr->edited == NULL)
+			data->term.hist->ptr->edited = vecstr_init_str(data->term.hist->ptr->str);
+		buf = data->term.hist->ptr->edited;
+	}
+	while (buf->len != 1)
+		vecstr_pop(buf);
+}
+
 void	flush_line(t_data *data)
 {
 	char	*result;
@@ -119,11 +136,23 @@ void	flush_line(t_data *data)
 	{
 		process_cli(result, data);
 		save_newest(result, data->term.hist);
-		vecstr_clear(data->term.buffer);
-		delete_edited(data->term.hist);
-		data->term.cursor.line_length = 0;
+		ft_setterm(data, ft_true);
 	}
+	data->interrupted = ft_false;
+	vecstr_clear(data->term.buffer);
+	delete_edited(data->term.hist);
+	data->term.cursor.line_length = 0;
 	ft_putprompt(NULL);
+	cursor_update(data);
+}
+
+static void	interrupt_buf(t_data *data)
+{
+	data->exit_status = FATAL_ERROR_SIG + SIGINT;
+	vecstr_clear(data->term.buffer);
+	delete_edited(data->term.hist);
+	data->term.cursor.line_length = 0;
+	ft_putprompt("^C\n");
 	cursor_update(data);
 }
 
@@ -143,13 +172,12 @@ static void	check_buf(t_data *data, char buf[6])
 	else if (buf[0] == BACKSPACE && data->term.cursor.line_length != 0)
 		pop_char(data);
 	else if (buf[0] == CTRL_U)
+	{
+		pop_line(data);
 		clear_line(data);
-	// else
-	// 	printf("%d\n", buf[0]);
-	// else if (buf[0] == '\t')
-	// 	fprintf(stderr, "LEN: %s\n", data->term.buffer->str);
-	// else
-		// print_sequence(buf);
+	}
+	else if (buf[0] == CTRL_C)
+		interrupt_buf(data);
 }
 
 int	prompt_termcap(t_data *data)

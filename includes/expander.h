@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 09:11:56 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:52:34 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ size_t	expand_tilde(t_vect *strings, t_vecstr *string, char *arg);
 size_t	expand_squote(t_vect *strings, t_vecstr *string, char *arg);
 size_t	expand_dquote(t_vect *strings, t_vecstr *string, char *arg);
 
-// typedef size_t	(*t_expander)(t_data *, t_vecstr *, char *);
-
-// void		expand_word(t_data *data, t_token *token);
-// t_expander	get_expander(size_t i);
-// size_t		expand_char(t_data *data, t_vecstr *result, char c);
-// size_t		expand_home(t_data *data, t_vecstr *result, char *str);
+typedef size_t	(*t_expander)(t_vect *, t_vecstr *, char *);
 
 #endif

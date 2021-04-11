@@ -1,2 +1,2 @@
-# make  > /dev/null ; ./a.out @
-make $@ ; ./a.out
+make  > /dev/null ; ./a.out @
+# make $@ ; ./a.out

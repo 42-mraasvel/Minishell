@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 20:49:46 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:21:25 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 19:04:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	reset_term(void)
 	data = getdata();
 	if (!data->term.changed)
 		return ;
-	ft_putstr_fd("Resetting terminal\n", STDOUT_FILENO);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->term.original) == -1)
 		ft_perror("tcsetattr");
 }

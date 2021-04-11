@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:50:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:58:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:04:32 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static int	check_changes(t_data *data)
 
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 		exit_perror(GENERAL_ERROR, "tcgetattr");
+	printf("%d - %d\n", term.c_iflag, data->term.settings.c_iflag);
+	printf("%d - %d\n", term.c_lflag, data->term.settings.c_lflag);
+	printf("%d - %d\n", term.c_cc[VMIN], data->term.settings.c_cc[VMIN]);
+	printf("%d - %d\n", term.c_cc[VTIME], data->term.settings.c_cc[VTIME]);
 	if (ft_memcmp(&term, &data->term.settings, sizeof(struct termios)) != 0)
 		return (error);
 	return (success);
@@ -51,7 +55,7 @@ int	ft_setterm(t_data *data, int reset)
 	}
 	data->term.settings = data->term.original;
 	data->term.settings.c_iflag &= ~(IMAXBEL);
-	data->term.settings.c_lflag &= ~(ICANON | ECHO);
+	data->term.settings.c_lflag &= ~(ICANON | ECHO | ISIG);
 	data->term.settings.c_cc[VMIN] = 1;
 	data->term.settings.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->term.settings) == -1)
