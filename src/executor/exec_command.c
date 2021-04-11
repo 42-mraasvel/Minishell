@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 17:46:35 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:09:05 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,6 @@ static void	set_redirection(t_node *node)
 	}
 }
 
-static void	close_all_fds(t_node *node, t_node *root)
-{
-	if (root == node || root == NULL)
-		return ;
-	close_fds(root);
-	close_all_fds(node, root->left);
-	close_all_fds(node, root->right);
-}
-
 static int	finalize_cmd(t_node *node, t_data *data)
 {
 	int			pid;
@@ -113,7 +104,7 @@ int	exec_command(t_node *node, t_data *data)
 	cmd_findpath(node, data);
 	if (ft_strcmp(node->args[0], "echo") != 0
 		&& ((!ft_strchr(node->exec_path, '/') && getenv("PATH"))
-		|| !file_exists(node->exec_path)))
+			|| !file_exists(node->exec_path)))
 	{
 		close_fds(node);
 		set_error_vec(data, cmd_not_found, node->exec_path, 0);

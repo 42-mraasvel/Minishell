@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:10:52 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:05:12 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static void	handle_status(t_data *data, int status)
 	}
 }
 
-int	flush_waits(t_data *data)
+void	flush_waits(t_data *data)
 {
 	t_process	*process;
 	size_t		i;
 	int			status;
 
 	if (data->processes == NULL)
-		return (0);
+		return ;
 	process = (t_process *)(data->processes->table);
 	i = 0;
 	while (i < data->processes->nmemb)
@@ -76,7 +76,6 @@ int	flush_waits(t_data *data)
 		i++;
 	}
 	reset_processes(data);
-	return (0);
 }
 
 /*

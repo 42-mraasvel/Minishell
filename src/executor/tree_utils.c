@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 08:42:16 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 08:21:37 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:08:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ void	apply_prefix_tree(t_node *root, void (*fct)(t_node *))
 		apply_prefix_tree(root->left, fct);
 	if (root->right != NULL)
 		apply_prefix_tree(root->right, fct);
+}
+
+void	close_all_fds(t_node *node, t_node *root)
+{
+	if (root == node || root == NULL)
+		return ;
+	close_fds(root);
+	close_all_fds(node, root->left);
+	close_all_fds(node, root->right);
 }
