@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/29 12:42:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:02:58 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 static int	ft_isotherop(t_optype type)
 {
 	if (type == o_semicolon || type == non_operator)
-		return (false);
-	return (true);
+		return (ft_false);
+	return (ft_true);
 }
 
 static int	syntax_op_error(t_token token, t_optype prev, size_t left)

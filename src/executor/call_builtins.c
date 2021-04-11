@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:43:40 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 17:42:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int	exec_builtin(t_node *node, t_data *data)
 {
 	t_builtin	fnct;
 	int			fd_copy[2];
+	int			status;
 
 	fd_copy[0] = -1;
 	fd_copy[1] = -1;
@@ -130,9 +131,10 @@ int	exec_builtin(t_node *node, t_data *data)
 	if (cmd_redirects(node) == -1)
 		return (0);
 	set_fds_builtin(data, node, fd_copy);
-	data->exit_status = fnct(data, node->args);
+	status = fnct(data, node->args);
 	reset_fds_builtin(fd_copy);
 	if (ft_strcmp(node->args[0], "echo") == 0)
-		return (data->exit_status);
+		return (status);
+	new_process(data, builtin, status);
 	return (0);
 }

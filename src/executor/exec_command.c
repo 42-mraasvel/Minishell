@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 11:03:18 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:03:06 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static void	close_all_fds(t_node *node, t_node *root)
 
 static int	finalize_cmd(t_node *node, t_data *data)
 {
-	int	pid;
-	int	status;
+	int			pid;
+	int			status;
 
 	pid = fork();
 	if (pid < 0)
@@ -95,8 +95,9 @@ static int	finalize_cmd(t_node *node, t_data *data)
 		if (ft_strcmp(node->args[0], "echo") == 0)
 			exit(exec_builtin(node, data));
 		if (execve(node->exec_path, node->args, data->envp) == -1)
-			exit_perror(GENERAL_ERROR, node->exec_path);
+			exit_perror(CANNOT_EXEC, node->exec_path);
 	}
+	new_process(data, p_command, pid);
 	close_fds(node);
 	return (1);
 }
@@ -114,9 +115,10 @@ int	exec_command(t_node *node, t_data *data)
 		&& ((!ft_strchr(node->exec_path, '/') && getenv("PATH"))
 		|| !file_exists(node->exec_path)))
 	{
-		data->exit_status = CMD_NOT_FOUND;
 		close_fds(node);
-		return (set_error_vec(data, cmd_not_found, node->exec_path, 0));
+		set_error_vec(data, cmd_not_found, node->exec_path, 0);
+		flush_error(data);
+		return (0);
 	}
 	return (finalize_cmd(node, data));
 }

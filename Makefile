@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/24 13:22:04 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/03/31 10:52:55 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/04/11 19:03:16 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBVECT = $(LIBVECTDIR)/libvect.a
 OBJDIR = obj
 SRCDIR = src
 SUBDIRS2 = env echo pwd unset export exit cd
-SUBDIRS = executor lexer error_handling expander string_vec utils builtins parsing $(addprefix builtins/, $(SUBDIRS2))
+SUBDIRS = executor lexer error_handling expander string_vec utils builtins termcaps parsing $(addprefix builtins/, $(SUBDIRS2))
 SRCDIRS = $(SRCDIR) $(addprefix $(SRCDIR)/, $(SUBDIRS))
 IDIR = includes
 LIBDIR = libs
@@ -42,7 +42,7 @@ DFLAGS = -g -fsanitize=address
 # -Werror is annoying for development
 # CFLAGS = -Wall -Wextra -Werror
 # CFLAGS = -Wall -Wextra
-LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect
+LIBFLAGS = -L$(LIBFTDIR) -lft -L$(LIBVECTDIR) -lvect -ltermcap
 
 OS_NAME = $(shell uname -s)
 ifeq ($(OS_NAME),Linux)

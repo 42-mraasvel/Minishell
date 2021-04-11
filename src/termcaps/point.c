@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
+/*   point.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/24 14:01:57 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 14:16:07 by mraasvel      ########   odam.nl         */
+/*   Created: 2021/04/09 14:20:50 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/09 14:35:40 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "ft_termcap.h"
 
-/*
-**
-*/
-
-int	expander(t_data *data)
+t_point	point(int x, int y)
 {
-	return (0);
+	return ((t_point){.x = x, .y = y});
 }
+
+t_point	point_sub(t_point a, t_point b)
+{
+	return ((t_point){.x = a.x - b.x, .y = a.y - b.y});
+}
+
+t_point	point_add(t_point a, t_point b)
+{
+	return ((t_point){.x = a.x + b.x, .y = a.y + b.y});
+}
+

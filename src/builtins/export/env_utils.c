@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 08:29:27 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/18 09:51:54 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/06 17:28:38 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_bool	varinargs(char *var, char **args, char arg_end)
 	size_t	i;
 
 	if (args == NULL || *args == NULL)
-		return (false);
+		return (ft_false);
 	while (*args)
 	{
 		i = 0;
@@ -29,35 +29,35 @@ t_bool	varinargs(char *var, char **args, char arg_end)
 			i++;
 		}
 		if (var[i] == '=' && (*args)[i] == arg_end)
-			return (true);
+			return (ft_true);
 		args++;
 	}
-	return (false);
+	return (ft_false);
 }
 
 t_bool	isvalidvar(char *var)
 {
 	if (!isalphascore(*var))
-		return (false);
+		return (ft_false);
 	var++;
 	while (*var)
 	{
 		if (!isalphanumscore(*var))
-			return (false);
+			return (ft_false);
 		var++;
 	}
-	return (true);
+	return (ft_true);
 }
 
 t_bool	isvalidvar_asign(char *arg)
 {
 	if (!isalphascore(*arg))
-		return (false);
+		return (ft_false);
 	while (*arg && *arg != '=')
 	{
 		if (!isalphanumscore(*arg))
-			return (false);
+			return (ft_false);
 		arg++;
 	}
-	return (true);
+	return (ft_true);
 }

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:40:21 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/09 17:37:13 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "lexer.h"
 
 int		prompt(t_data *data);
+int		process_cli(char *line, t_data *data);
+t_data	*getdata(void);
 
 void	test_pipe(void);
 
@@ -52,6 +54,7 @@ t_bool	isdir(char *filename);
 
 int		get_envp(t_data *data);
 int		*get_exit_status(void);
+void	ft_putprompt(char *prefix);
 
 /* Error Handling */
 
@@ -117,5 +120,35 @@ void	print_node(t_node *node);
 void	print_command(t_node *node);
 void	print_tree(t_node *root);
 void	print_tree_depth(t_node *root, int depth);
+
+/* Termcaps */
+
+int		prompt_termcap(t_data *data);
+int		init_termcap(t_data *data);
+int		ft_setterm(t_data *data, int reset);
+void	restore_term(t_data *data);
+void	delete_edited(t_tchist *hist);
+t_tchist	*init_history(void);
+void	reset_term(void);
+int		save_newest(char *str, t_tchist *hist);
+char	*cycle_through(t_tchist *hist, int up, int down);
+
+void	termcmd(char *id, int hpos, int ypos, int nlines);
+void	delete_char(t_data *data);
+
+/* Cursor */
+
+void	cursor_update(t_data *data);
+void	cursor_move(t_cursor *cursor, t_point delta);
+void	update_winsz(void);
+void	clear_line(t_data *data);
+
+void	print_cursor(t_cursor cursor);
+
+/* Point */
+
+t_point	point(int x, int y);
+t_point	point_sub(t_point a, t_point b);
+t_point	point_add(t_point a, t_point b);
 
 #endif

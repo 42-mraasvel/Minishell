@@ -6,16 +6,18 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/23 20:37:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:10:52 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> // rm
 #include <unistd.h>
 #include <sys/wait.h>
+#include "executor.h"
 #include "proto.h"
 #include "header.h"
 #include "structs.h"
+#include "libft.h"
 
 int	execute_node(t_node *node, t_data *data)
 {
@@ -30,6 +32,53 @@ int	execute_node(t_node *node, t_data *data)
 	return (executors[node->rule](node, data));
 }
 
+static void	handle_status(t_data *data, int status)
+{
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		data->exit_status = WTERMSIG(status) + FATAL_ERROR_SIG;
+		if (data->exit_status == 130)
+		{
+			data->interrupted = ft_true;
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		}
+		else if (data->exit_status == 131)
+			ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
+	}
+}
+
+int	flush_waits(t_data *data)
+{
+	t_process	*process;
+	size_t		i;
+	int			status;
+
+	if (data->processes == NULL)
+		return (0);
+	process = (t_process *)(data->processes->table);
+	i = 0;
+	while (i < data->processes->nmemb)
+	{
+		if (process[i].ptype == builtin)
+			data->exit_status = process[i].exit_status;
+		else
+		{
+			waitpid(process[i].pid, &status, 0);
+			handle_status(data, status);
+			if (data->interrupted == ft_true)
+			{
+				kill_processes(data, i);
+				break ;
+			}
+		}
+		i++;
+	}
+	reset_processes(data);
+	return (0);
+}
+
 /*
 ** Maybe we want to wait for each semicolon sequence?
 */
@@ -42,6 +91,9 @@ int	exec_semicolon(t_node *node, t_data *data)
 	if (node->left != NULL)
 		pid_total += execute_node(node->left, data);
 	flush_error(data);
+	flush_waits(data);
+	if (data->interrupted == ft_true)
+		return (-1);
 	if (node->right != NULL)
 		pid_total += execute_node(node->right, data);
 	return (pid_total);
@@ -60,20 +112,13 @@ int	exec_semicolon(t_node *node, t_data *data)
 
 int	executor(t_node *root, t_data *data)
 {
-	int	pid_total;
-	int	status;
+	int	ret;
 
-	pid_total = execute_node(root, data);
-	if (pid_total == -1)
+	restore_term(data);
+	ret = execute_node(root, data);
+	if (ret == -1 || data->interrupted == ft_true)
 		return (-1);
-	while (pid_total > 0)
-	{
-		int pid = wait(&status);
-		pid_total--;
-	}
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	else
-		data->exit_status = GENERAL_ERROR;
+	flush_waits(data);
+	flush_error(data);
 	return (0);
 }
