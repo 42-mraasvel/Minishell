@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 19:17:48 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 21:03:16 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ static void	set_redirection(t_node *node)
 	{
 		if (dup2(node->fds[0], STDIN_FILENO) == -1)
 			exit_perror(GENERAL_ERROR, "dup2");
-		if (close(node->fds[0]) == -1)
-			ft_perror("close");
-		node->fds[0] = -1;
 	}
 	if (node->fds[1] != -1)
 	{
 		if (dup2(node->fds[1], STDOUT_FILENO) == -1)
 			exit_perror(GENERAL_ERROR, "dup2");
-		if (close(node->fds[1]) == -1)
-			ft_perror("close");
-		node->fds[1] = -1;
 	}
+	if (node->fds[0] != -1 && close(node->fds[0]) == -1)
+		ft_perror("close");
+	if (node->fds[1] != node->fds[0] && close(node->fds[1]) == -1)
+		ft_perror("close");
+	node->fds[0] = -1;
+	node->fds[1] = -1;
 }
 
 static int	finalize_cmd(t_node *node, t_data *data)
