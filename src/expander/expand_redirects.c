@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/26 08:51:44 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 09:48:35 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/11 19:09:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	free_string(void *ptr)
 	free(*(void **)ptr);
 }
 
-static int	abort_iterate_redirect_list(t_vect *strings, t_token *table, size_t i)
+static int	abort_iterate_redirect_list(
+				t_vect *strings, t_token *table, size_t i)
 {
 	ft_error(table[i].start, "ambiguous redirect");
 	vect_free(strings, free_string);
