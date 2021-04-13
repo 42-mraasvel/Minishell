@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:50:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:04:32 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 13:51:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ int	ft_setterm(t_data *data, int reset)
 
 void	restore_term(t_data *data)
 {
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->term.original) == -1)
-		exit_perror(GENERAL_ERROR, "tcsetattr");
+	if (data->term.changed == ft_true)
+		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->term.original) == -1)
+			exit_perror(GENERAL_ERROR, "tcsetattr");
+	data->term.changed = ft_false;
 }
 int	init_termcap(t_data *data)
 {

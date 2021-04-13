@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/24 14:00:56 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 13:51:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	prompt(t_data *data)
 	ret = 1;
 	while (ret > 0)
 	{
-		write(1, MINISHELL_PROMPT, sizeof(MINISHELL_PROMPT));
 		ret = ft_getline(0, &line);
 		if (ret < 0)
 			exit_program(error, "Getline error");
