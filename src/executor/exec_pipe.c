@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:27:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:29:40 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:26:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	start_children(t_node *node, t_data *data)
 	int	tmp;
 	int	total_pid;
 
+	data->executor_status = t_pipe;
 	total_pid = execute_node(node->left, data);
 	if (total_pid == -1)
 		return (-1);
@@ -54,6 +55,7 @@ static int	start_children(t_node *node, t_data *data)
 	if (tmp == -1)
 		return (-1);
 	total_pid += tmp;
+	data->executor_status = command;
 	return (total_pid);
 }
 

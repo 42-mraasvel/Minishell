@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 18:56:32 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/26 10:49:07 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:33:38 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	ft_echo(t_data *data, char **args)
 	}
 	else if (write(STDOUT_FILENO, "\n", 1) == -1)
 		return (1);
+	(void)data;
 	return (0);
 }

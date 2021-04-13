@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 17:46:32 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:25:57 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,11 @@ typedef struct s_error
 	char		*err_str;
 }	t_error;
 
-typedef enum e_status
-{
-	done,
-	waiting
-}	t_status;
-
 typedef enum e_ptype
 {
 	builtin,
-	p_command
+	p_command,
+	p_error
 }	t_ptype;
 
 typedef struct s_process
@@ -94,7 +89,7 @@ typedef struct s_data
 	t_node		*root;
 	t_vect		*processes;
 	t_termcap	term;
-	t_status	status;
+	t_rule		executor_status;
 	int			interrupted;
 	char		**envp;
 	char		***envpp;

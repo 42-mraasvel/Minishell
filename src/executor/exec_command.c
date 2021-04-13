@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 21:10:56 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:30:44 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static void	set_redirection(t_node *node)
 static int	finalize_cmd(t_node *node, t_data *data)
 {
 	int			pid;
-	int			status;
 
 	pid = fork();
 	if (pid < 0)
@@ -107,6 +106,7 @@ int	exec_command(t_node *node, t_data *data)
 			|| !file_exists(node->exec_path)))
 	{
 		close_fds(node);
+		new_process(data, p_error, CMD_NOT_FOUND);
 		set_error_vec(data, cmd_not_found, node->exec_path, 0);
 		flush_error(data);
 		return (0);

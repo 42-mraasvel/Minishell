@@ -1,1 +1,1 @@
-export var="ls      -l" ; $var'a' ; "$var"'a'
+echo “./hello”.

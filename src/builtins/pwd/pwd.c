@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 19:33:23 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/20 12:45:50 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:33:23 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int	ft_pwd(t_data *data, char **args)
 		error = ft_putstr("pwd: too many arguments\n");
 	if (error)
 		return (1);
+	(void)data;
 	return (0);
 }

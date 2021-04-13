@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 13:54:31 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:50:06 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:32:49 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int	syntax_check(t_data *data, t_vect *tokens)
 		prev = table[i].optype;
 		i++;
 	}
+	(void)data;
 	return (success);
 }

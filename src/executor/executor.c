@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 19:05:12 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:05:33 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	flush_waits(t_data *data)
 	i = 0;
 	while (i < data->processes->nmemb)
 	{
-		if (process[i].ptype == builtin)
+		if (process[i].ptype == builtin || process[i].ptype == p_error)
 			data->exit_status = process[i].exit_status;
 		else
 		{

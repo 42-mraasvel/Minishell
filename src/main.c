@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 21:05:19 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:34:00 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 #include "structs.h"
 #include <limits.h>
 
-void	test_execve(void);
-
 void	end_close(void)
 {
 	close(STDIN_FILENO);
@@ -29,56 +27,9 @@ void	end_close(void)
 	close(STDERR_FILENO);
 }
 
-/*
-** Should set exit status for example
-*/
-
-void	sighandler(int sig)
-{
-	t_data *data;
-
-	data = getdata();
-	if (sig == 2 && data->status == done)
-		ft_putprompt("\n");
-	if (sig == 2)
-		data->exit_status = 130;
-	else if (sig == 3 && data->status == waiting)
-	{
-		data->exit_status = 131;
-		ft_putstr_fd("Quit: 3", STDERR_FILENO);
-	}
-	if (data->status == waiting)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	else if (sig == 2)
-	{
-		cursor_update(data);
-		data->term.cursor.line_length = 0;
-	}
-	data->interrupted = ft_true;
-}
-
-void	replace_stdin() // Testing function
-{
-	int fd = open("command.txt", O_RDONLY);
-	if (fd == -1)
-		exit_perror(GENERAL_ERROR, "open");
-	if (dup2(fd, STDIN_FILENO) == -1)
-		exit_perror(GENERAL_ERROR, "dup2");
-	close(fd);
-}
-
-static int	*set_exit_status(t_data *data)
-{
-	static int	*status = NULL;
-
-	if (status == NULL && data != NULL)
-		status = &data->exit_status;
-	return (status);
-}
-
 int	*get_exit_status(void)
 {
-	return (set_exit_status(NULL));
+	return (&getdata()->exit_status);
 }
 
 t_data	*getdata(void)
@@ -90,6 +41,7 @@ t_data	*getdata(void)
 
 void	handle_winch(int sig)
 {
+	(void)sig;
 	cursor_update(getdata());
 }
 
@@ -108,7 +60,6 @@ int	main (void)
 
 	data = getdata();
 	ft_bzero(data, sizeof(data));
-	set_exit_status(data);
 	data->exec_errors = vect_init(0, sizeof(t_error));
 	if (data->exec_errors == NULL)
 		exit_program(malloc_error, NULL);
@@ -121,7 +72,7 @@ int	main (void)
 		prompt(data);
 	ft_free_split(data->envp);
 	vect_free(data->exec_errors, NULL);
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	// ft_putstr_fd("exit\n", STDOUT_FILENO);
 	reset_term();
 	end_close();
 	return (data->exit_status);

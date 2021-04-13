@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/11 17:40:58 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 19:05:31 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:03:41 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	new_process(t_data *data, t_ptype type, int value)
 	t_process	new;
 
 	new.ptype = type;
-	if (type == builtin)
+	if (type == builtin || type == p_error)
 		new.exit_status = value;
 	else if (type == p_command)
 		new.pid = value;

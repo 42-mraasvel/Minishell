@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:37:10 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/19 08:18:39 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:33:15 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	ft_env(t_data *data, char **args)
 		ft_putendl_fd(data->envp[i], STDOUT_FILENO);
 		i++;
 	}
+	(void)args;
 	return (0);
 }

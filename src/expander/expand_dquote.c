@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 20:30:15 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/06 17:27:53 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 15:00:20 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static t_bool	dq_isonlyvariable(char *arg, size_t len, size_t var_len)
 {
-	if (len > 1 || arg[var_len] != '"')
+	if (arg[var_len + 1] != '\0' || len > 1 || arg[var_len] != '"')
 		return (ft_false);
 	return (ft_true);
 }
@@ -46,7 +46,7 @@ static size_t	expand_dquote_variable(t_vect *strings, t_vecstr *string,
 	value = get_variable(arg, &var_len);
 	if (value == NULL || *value == '\0')
 	{
-		if (dq_isonlyvariable(arg, len, var_len))
+		if (dq_isonlyvariable(arg, len, var_len) && string->len == 1)
 			expand_char(strings, string, "");
 	}
 	else if (vecstr_pushback_str(string, value) == -1)

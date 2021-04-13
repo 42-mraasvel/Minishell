@@ -6,11 +6,10 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 17:42:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:40:24 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // rm
 #include <stdlib.h>
 #include "header.h"
 #include "executor.h"
@@ -71,7 +70,7 @@ static t_builtin	get_builtin(char *name)
 **	3. Close the one in node because they're unused
 */
 
-static int	set_fds_builtin(t_data *data, t_node *node, int fds[2])
+static int	set_fds_builtin(t_node *node, int fds[2])
 {
 	if (node->fds[0] != -1)
 	{
@@ -113,8 +112,25 @@ static int	reset_fds_builtin(int fds[2])
 	return (success);
 }
 
+int	builtin_checkpipe(t_node *node, t_data *data)
+{
+	int	pid;
+
+	if (data->executor_status != t_pipe
+		|| ft_strcmp(node->args[0], "echo") == 0)
+		return (0);
+	pid = fork();
+	if (pid == -1)
+		exit_perror(GENERAL_ERROR, "fork");
+	if (pid == 0)
+		return (0);
+	new_process(data, p_command, pid);
+	return (1);
+}
+
 /*
 ** Doesn't fork the process and calls builtin functions
+** Unless the process is part of a pipe, then it is forked
 */
 
 int	exec_builtin(t_node *node, t_data *data)
@@ -122,7 +138,11 @@ int	exec_builtin(t_node *node, t_data *data)
 	t_builtin	fnct;
 	int			fd_copy[2];
 	int			status;
+	int			pid;
 
+	pid = builtin_checkpipe(node, data);
+	if (pid != 0)
+		return (pid);
 	fd_copy[0] = -1;
 	fd_copy[1] = -1;
 	fnct = get_builtin(node->args[0]);
@@ -130,11 +150,13 @@ int	exec_builtin(t_node *node, t_data *data)
 		return (-1);
 	if (cmd_redirects(node) == -1)
 		return (0);
-	set_fds_builtin(data, node, fd_copy);
+	set_fds_builtin(node, fd_copy);
 	status = fnct(data, node->args);
 	reset_fds_builtin(fd_copy);
 	if (ft_strcmp(node->args[0], "echo") == 0)
 		return (status);
+	if (data->executor_status == t_pipe)
+		exit(status);
 	new_process(data, builtin, status);
 	return (0);
 }

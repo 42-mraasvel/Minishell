@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 22:28:40 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/26 08:15:32 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:31:11 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ size_t	expand_variable(t_vect *strings, t_vecstr *string, char *arg)
 {
 	size_t	var_len;
 	char	*value;
-	char	**split;
 
 	if (arg[1] == '?')
 		return (expand_exit_status(string, arg));
+	if (isquote(arg[1]))
+		return (1);
 	if (!isalphascore(arg[1]))
 		return (expand_char(strings, string, arg));
 	value = get_variable(arg, &var_len);

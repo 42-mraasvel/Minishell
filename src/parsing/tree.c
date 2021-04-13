@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:28:38 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/03/24 13:38:17 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:30:59 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ int	get_args(t_vect *tokens, size_t start, size_t end, t_node *node)
 t_node	*add_node(t_vect *tokens, size_t start, size_t end)
 {
 	t_node	*node;
-	t_token	token;
 
 	if (start == end)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 19:49:17 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 19:09:43 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:31:58 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ size_t	expand_char(t_vect *strings, t_vecstr *string, char *arg)
 {
 	if (vecstr_pushback_c(string, *arg) == -1)
 		exit_perror(GENERAL_ERROR, "malloc");
+	(void)strings;
 	return (1);
 }
 
@@ -30,6 +31,7 @@ size_t	expand_squote(t_vect *strings, t_vecstr *string, char *arg)
 
 	len = ft_strchr(&arg[1], '\'') - arg - 1;
 	vecstr_pushback_substr(string, &arg[1], len);
+	(void)strings;
 	return (len + 2);
 }
 
@@ -53,5 +55,6 @@ size_t	expand_exit_status(t_vecstr *string, char *arg)
 	if (vecstr_pushback_str(string, num) == -1)
 		exit_perror(GENERAL_ERROR, "malloc");
 	free(num);
+	(void)arg;
 	return (2);
 }

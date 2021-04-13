@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/15 10:10:35 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/03/20 11:49:56 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:29:07 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include "libft.h"
 #include "proto.h"
 #include "structs.h"
-#include <stdio.h> // rm
 
-static char	**get_path_strings(t_data *data)
+static char	**get_path_strings(void)
 {
 	char	**paths;
 	char	*path;
@@ -49,7 +48,7 @@ static char	*cat_path(char *path, char *name)
 ** 0 = File Exists and can be accessed (replace argc)
 */
 
-static int	stat_path(t_data *data, char *pathname)
+static int	stat_path(char *pathname)
 {
 	struct stat	buf;
 
@@ -61,7 +60,7 @@ static int	stat_path(t_data *data, char *pathname)
 	return (1);
 }
 
-static int	check_path(t_data *data, char **dst, char **path, char *name)
+static int	check_path(char **dst, char **path, char *name)
 {
 	char	*pathname;
 	size_t	i;
@@ -71,7 +70,7 @@ static int	check_path(t_data *data, char **dst, char **path, char *name)
 	while (path[i] != NULL)
 	{
 		pathname = cat_path(path[i], name);
-		ret = stat_path(data, pathname);
+		ret = stat_path(pathname);
 		if (ret == 0 || ret == 2)
 		{
 			free(*dst);
@@ -101,13 +100,14 @@ void	search_path(t_data *data, char **dst, char *name)
 {
 	char	**path;
 
-	path = get_path_strings(data);
+	path = get_path_strings();
 	if (path == NULL)
 	{
 		*dst = malloc_guard(ft_strdup(name));
 		return ;
 	}
-	if (check_path(data, dst, path, name) == -1)
+	if (check_path(dst, path, name) == -1)
 		*dst = malloc_guard(ft_strdup(name));
 	ft_free_split(path);
+	(void)data;
 }

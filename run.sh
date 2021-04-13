@@ -1,2 +1,2 @@
-make  > /dev/null ; ./a.out @
+make  > /dev/null ; ./minishell @
 # make $@ ; ./a.out

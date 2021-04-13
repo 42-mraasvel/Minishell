@@ -1,8 +1,10 @@
 *.a
 a.out
 *.o
+*.d
 obj/
 .DS_Store
 .vscode
 a.out.DSYM/
 a.out*
+minishell

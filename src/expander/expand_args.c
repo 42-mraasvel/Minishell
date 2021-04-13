@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 19:02:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:58:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/13 22:32:25 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_expander	get_expander(char c)
 		['"'] = expand_dquote
 	};
 
-	if (expanders[c] == NULL)
+	if (expanders[(unsigned char)c] == NULL)
 		return (expand_char);
-	return (expanders[c]);
+	return (expanders[(unsigned char)c]);
 }
 
 void	expand_arg(t_vect *strings, char *arg)
