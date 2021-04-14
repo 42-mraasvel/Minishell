@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_bzero.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/24 20:36:50 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:22:21 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "structs.h"
+#include <stddef.h>
 
-char	*skipspace(char *line)
+void	ft_bzero(void *s, size_t n)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
 }

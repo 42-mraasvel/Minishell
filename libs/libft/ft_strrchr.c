@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/26 11:35:02 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:24:50 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+char	*ft_strrchr(const char *s, int c)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	size_t	i;
+	char	*ptc;
+
+	if ((char)c == '\0')
+		return (ft_strchr(s, '\0'));
+	i = 0;
+	ptc = (char *)s;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+			ptc = ((char *)s + i);
+		i++;
+	}
+	if (*ptc == (char)c)
+		return (ptc);
+	return (NULL);
 }

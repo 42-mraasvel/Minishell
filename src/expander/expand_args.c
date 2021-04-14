@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 19:02:42 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:32:25 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:57:09 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,10 @@ int	expand_args(t_node *node)
 	}
 	replace_args(strings, node);
 	return (0);
+}
+
+int	expand_node(t_node *node)
+{
+	expand_args(node);
+	return (expand_redirects(node));
 }

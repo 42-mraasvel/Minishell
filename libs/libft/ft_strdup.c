@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/26 16:10:10 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:24:22 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+char	*ft_strdup(const char *s)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	size_t	len;
+	char	*dest;
+
+	len = ft_strlen(s);
+	dest = (char *)malloc((len + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	dest[len] = '\0';
+	ft_memcpy(dest, s, len + 1);
+	return (dest);
 }

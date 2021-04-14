@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_memmove.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/25 14:52:30 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:23:53 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	if (dest == src)
+		return (dest);
+	if (dest > src)
+	{
+		while (n > 0)
+		{
+			n--;
+			((unsigned char *)dest)[n] = ((const unsigned char *)src)[n];
+		}
+	}
+	else
+		dest = ft_memcpy(dest, src, n);
+	return (dest);
 }

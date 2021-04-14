@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_swap_ptr.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/12/29 16:09:28 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:26:55 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "structs.h"
-
-char	*skipspace(char *line)
+void	ft_swap_ptr(void *a, void *b)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	void	*tmp;
+
+	tmp = *(void **)a;
+	*(void **)a = *(void **)b;
+	*(void **)b = tmp;
 }

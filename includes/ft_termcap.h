@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/26 11:39:49 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/11 08:16:38 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:40:30 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <vec_string.h>
 
 # ifndef MAX_HISTORY
-#  define MAX_HISTORY 10
+#  define MAX_HISTORY 1000
 # endif
 
 //! Add edited for history changes
@@ -61,6 +61,8 @@ typedef struct s_termcap
 	t_vecstr		*buffer;
 	t_tchist		*hist;
 }	t_termcap;
+
+t_tchist	*init_history(void);
 
 /* Key Codes */
 

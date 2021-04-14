@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_strmapi.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/27 10:38:05 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:24:36 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	char			*dest;
+	unsigned int	i;
+
+	if (s == 0 || f == 0)
+		return (0);
+	i = ft_strlen(s);
+	dest = (char *)malloc((i + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	dest[i] = '\0';
+	i = 0;
+	while (s[i] != 0)
+	{
+		dest[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (dest);
 }

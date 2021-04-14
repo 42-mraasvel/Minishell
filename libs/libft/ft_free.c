@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_free.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/11/13 11:17:24 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:25:29 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "structs.h"
+#include <stdlib.h>
+#include <stdarg.h>
 
-char	*skipspace(char *line)
+void	ft_free(int cnt, ...)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	va_list	start;
+
+	va_start(start, cnt);
+	while (cnt > 0)
+	{
+		free(va_arg(start, void *));
+		cnt--;
+	}
+	va_end(start);
 }

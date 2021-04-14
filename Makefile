@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/13 22:14:27 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/04/13 22:23:11 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/04/14 16:41:50 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,18 @@ include settings.mk
 
 .PHONY: all
 all:
-	$(MAKE) -j4 $(LFTDIR)
-	$(MAKE) -j4 $(LVCDIR)
+	$(MAKE) -j4 -C $(LFTDIR)
 	$(MAKE) -j4 $(NAME)
 
 # Compilation
 $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LFLAGS)
-$(ODIR)%.o: $(SDIR)%.c
+$(ODIR)%.o: $(SDIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) -c -o $@ $< $(CFLAGS) $(IFLAGS)
-$(DDIR)%.d: $(SDIR)%.c
+$(DDIR)%.d: $(SDIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $< -MM -MF $@ -MT $(ODIR)$*.o $(IFLAGS)
-
 
 # Cleanup
 .PHONY: clean fclean cleanall re
@@ -39,8 +37,9 @@ fclean:
 cleanall: fclean
 	$(RM) -r $(DDIR)
 	$(RM) -r $(ODIR)
+	$(MAKE) fclean -C $(LFTDIR)
 re: fclean
 	$(MAKE) all
 
 # Header dependencies
-include $(DEP)
+-include $(DEP)

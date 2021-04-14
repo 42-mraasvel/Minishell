@@ -6,11 +6,10 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 22:28:40 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:31:11 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:57:43 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // rm
 #include <stdlib.h>
 #include "header.h"
 #include "libft.h"

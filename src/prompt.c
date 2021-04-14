@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 09:24:14 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 13:51:57 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:48:18 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,26 @@
 #include "proto.h"
 #include "header.h"
 
-void	delete_token(void *token)
+static void	delete_token(void *token)
 {
 	if (((t_token *)token)->type == operator)
 		free(((t_token *)token)->start);
+}
+
+int	allocate_tokens(t_data *data)
+{
+	t_token	*tokens;
+	size_t	i;
+
+	tokens = data->tokens->table;
+	i = 0;
+	while (i < data->tokens->nmemb)
+	{
+		tokens[i].start = malloc_guard(
+				ft_substr(tokens[i].start, 0, tokens[i].length));
+		i++;
+	}
+	return (0);
 }
 
 int	process_cli(char *line, t_data *data)

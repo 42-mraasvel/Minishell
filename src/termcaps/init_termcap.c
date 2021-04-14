@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:50:47 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 13:51:29 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 10:32:28 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@
 #include "structs.h"
 #include "header.h"
 
-static int	check_changes(t_data *data)
-{
-	struct termios	term;
+// static int	check_changes(t_data *data)
+// {
+// 	struct termios	term;
 
-	if (tcgetattr(STDIN_FILENO, &term) == -1)
-		exit_perror(GENERAL_ERROR, "tcgetattr");
-	printf("%d - %d\n", term.c_iflag, data->term.settings.c_iflag);
-	printf("%d - %d\n", term.c_lflag, data->term.settings.c_lflag);
-	printf("%d - %d\n", term.c_cc[VMIN], data->term.settings.c_cc[VMIN]);
-	printf("%d - %d\n", term.c_cc[VTIME], data->term.settings.c_cc[VTIME]);
-	if (ft_memcmp(&term, &data->term.settings, sizeof(struct termios)) != 0)
-		return (error);
-	return (success);
-}
+// 	if (tcgetattr(STDIN_FILENO, &term) == -1)
+// 		exit_perror(GENERAL_ERROR, "tcgetattr");
+// 	printf("%d - %d\n", term.c_iflag, data->term.settings.c_iflag);
+// 	printf("%d - %d\n", term.c_lflag, data->term.settings.c_lflag);
+// 	printf("%d - %d\n", term.c_cc[VMIN], data->term.settings.c_cc[VMIN]);
+// 	printf("%d - %d\n", term.c_cc[VTIME], data->term.settings.c_cc[VTIME]);
+// 	if (ft_memcmp(&term, &data->term.settings, sizeof(struct termios)) != 0)
+// 		return (error);
+// 	return (success);
+// }
 
 /*
 ** https://man7.org/linux/man-pages/man3/termios.3.html

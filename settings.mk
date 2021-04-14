@@ -6,7 +6,7 @@
 #    By: mraasvel <mraasvel@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/04/13 22:09:02 by mraasvel      #+#    #+#                  #
-#    Updated: 2021/04/13 22:21:40 by mraasvel      ########   odam.nl          #
+#    Updated: 2021/04/14 16:46:10 by mraasvel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,25 +17,24 @@ SETTINGS_MK = 1
 NAME := minishell
 
 # Directories
-SDIR := src/
+SDIR := src
 ODIR := obj/
 DDIR := dep/
 IDIR := includes
-LDIR := libs/
+LDIR := libs
 
-LFTDIR := $(LDIR)libft
-LVCDIR := $(LDIR)libvect
+LFTDIR := $(LDIR)/libft
 
 # Files
 SRC := $(shell find $(SDIR) -name "*.c" -type f)
-OBJ := $(patsubst $(SDIR)%.c,$(ODIR)%.o,$(SRC))
-DEP := $(patsubst $(SDIR)%.c,$(DDIR)%.d,$(SRC))
+OBJ := $(patsubst $(SDIR)/%.c,$(ODIR)%.o,$(SRC))
+DEP := $(patsubst $(SDIR)/%.c,$(DDIR)%.d,$(SRC))
 
 # Compilation
-CC := gcc
-CFLAGS = -Wall -Wextra
-LFLAGS := -ltermcap -L$(LFTDIR) -lft -L$(LVCDIR) -lvect
-IFLAGS := -I$(IDIR) -I$(LVCDIR) -I$(LFTDIR)
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+LFLAGS := -ltermcap -L$(LFTDIR) -lft
+IFLAGS := -I$(IDIR) -I$(LFTDIR)
 ifeq ($(shell uname -s),Linux)
 DFLAGS := -O0 -g -fsanitize=address -fsanitize=leak
 else

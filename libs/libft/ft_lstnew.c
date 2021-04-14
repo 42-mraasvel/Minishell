@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/28 14:42:09 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:23:17 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+t_list	*ft_lstnew(void *content)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	t_list	*entry;
+
+	entry = (t_list *)malloc(1 * sizeof(t_list));
+	if (entry == 0)
+		return (0);
+	entry->content = content;
+	entry->next = 0;
+	return (entry);
 }

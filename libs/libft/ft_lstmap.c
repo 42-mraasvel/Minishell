@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_lstmap.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/28 16:35:05 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:23:02 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "structs.h"
 
-char	*skipspace(char *line)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	t_list	*start;
+	t_list	*new;
+
+	if (lst == 0 || f == 0 || del == 0)
+		return (0);
+	start = 0;
+	while (lst != 0)
+	{
+		new = ft_lstnew((*f)(lst->content));
+		if (new == 0)
+		{
+			ft_lstclear(&start, del);
+			return (0);
+		}
+		if (new->content == 0)
+			ft_lstdelone(new, (void *)0);
+		else
+			ft_lstadd_back(&start, new);
+		lst = lst->next;
+	}
+	return (start);
 }

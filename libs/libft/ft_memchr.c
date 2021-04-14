@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_utils.c                                        :+:    :+:            */
+/*   ft_memchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/03/14 22:23:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:58:10 by mraasvel      ########   odam.nl         */
+/*   Created: 2020/10/25 15:37:02 by mraasvel      #+#    #+#                 */
+/*   Updated: 2021/04/14 16:23:27 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "structs.h"
+#include <stddef.h>
 
-char	*skipspace(char *line)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	const unsigned char	*pts;
+
+	pts = (const unsigned char *)s;
+	while (n > 0)
+	{
+		if (*pts == (unsigned char)c)
+			return ((void *)pts);
+		pts++;
+		n--;
+	}
+	return (0);
 }

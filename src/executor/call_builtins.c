@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 08:42:06 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:40:24 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:52:33 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,6 @@
 #include "executor.h"
 #include "libft.h"
 #include "proto.h"
-
-int	isbuiltin(char *arg)
-{
-	int					i;
-	static const char	*builtins[] = {
-		"echo",
-		"cd",
-		"pwd",
-		"export",
-		"unset",
-		"env",
-		"exit",
-		NULL
-	};
-
-	i = 0;
-	while (builtins[i] != NULL)
-	{
-		if (ft_strcmp(builtins[i], arg) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 static t_builtin	get_builtin(char *name)
 {
@@ -112,6 +88,11 @@ static int	reset_fds_builtin(int fds[2])
 	return (success);
 }
 
+/*
+** Fork builtin if part of pipe sequence
+** Echo is already forked by default
+*/
+
 int	builtin_checkpipe(t_node *node, t_data *data)
 {
 	int	pid;
@@ -123,7 +104,11 @@ int	builtin_checkpipe(t_node *node, t_data *data)
 	if (pid == -1)
 		exit_perror(GENERAL_ERROR, "fork");
 	if (pid == 0)
+	{
+		close_all_fds(node, data->root);
 		return (0);
+	}
+	close_fds(node);
 	new_process(data, p_command, pid);
 	return (1);
 }

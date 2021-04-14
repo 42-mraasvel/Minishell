@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 17:37:13 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:53:34 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_putprompt(char *prefix);
 
 /* Error Handling */
 
-int		syntax_check(t_data *data, t_vect *tokens); //! Checks if tokens are valid
+int		syntax_check(t_data *data, t_vect *tokens);
 
 void	flush_error(t_data *data);
 
@@ -80,6 +80,8 @@ int		exec_pipe(t_node *node, t_data *data);
 int		exec_command(t_node *node, t_data *data);
 int		exec_semicolon(t_node *node, t_data *data);
 
+void	close_fds(t_node *node);
+int		isbuiltin(char *arg);
 int		lookup_path(t_data *data, char **args, char *name);
 
 void	tree_free(t_node *root);
@@ -95,6 +97,7 @@ int		ft_echo(t_data *data, char **args);
 int		ft_cd(t_data *data, char **args);
 int		ft_pwd(t_data *data, char **args);
 int		ft_export(t_data *data, char **args);
+int		ft_export_print(t_data *data);
 int		ft_unset(t_data *data, char **args);
 int		ft_env(t_data *data, char **args);
 int		ft_exit(t_data *data, char **args);
@@ -109,6 +112,7 @@ t_bool	varinargs(char *var, char **args, char arg_end);
 
 void	ft_perror(char *str);
 void	ft_error(char *prefix, char *str);
+void	end_program(t_data *data);
 void	exit_program(t_errnum errnum, char *err_str);
 void	exit_perror(int exit_status, char *str);
 
@@ -128,7 +132,6 @@ int		init_termcap(t_data *data);
 int		ft_setterm(t_data *data, int reset);
 void	restore_term(t_data *data);
 void	delete_edited(t_tchist *hist);
-t_tchist	*init_history(void);
 void	reset_term(void);
 int		save_newest(char *str, t_tchist *hist);
 char	*cycle_through(t_tchist *hist, int up, int down);

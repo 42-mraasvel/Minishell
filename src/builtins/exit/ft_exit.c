@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/18 13:19:23 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 14:01:00 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:15:31 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_exit(t_data *data, char **args)
 	reset_term();
 	if (args[1] == NULL)
 	{
-		// ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit((unsigned char)data->exit_status);
 	}
 	else if (!exit_isnumeric_arg(args[1]))

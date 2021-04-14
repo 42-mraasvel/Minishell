@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:30:44 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 16:53:06 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@
 #include "expander.h"
 #include "structs.h"
 #include "proto.h"
-
-void	close_fds(t_node *node)
-{
-	if (node->fds[0] != -1)
-		if (close(node->fds[0]) == -1)
-			ft_perror("close");
-	if (node->fds[1] != -1)
-		if (close(node->fds[1]) == -1)
-			ft_perror("close");
-	node->fds[0] = -1;
-	node->fds[1] = -1;
-}
 
 static int	cmd_findpath(t_node *node, t_data *data)
 {
@@ -92,12 +80,24 @@ static int	finalize_cmd(t_node *node, t_data *data)
 	return (1);
 }
 
+static int	check_redirections(t_node *node, t_data *data)
+{
+	if (cmd_redirects(node) == -1)
+	{
+		new_process(data, p_error, GENERAL_ERROR);
+		return (0);
+	}
+	new_process(data, builtin, 0);
+	close_fds(node);
+	return (0);
+}
+
 int	exec_command(t_node *node, t_data *data)
 {
 	if (expand_node(node) == -1)
 		return (0);
 	if (node->args[0] == NULL)
-		return (0);
+		return (check_redirections(node, data));
 	if (isbuiltin(node->args[0]) != -1 && ft_strcmp(node->args[0], "echo") != 0)
 		return (exec_builtin(node, data));
 	cmd_findpath(node, data);
