@@ -6,12 +6,10 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 08:39:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:53:06 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:15:54 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // rm
-#include <errno.h> // rm
 #include <stdlib.h>
 #include <sys/wait.h>
 #include "header.h"

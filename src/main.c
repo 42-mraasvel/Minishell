@@ -6,18 +6,16 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/24 13:27:01 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:46:54 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:23:53 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include "header.h"
 #include "libft.h"
 #include "proto.h"
 #include "structs.h"
-#include <limits.h>
 
 int	*get_exit_status(void)
 {

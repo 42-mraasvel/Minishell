@@ -6,11 +6,10 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/12 11:12:04 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:05:33 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:17:43 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // rm
 #include <unistd.h>
 #include <sys/wait.h>
 #include "executor.h"
@@ -78,10 +77,6 @@ void	flush_waits(t_data *data)
 	reset_processes(data);
 }
 
-/*
-** Maybe we want to wait for each semicolon sequence?
-*/
-
 int	exec_semicolon(t_node *node, t_data *data)
 {
 	int	pid_total;
@@ -97,17 +92,6 @@ int	exec_semicolon(t_node *node, t_data *data)
 		pid_total += execute_node(node->right, data);
 	return (pid_total);
 }
-
-/*
-** Idea:
-**	Return total forks.
-**	Wait for each fork, take the last fork's exit status (?)
-**
-** (Better) Alternative:
-**	Return a vector of PIDs in [data]
-**	Each time a fork is called: the PID is returned to the caller.
-**	Wait for each pid using waitpid, guaranteeing the last fork's exit status.
-*/
 
 int	executor(t_node *root, t_data *data)
 {
