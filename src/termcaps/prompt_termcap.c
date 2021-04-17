@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:44:52 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/17 14:46:26 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:18:32 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ int	prompt_termcap(t_data *data)
 		ret = read(STDIN_FILENO, buf, 6);
 		if (ret == -1)
 			exit_perror(GENERAL_ERROR, "read");
-		//! Don't break if there is anything in current line buffer being used
-		if (buf[0] == CTRL_D)
+		if (buf[0] == CTRL_D && buffer_is_empty(data))
 			break ;
 		check_buf(data, buf);
 	}

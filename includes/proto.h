@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/17 15:04:35 by tel-bara      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:16:31 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ char	*cycle_through(t_tchist *hist, int up, int down);
 void	termcmd(char *id, int hpos, int ypos, int nlines);
 void	delete_char(t_data *data);
 
+t_bool	buffer_is_empty(t_data *data);
 void	put_line(char *str, t_cursor *cursor);
 void	pushback_char(t_data *data, char c);
 void	pop_char(t_data *data);
