@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 19:49:17 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/13 22:31:58 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/14 22:56:26 by mraasvel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ size_t	expand_squote(t_vect *strings, t_vecstr *string, char *arg)
 	size_t	len;
 
 	len = ft_strchr(&arg[1], '\'') - arg - 1;
-	vecstr_pushback_substr(string, &arg[1], len);
+	if (string->len == 1 && len == 0 && *(arg + 2) == '\0')
+		vecstr_pushback_c(string, '\0');
+	else
+		vecstr_pushback_substr(string, &arg[1], len);
 	(void)strings;
 	return (len + 2);
 }
