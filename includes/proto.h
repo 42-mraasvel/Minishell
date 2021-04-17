@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/02 18:01:24 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/14 16:53:34 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 15:04:35 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int		set_error_vec(t_data *data, t_errnum errnum, char *str, int ret);
 t_node	*create_tree(t_vect *tokens);
 t_node	*add_node(t_vect *tokens, size_t start, size_t end);
 
-t_node	*test_parser(void);
+int		check_semicolon(t_vect *tokens, size_t start, size_t end, t_node *node);
+int		check_pipe(t_vect *tokens, size_t start, size_t end, t_node *node);
+int		check_for_redirect(
+			t_token *curr, t_token *next, t_node *node, size_t *index);
 
 int		executor(t_node *root, t_data *data);
 int		execute_node(t_node *node, t_data *data);
@@ -138,6 +141,12 @@ char	*cycle_through(t_tchist *hist, int up, int down);
 
 void	termcmd(char *id, int hpos, int ypos, int nlines);
 void	delete_char(t_data *data);
+
+void	put_line(char *str, t_cursor *cursor);
+void	pushback_char(t_data *data, char c);
+void	pop_char(t_data *data);
+void	pop_line(t_data *data);
+void	flush_line(t_data *data);
 
 /* Cursor */
 

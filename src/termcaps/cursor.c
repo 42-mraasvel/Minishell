@@ -6,12 +6,11 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 14:00:30 by mraasvel      #+#    #+#                 */
-/*   Updated: 2021/04/09 14:50:51 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 14:50:54 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h> // rm
 #include <sys/ioctl.h>
 #include "libft.h"
 #include "header.h"
@@ -64,12 +63,6 @@ void	cursor_position(t_cursor *cursor)
 		if (ft_isdigit(buf))
 			update_position(cursor, buf, type);
 	}
-}
-
-void	print_cursor(t_cursor cursor)
-{
-	fprintf(stderr, "CUR: %d, %d\n", cursor.pos.x, cursor.pos.y);
-	fprintf(stderr, "WIN: %d, %d\n", cursor.winsz.x, cursor.winsz.y);
 }
 
 void	cursor_update(t_data *data)

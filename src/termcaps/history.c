@@ -6,7 +6,7 @@
 /*   By: mraasvel <mraasvel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 23:26:42 by tel-bara      #+#    #+#                 */
-/*   Updated: 2021/04/11 08:21:42 by mraasvel      ########   odam.nl         */
+/*   Updated: 2021/04/17 14:51:18 by tel-bara      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_tchist	*init_history(void)
 	return (new);
 }
 
-//cycle up or down through history and return and display relevant string. If history pointer = null, return 0 and display active string buffer.
 char	*cycle_through(t_tchist *hist, int up, int down)
 {
 	if (up)
@@ -79,7 +78,6 @@ void	delete_edited(t_tchist *hist)
 	hist->ptr = NULL;
 }
 
-//goal: save command line input into history whenever the user presses enter
 int	save_newest(char *str, t_tchist *hist)
 {
 	t_tclist	*link;
