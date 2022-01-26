@@ -1,1 +1,2 @@
-Nice*
+# Minishell
+A simple Unix shell.
